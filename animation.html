@@ -34,14 +34,34 @@ $("#slider").slider({
 });
 
 
-function Rhythm (beats_in_bar, bars, tracks){
-	this.total_half_beats = beats_in_bar * bars * 2;
+function Rhythm (tracks){
 	this.tracks = tracks
 	this.beats = new Array();
-	for (i=0; i < this.total_half_beats; i++){
-		this.beats = new Array();
+	for( i = 0 ; i < this.tracks ; i++ )
+	{
+	  this.beats[i] = new Array();
+	}
+	
+	this.play(rythm_time, start_time, time, scale)
+	{
+	  if( start_time > time && start_time + rythm_time > time )
+	  {
+	    for( track = 0; i < this.tracks ; track ++ )
+	    {
+	      var x = track * xscale;
+	      for( j = 0; j < this.nbBeats; j ++ )
+	      {
+
+	        var y = ( start_time - time + this.beats[i][j] ) * yscale;
+	        var color = '#' + track + '00000'
+	        var circle = new Circle(x, y, color)
+	        drawCircle(circle)
+	      }
+	    }
+	  }
 	}
 }
+
 
 function Sound (x, y, sound_file)
 {
