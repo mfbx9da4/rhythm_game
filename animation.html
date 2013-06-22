@@ -17,9 +17,13 @@ body {
 </head>
 <body>
 <div id="slider"></div>
+
 <p id="p1">  </p>
 <p id="p2">  </p>
+<p id="pos">  </p>
+
 <p id="score">0</p>
+
 <span> Speed: <pre id="speed">  </pre> </span>
 <canvas id="myCanvas" width="600" height="400"
 style="border:1px solid #000000;">
@@ -35,30 +39,57 @@ $("#slider").slider({
 
 
 function Rhythm (tracks){
-	this.tracks = tracks
-	this.beats = new Array();
-	for( i = 0 ; i < this.tracks ; i++ )
+
+	this.construct = function(beats, diff_time, rhythm_time)
 	{
-	  this.beats[i] = new Array();
+		this.tracks = beats.length;
+		this.beats = beats;
+  		this.xscale = c.width / this.tracks;
+  		this.offset = c.width % this.tracks + ( this.xscale / 2 );
+  		this.diff_time = diff_time;
+  		this.rhythm_time = rhythm_time;
 	}
 	
-	this.play(rythm_time, start_time, time, scale)
+	this.play = function(start_time, time, yscale)
 	{
-	  if( start_time > time && start_time + rythm_time > time )
+	  if(  start_time + this.diff_time + this.rhythm_time > time )
 	  {
-	    for( track = 0; i < this.tracks ; track ++ )
+	    for( track = 0; track < this.tracks ; track ++ )
 	    {
-	      var x = track * xscale;
-	      for( j = 0; j < this.nbBeats; j ++ )
+	      var x = track * this.xscale + this.offset;
+	      for( j = 0; j < this.beats[track].length; j ++ )
 	      {
-
-	        var y = ( start_time - time + this.beats[i][j] ) * yscale;
-	        var color = '#' + track + '00000'
+	        var y = ( time_position - ( start_time + this.diff_time - time ) * yscale ) - this.beats[track][j] * this.rhythm_time * yscale;
+	        var color = 'red'
 	        var circle = new Circle(x, y, color)
 	        drawCircle(circle)
 	      }
 	    }
 	  }
+	}
+}
+
+function Song(){
+
+	this.construct = function( rhythms, sound_track )
+	{
+	//	this.music = new Audio(sound_track);
+		this.rythms = rhythms;
+	}
+
+	this.start = function(yscale)
+	{
+		this.start_time = new Date().getTime();
+		this.yscale = yscale;
+	}
+
+	this.play = function()
+	{
+		time = new Date().getTime();
+		for( i = 0; i < this.rythms.length; i++)
+		{
+			this.rythms[i].play(this.start_time, time, this.yscale);
+		}
 	}
 }
 
@@ -81,12 +112,9 @@ function Circle (x, y, color)
 
 function animate()
 {
-	var newTime = new Date().getTime();
-	var diffTime = newTime - time;
 	clearCanvas()
-	drawStatic();
-	redrawPositions(diffTime)
-  	time = newTime;
+	drawStatic(new_rhythm.tracks);
+	new_song.play();
 }
 
 function redrawPositions(diffTime)
@@ -103,13 +131,13 @@ function redrawPositions(diffTime)
 function clearCanvas () {
   	ctx.clearRect(0, 0, c.width, c.height);
 }
-function drawStatic () {
-	n_sounds = 2.0
+
+function drawStatic (n_sounds) {
 	spacing = c.width / n_sounds
 	padding = c.width % n_sounds + (spacing/2)
 	for (i=0; i<n_sounds; i++){
 		ctx.beginPath();
-		ctx.arc(padding + spacing*i, 400, 40, 0 , 2 * Math.PI);
+		ctx.arc(padding + spacing*i, time_position, 40, 0 , 2 * Math.PI);
 		ctx.stroke();
 	}
 }
@@ -119,7 +147,7 @@ function drawCircle (circle) {
 	// need to make a dictionary of tracks and sounds and keyCodes
 	// need to know steps of different tracks and their colours
 	ctx.beginPath();
-	ctx.arc(circle.x, circle.y, 40, 0 ,2*Math.PI);
+	ctx.arc( circle.x, circle.y, 40, 0 ,2*Math.PI);
 	ctx.fillStyle = circle.color;
 	ctx.fill();
 	ctx.stroke();
@@ -127,20 +155,20 @@ function drawCircle (circle) {
 
 function playSound(e){
 	var keyCode = String(e.keyCode);
-	updateScore(keyCode);
+	//updateScore(keyCode);
 	document.getElementById("p1").innerHTML = e.keyCode;
-	var snd = new Audio(sounds[keyCode]);
+	var snd = new Audio(map_key_sounds[keyCode]);
 	snd.play();
 }
 
 function updateScore (keyCode){
 	var t = new Date().getTime();
-	for (i = 0; i < rhythm.beats.length; i++){
-		if (sounds[keyCode][1] == rhythm.beats[i].track){
+	for (i = 0; i < new_rhythm.beats.length; i++){
+		if (sounds[keyCode] == new_rhythm.beats[i].track){
 			// startBar is time registered when first beat is reset?
 			// or multiple of initial start time * dur_rhythm * rhythms_played + offset
 			// need to round up the time for standard error
-			if (t - start_bar == (rhythm[i].offset * time_per_beat)) {
+			if (t - start_bar == (new_rhythm[i].offset * time_per_beat)) {
 				$('#score').html(Number($('#score').html()) + 1);
 			}
 			
@@ -160,11 +188,13 @@ function makeCircles () {
 	return circles;
 }
 
-sounds={ 
+map_key_sounds={
      "101":["54013__domingus__djembe-doble.wav"], 
      "119":["54014__domingus__djembe-hi-1.wav"], 
      "113":["54015__domingus__djembe-hi-2.wav"]
 };
+
+map_key_track=["101", "119", "113"];
 
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
@@ -172,11 +202,22 @@ document.addEventListener('keydown', function (e){playSound(e);}, false);
 var time = new Date().getTime();
 var speed = 0.3
 circles = makeCircles()
+time_position = 350
 
-setInterval(function () {
-	animate();
-}
-	, 1);
+//First rythm
+var new_rhythm = new Rhythm();
+new_rhythm.construct([[0.1, 0.4],[1],[0.7]], 3000, 5000);
+
+//Second Rythm
+var new_rhythm2 = new Rhythm();
+new_rhythm2.construct([[0.1, 0.4],[1],[0.7]], 10000, 5000);
+
+var new_song = new Song();
+new_song.construct([new_rhythm, new_rhythm2], "ij");
+new_song.start(0.1);
+
+
+setInterval(function () { animate(); }, 1);
 
 
 
