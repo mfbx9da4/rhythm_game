@@ -3,6 +3,9 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="rhythm.js"></script>
+  <script src="song.js"></script>
+  <script src="circle.js"></script>
 
 <style type="text/css">
 body {
@@ -38,94 +41,15 @@ $("#slider").slider({
 });
 
 
-function Rhythm (tracks){
-
-	this.construct = function(beats, diff_time, rhythm_time)
-	{
-		this.tracks = beats.length;
-		this.beats = beats;
-  		this.xscale = c.width / this.tracks;
-  		this.offset = c.width % this.tracks + ( this.xscale / 2 );
-  		this.diff_time = diff_time;
-  		this.rhythm_time = rhythm_time;
-	}
-	
-	this.play = function(start_time, time, yscale)
-	{
-	  if(  start_time + this.diff_time + this.rhythm_time > time )
-	  {
-	    for( track = 0; track < this.tracks ; track ++ )
-	    {
-	      var x = track * this.xscale + this.offset;
-	      for( j = 0; j < this.beats[track].length; j ++ )
-	      {
-	        var y = ( time_position - ( start_time + this.diff_time - time ) * yscale ) - this.beats[track][j] * this.rhythm_time * yscale;
-	        var color = 'red'
-	        var circle = new Circle(x, y, color)
-	        drawCircle(circle)
-	      }
-	    }
-	  }
-	}
-}
-
-function Song(){
-
-	this.construct = function( rhythms, sound_track )
-	{
-	//	this.music = new Audio(sound_track);
-		this.rythms = rhythms;
-	}
-
-	this.start = function(yscale)
-	{
-		this.start_time = new Date().getTime();
-		this.yscale = yscale;
-	}
-
-	this.play = function()
-	{
-		time = new Date().getTime();
-		for( i = 0; i < this.rythms.length; i++)
-		{
-			this.rythms[i].play(this.start_time, time, this.yscale);
-		}
-	}
-}
 
 
-function Sound (x, y, sound_file)
-{
-	// need to change to x to sound number
-	this.track = x;
-	this.offset = y;
-	this.draw = function (){alert('notImplemented')};
-}
 
-
-function Circle (x, y, color)
-{
-	this.x = x;
-	this.y = y;
-	this.color = color;
-}
 
 function animate()
 {
 	clearCanvas()
 	drawStatic(new_rhythm.tracks);
 	new_song.play();
-}
-
-function redrawPositions(diffTime)
-{
-	for (var i = 0; i < circles.length; i++){
-		if (circles[i].y > 800){
-			circles[i].y = circles[i].y - 800
-		}
-	  	circles[i].y = circles[i].y + diffTime * speed;
-  		drawCircle(circles[i]);
-	}
 }
 
 function clearCanvas () {
@@ -142,16 +66,6 @@ function drawStatic (n_sounds) {
 	}
 }
 
-function drawCircle (circle) {
-	// need to make x a function of how many tracks and which track it is
-	// need to make a dictionary of tracks and sounds and keyCodes
-	// need to know steps of different tracks and their colours
-	ctx.beginPath();
-	ctx.arc( circle.x, circle.y, 40, 0 ,2*Math.PI);
-	ctx.fillStyle = circle.color;
-	ctx.fill();
-	ctx.stroke();
-}
 
 function playSound(e){
 	var keyCode = String(e.keyCode);
@@ -198,7 +112,7 @@ map_key_track=["101", "119", "113"];
 
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
-document.addEventListener('keydown', function (e){playSound(e);}, false);
+document.addEventListener('keypress', function (e){playSound(e);}, false);
 var time = new Date().getTime();
 var speed = 0.3
 circles = makeCircles()
