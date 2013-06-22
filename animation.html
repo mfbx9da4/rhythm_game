@@ -56,7 +56,8 @@ function clearCanvas () {
   	ctx.clearRect(0, 0, c.width, c.height);
 }
 
-function drawStatic (n_sounds) {
+function drawStatic (n_sounds) 
+{
 	spacing = c.width / n_sounds
 	padding = c.width % n_sounds + (spacing/2)
 	for (i=0; i<n_sounds; i++){
@@ -67,9 +68,9 @@ function drawStatic (n_sounds) {
 }
 
 
-function playSound(e){
+function keyHandler(e){
 	var keyCode = String(e.keyCode);
-	//updateScore(keyCode);
+	updateScore(keyCode);
 	document.getElementById("p1").innerHTML = e.keyCode;
 	var snd = new Audio(map_key_sounds[keyCode]);
 	snd.play();
@@ -77,18 +78,26 @@ function playSound(e){
 
 function updateScore (keyCode){
 	var t = new Date().getTime();
-	for (i = 0; i < new_rhythm.beats.length; i++){
-		if (sounds[keyCode] == new_rhythm.beats[i].track){
-			// startBar is time registered when first beat is reset?
-			// or multiple of initial start time * dur_rhythm * rhythms_played + offset
-			// need to round up the time for standard error
-			if (t - start_bar == (new_rhythm[i].offset * time_per_beat)) {
-				$('#score').html(Number($('#score').html()) + 1);
-			}
-			
-		}
-		
+	var track = map_key_track[keyCode];
+	var cur_beat_time = new_song.getCurrentBeatTime(t, track);
+	if (cur_beat_time == -1){
+		// score = score - 1
 	}
+	else
+	{
+		score = (1 / (cur_beat_time - t)) * 100
+	}
+	$('#score').html(score);
+
+	// for (i = 0; i < new_rhythm.beats.length; i++){
+	// 	if (sounds[keyCode] == new_rhythm.beats[i].track){
+	// 		// startBar is time registered when first beat is reset?
+	// 		// or multiple of initial start time * dur_rhythm * rhythms_played + offset
+	// 		// need to round up the time for standard error
+	// 		if (t - start_bar == (new_rhythm[i].offset * time_per_beat)) {
+	// 		}
+	// 	}
+	// }
 }
 
 
@@ -108,13 +117,17 @@ map_key_sounds={
      "113":["54015__domingus__djembe-hi-2.wav"]
 };
 
-map_key_track=["101", "119", "113"];
+map_key_track={
+     "101":0, 
+     "119":1, 
+     "113":2
+};
 
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
-document.addEventListener('keypress', function (e){playSound(e);}, false);
 var time = new Date().getTime();
-var speed = 0.3
+var score = 0;
+var error_range = 666666;
 circles = makeCircles()
 time_position = 350
 
@@ -130,6 +143,7 @@ var new_song = new Song();
 new_song.construct([new_rhythm, new_rhythm2], "ij");
 new_song.start(0.1);
 
+document.addEventListener('keypress', function (e){keyHandler(e);}, false);
 
 setInterval(function () { animate(); }, 1);
 

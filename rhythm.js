@@ -1,6 +1,6 @@
 function Rhythm (tracks){
 
-	this.construct = function(beats, diff_time, rhythm_time)
+	this.construct = function (beats, diff_time, rhythm_time)
 	{
 		this.tracks = beats.length;
 		this.beats = beats;
@@ -28,5 +28,20 @@ function Rhythm (tracks){
 	      }
 	    }
 	  }
+	}
+
+	this.getCurrentBeatTime = function (current_time, start_time, track)
+	{
+		var rhythm_start_time = start_time + this.diff_time;
+		for ( j = 0; j < this.beats[track].length; j ++)
+		{
+			var beat_offset = this.beats[track][j] * this.rhythm_time;
+			var beat_time = rhythm_start_time + beat_offset
+			if ( Math.abs(beat_time - current_time) < error_range )
+			{
+				return beat_time;
+			}
+		}
+		return -1;
 	}
 }
