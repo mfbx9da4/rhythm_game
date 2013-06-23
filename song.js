@@ -24,7 +24,7 @@ function Song()
 
 	this.getCurrentBeatTime = function (current_time, track)
 	{
-		for (var i = 0; i > this.rhythms.length; i ++) 
+		for ( i = 0; i < this.rhythms.length; i++ ) 
 		{
 			var cur_beat_time = this.rhythms[i].getCurrentBeatTime(current_time, this.start_time, track);
 			if ( cur_beat_time != -1)

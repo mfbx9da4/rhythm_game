@@ -81,11 +81,11 @@ function updateScore (keyCode){
 	var track = map_key_track[keyCode];
 	var cur_beat_time = new_song.getCurrentBeatTime(t, track);
 	if (cur_beat_time == -1){
-		// score = score - 1
+		score = score - 1
 	}
 	else
 	{
-		score = (1 / (cur_beat_time - t)) * 100
+		score = (1 / (Math.abs(cur_beat_time - t))) * 100
 	}
 	$('#score').html(score);
 
@@ -127,7 +127,7 @@ var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 var time = new Date().getTime();
 var score = 0;
-var error_range = 666666;
+var error_range = 2000;
 circles = makeCircles()
 time_position = 350
 
