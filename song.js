@@ -1,9 +1,9 @@
 
 function Song()
 {
+
 	this.construct = function( rhythms, sound_track )
 	{
-	//	this.music = new Audio(sound_track);
 		this.rhythms = rhythms;
 		track_numbers = new Array();
 		for ( i = 0; i < rhythms.length; i ++){
@@ -16,14 +16,27 @@ function Song()
 	{
 		this.start_time = new Date().getTime();
 		this.yscale = yscale;
+		this.start_rhythm = 0;
 	}
 
 	this.play = function()
 	{
-		time = new Date().getTime();
-		for( i = 0; i < this.rhythms.length; i ++)
+		var time = new Date().getTime();
+
+		var i = this.start_rhythm;
+		for( ; i < this.rhythms.length; i ++)
 		{
-			this.rhythms[i].play(this.start_time, time, this.yscale);
+			if( this.start_time + this.rhythms[i].diff_time + this.rhythms[i].rhythm_time > time )
+				break;
+			else
+				this.start_rhythm = i + 1;
+		}
+		
+		for( ; i < this.rhythms.length; i ++)
+		{
+			if(  this.start_time + this.rhythms[i].diff_time > time + ( 400 / this.yscale ) )
+	  			break;
+	  		this.rhythms[i].play(this.start_time, time, this.yscale);
 		}
 	}
 

@@ -1,4 +1,4 @@
-function Rhythm (tracks){
+function Rhythm (){
 
 	this.construct = function (beats, diff_time, rhythm_time)
 	{
@@ -12,8 +12,6 @@ function Rhythm (tracks){
 	
 	this.play = function(start_time, time, yscale)
 	{
-	  if(  start_time + this.diff_time + this.rhythm_time > time )
-	  {
 	  	var start_time_position = ( time_position - ( start_time + this.diff_time - time ) * yscale )
 	    for( track = 0; track < this.tracks ; track ++ )
 	    {
@@ -27,7 +25,6 @@ function Rhythm (tracks){
 	        circle.draw();
 	      }
 	    }
-	  }
 	}
 
 	this.getCurrentBeatTime = function (current_time, start_time, track)

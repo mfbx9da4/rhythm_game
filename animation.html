@@ -1,8 +1,8 @@
 <html>
 <head>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<link rel="stylesheet" href="jquery-ui.css" />
+  <script src="jquery-1.9.1.js"></script>
+  <script src="jquery-ui.js"></script>
   <script src="rhythm.js"></script>
   <script src="song.js"></script>
   <script src="circle.js"></script>
@@ -26,7 +26,7 @@ body {
 <p id="pos">  </p>
 
 <p id="update" style="color:green;"></p>
-<p id="score"></p>
+<p> Score: </p> <p id="score"></p>
 
 <span> Speed: <pre id="speed">  </pre> </span>
 <canvas id="myCanvas" width="600" height="400"
@@ -34,12 +34,13 @@ style="border:1px solid #000000;">
 </canvas>
 </body>
 <script> 
+/*
 $("#slider").slider({
 	change: function( event, ui ) {
 		speed = 3 / $( "#slider" ).slider( "value" )
 		$( "#speed" ).html(speed);
 	}
-});
+});*/
 
 
 
@@ -110,16 +111,6 @@ function updateScore (keyCode){
 	score = score + update
 	$('#update').html(update);
 	$('#score').html(score);
-
-	// for (i = 0; i < new_rhythm.beats.length; i++){
-	// 	if (sounds[keyCode] == new_rhythm.beats[i].track){
-	// 		// startBar is time registered when first beat is reset?
-	// 		// or multiple of initial start time * dur_rhythm * rhythms_played + offset
-	// 		// need to round up the time for standard error
-	// 		if (t - start_bar == (new_rhythm[i].offset * time_per_beat)) {
-	// 		}
-	// 	}
-	// }
 }
 
 
@@ -131,6 +122,62 @@ function makeCircles () {
 	circles[3] = new Circle(150, -400, 'orange');
 	circles[4] = new Circle(450, -600, 'yellow');
 	return circles;
+}
+
+function getXMLHttpRequest() {
+    var xhr = null;
+     
+    if (window.XMLHttpRequest || window.ActiveXObject) {
+        if (window.ActiveXObject) {
+            try {
+                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch(e) {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+        } else {
+            xhr = new XMLHttpRequest(); 
+        }
+    } else {
+        alert("Your webbrowser doesn't suppot XMLHTTP!");
+        return null;
+    }     
+    return xhr;
+}
+
+function sendSongRequest()
+{
+	var xhr = getXMLHttpRequest();
+	xhr.open("GET", "song.xml", false);
+	xhr.send(null);
+	return parseXml( xhr.responseXML );
+}
+
+function parseXml( xml)
+{
+	var new_rhythms = [];
+	var rhythms = xml.getElementsByTagName("rhythm");
+	for( i = 0; i < rhythms.length; i++)
+	{
+		var rhythm = rhythms[i];
+		var tracks = rhythm.getElementsByTagName("track");
+		var beats = [];
+		for( k = 0; k <tracks.length; k++ )
+		{
+			var track = tracks[k];
+			var beatsT = [];
+			var notes = track.getElementsByTagName("note");
+			for( j = 0; j < notes.length; j++) {
+				beatsT[j] = Number(notes[j].childNodes[0].nodeValue);
+			}
+			beats[k] = beatsT;
+		}
+		new_rhythms[i] = new Rhythm(  );
+		new_rhythms[i].construct( beats, Number( rhythm.getElementsByTagName("start")[0].childNodes[0].nodeValue ), 
+											Number( rhythm.getElementsByTagName("length")[0].childNodes[0].nodeValue ));
+	}
+	var songT = new Song();
+	songT.construct( new_rhythms, "ij");
+ 	return songT;
 }
 
 
@@ -154,16 +201,9 @@ var error_range = 200;
 circles = makeCircles()
 time_position = 350
 
-//First rythm
-var new_rhythm = new Rhythm();
-new_rhythm.construct([[0.1, 0.4],[1],[0.7]], 3000, 1000);
 
-//Second Rythm
-var new_rhythm2 = new Rhythm();
-new_rhythm2.construct([[0.1, 0.4],[1],[0.7]], 4000, 1000);
 
-var new_song = new Song();
-new_song.construct([new_rhythm, new_rhythm2], "ij");
+var new_song = sendSongRequest();
 new_song.start(0.5);
 
 document.addEventListener('keypress', function (e){keyHandler(e);}, false);
