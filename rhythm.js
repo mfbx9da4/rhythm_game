@@ -22,7 +22,7 @@ function Rhythm (tracks){
 	      {
       		var beat_offest = this.beats[track][j] * this.rhythm_time * yscale;
 	        var y =  start_time_position - beat_offest;
-	        var color = 'red';
+	        var color = map_track_color[track];
 	        var circle = new Circle(x, y, color);
 	        circle.draw();
 	      }

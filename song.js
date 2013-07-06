@@ -5,6 +5,11 @@ function Song()
 	{
 	//	this.music = new Audio(sound_track);
 		this.rhythms = rhythms;
+		track_numbers = new Array();
+		for ( i = 0; i < rhythms.length; i ++){
+			track_numbers.push(rhythms[i].tracks);
+		}
+		this.tracks = Math.max.apply( Math, track_numbers);
 	}
 
 	this.start = function(yscale)
