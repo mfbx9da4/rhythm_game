@@ -1,14 +1,20 @@
-function Rhythm (){
+function Rhythm (beats, diff_time, rhythm_time){
 
-	this.construct = function (beats, diff_time, rhythm_time)
+	this.tracks = beats.length;
+	this.beats = beats;
+  	this.xscale = c.width / this.tracks;
+  	this.offset = c.width % this.tracks + ( this.xscale / 2 );
+  	this.diff_time = diff_time;
+  	this.rhythm_time = rhythm_time;
+
+  	this.played = new Array(this.beats.length);
+	for( var i = 0; i < this.played.length ; i++ )
 	{
-		this.tracks = beats.length;
-		this.beats = beats;
-  		this.xscale = c.width / this.tracks;
-  		this.offset = c.width % this.tracks + ( this.xscale / 2 );
-  		this.diff_time = diff_time;
-  		this.rhythm_time = rhythm_time;
+		this.played[i] = new Array(this.beats[i].length);
+		for( j = 0; j < this.played[i].length ; j++)
+			this.played[i][j] = 0;
 	}
+	
 	
 	this.play = function(start_time, time, yscale)
 	{
@@ -36,6 +42,23 @@ function Rhythm (){
 			var beat_time = rhythm_start_time + beat_offset
 			if ( Math.abs(beat_time - current_time) < error_range )
 			{
+				return beat_time;
+			}
+		}
+		return -1;
+	}
+
+	this.getCurrentBeatTimePlayback = function (current_time, start_time, track)
+	{
+		var rhythm_start_time = start_time + this.diff_time;
+		for ( j = 0; j < this.beats[track].length; j ++)
+		{
+			var beat_offset = this.beats[track][j] * this.rhythm_time;
+			var beat_time = rhythm_start_time + beat_offset
+			if ( Math.abs(beat_time - current_time) < error_range 
+				  && this.played[track][j] == 0 )
+			{
+				this.played[track][j] = 1;
 				return beat_time;
 			}
 		}

@@ -34,13 +34,7 @@ style="border:1px solid #000000;">
 </canvas>
 </body>
 <script> 
-/*
-$("#slider").slider({
-	change: function( event, ui ) {
-		speed = 3 / $( "#slider" ).slider( "value" )
-		$( "#speed" ).html(speed);
-	}
-});*/
+
 
 
 
@@ -85,7 +79,7 @@ function playback(){
 	var t = new Date().getTime();
 	for ( track = 0; track < new_song.tracks; track ++)
 	{
-		var cur_beat_time = new_song.getCurrentBeatTime(t, track);
+		var cur_beat_time = new_song.getCurrentBeatTimePlayback(t, track);
 		if (Math.abs(cur_beat_time - t) < 3){
 			playSound(track);
 		}
@@ -156,7 +150,7 @@ function parseXml( xml)
 {
 	var new_rhythms = [];
 	var rhythms = xml.getElementsByTagName("rhythm");
-	for( i = 0; i < rhythms.length; i++)
+	for( var i = 0; i < rhythms.length; i++)
 	{
 		var rhythm = rhythms[i];
 		var tracks = rhythm.getElementsByTagName("track");
@@ -171,13 +165,10 @@ function parseXml( xml)
 			}
 			beats[k] = beatsT;
 		}
-		new_rhythms[i] = new Rhythm(  );
-		new_rhythms[i].construct( beats, Number( rhythm.getElementsByTagName("start")[0].childNodes[0].nodeValue ), 
-											Number( rhythm.getElementsByTagName("length")[0].childNodes[0].nodeValue ));
+		new_rhythms[i] = new Rhythm( beats, Number( rhythm.getElementsByTagName("start")[0].childNodes[0].nodeValue ), 
+											Number( rhythm.getElementsByTagName("length")[0].childNodes[0].nodeValue ) );
 	}
-	var songT = new Song();
-	songT.construct( new_rhythms, "ij");
- 	return songT;
+	return new Song(new_rhythms, "ij");
 }
 
 
