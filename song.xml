@@ -7,9 +7,6 @@
  			<note>0.33</note>
  			<note>0.66</note>
  		</track>
- 		<track>
- 			<note>0.66</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>1000</start>
@@ -18,18 +15,12 @@
  			<note>0.33</note>
  			<note>.66</note>
  		</track>
- 		<track>
- 			<note>0.66</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>2000</start>
  		<length>1000</length>
  		<track>
  			<note>0.33</note>
- 			<note>0.66</note>
- 		</track>
- 		<track>
  			<note>0.66</note>
  		</track>
  	</rhythm>
@@ -40,18 +31,12 @@
  			<note>0.33</note>
  			<note>0.66</note>
  		</track>
- 		<track>
- 			<note>0.66</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>4000</start>
  		<length>1000</length>
  		<track>
  			<note>0.33</note>
- 			<note>0.66</note>
- 		</track>
- 		<track>
  			<note>0.66</note>
  		</track>
  	</rhythm>
@@ -62,9 +47,6 @@
  			<note>0.33</note>
  			<note>0.66</note>
  		</track>
- 		<track>
- 			<note>0.66</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>6000</start>
@@ -73,18 +55,13 @@
  			<note>0.33</note>
  			<note>0.66</note>
  		</track>
- 		<track>
- 			<note>0.66</note>
- 		</track>
+
  	</rhythm>
  	<rhythm>
  		<start>7000</start>
  		<length>1000</length>
  		<track>
  			<note>0.33</note>
- 			<note>0.66</note>
- 		</track>
- 		<track>
  			<note>0.66</note>
  		</track>
  	</rhythm>
@@ -95,9 +72,6 @@
  			<note>0.33</note>
  			<note>0.66</note>
  		</track>
- 		<track>
- 			<note>0.66</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>9000</start>
@@ -106,18 +80,12 @@
  			<note>0.33</note>
  			<note>0.66</note>
  		</track>
- 		<track>
- 			<note>0.66</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>10000</start>
  		<length>1000</length>
  		<track>
  			<note>0.33</note>
- 			<note>0.66</note>
- 		</track>
- 		<track>
  			<note>0.66</note>
  		</track>
  	</rhythm>

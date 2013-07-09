@@ -57,10 +57,10 @@ function Song(rhythms, sound_track)
 	{
 		for ( i = 0; i < this.rhythms.length; i++ ) 
 		{
-			var cur_beat_time = this.rhythms[i].getCurrentBeatTime(current_time, this.start_time, track);
-			if ( cur_beat_time != -1)
+			var audio_index = this.rhythms[i].getCurrentBeatTimePlayback(current_time, this.start_time, track);
+			if ( audio_index != -1)
 			{
-				return cur_beat_time;
+				return audio_index;
 			}
 		}
 		return -1;
