@@ -55,7 +55,7 @@ function Rhythm (beats, diff_time, rhythm_time){
 		{
 			var beat_offset = this.beats[track][j] * this.rhythm_time;
 			var beat_time = rhythm_start_time + beat_offset
-			if ( Math.abs(beat_time - current_time) < 3
+			if ( beat_time - current_time < 3
 				  && this.played[track][j] == 0 )
 			{
 				this.played[track][j] = 1;
