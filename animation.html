@@ -248,8 +248,9 @@ function start()
 
 	document.addEventListener('keypress', function (e){keyHandler(e);}, false);
 
-	setInterval(function () { animate(); }, 1);
 	setInterval(function () { flip(); }, 1000);
+	setInterval(function () { animate(); }, 1);
+	
 }
 
 
