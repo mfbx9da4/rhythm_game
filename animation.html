@@ -28,24 +28,28 @@ body {
 <p> Score: </p> <p id="score"></p>
 
 <span> Speed: <pre id="speed">  </pre> </span>
-<canvas id="myCanvas" width="600" height="400"
-style="border:1px solid #000000;">
+
+<canvas id="metronome" width="30" height="30" style="border:1px solid #000000;">
 </canvas>
+
+
+<canvas id="game" width="600" height="400" style="border:1px solid #000000;">
+</canvas>
+
 </body>
 <script> 
 
 
-
-
 function animate()
 {
-	if( stop != 1 )
+	if( render == 1 )
 	{
+		render = 0;
 		clearCanvas()
 		drawStatic(new_song.tracks);
 		new_song.play();
-		playback();
 	}
+	playback();
 }
 
 function clearCanvas () {
@@ -74,6 +78,7 @@ function keyHandler(e){
 
 function playSound(track){
 	audio[track].play();
+	render = 1;
 }
 
 function playback(){
@@ -181,6 +186,16 @@ function loadAudio()
 	}
 }
 
+function flip()
+{
+	if( metronome_state == -1)
+		metronome.fillRect(0,0,c.width, c.height);
+	else
+		metronome.clearRect(0, 0, c.width, c.height);
+	metronome_state = -metronome_state;
+
+}
+
 
 map_key_track={
      "101":0, 
@@ -203,6 +218,10 @@ var ctx = null;
 var new_song = null;
 var counter = 0; 
 var c = null;
+var render = 0;
+var metronome_state = 1;
+var m = null;
+var metronome = null;
 
 function startoff()
 {
@@ -214,7 +233,11 @@ function startoff()
 
 function start()
 {
-	c = document.getElementById("myCanvas");
+	m = document.getElementById("metronome");
+	metronome = m.getContext("2d");
+	metronome.fillStyle="#000000";
+
+	c = document.getElementById("game");
 	ctx = c.getContext("2d");
 	time = new Date().getTime();
 	circles = makeCircles()
@@ -226,6 +249,7 @@ function start()
 	document.addEventListener('keypress', function (e){keyHandler(e);}, false);
 
 	setInterval(function () { animate(); }, 1);
+	setInterval(function () { flip(); }, 1000);
 }
 
 
