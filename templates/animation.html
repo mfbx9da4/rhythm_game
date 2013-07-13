@@ -3,7 +3,6 @@
   	<script src="script/rhythm.js"></script>
   	<script src="script/song.js"></script>
   	<script src="script/circle.js"></script>
-
 	<link rel="stylesheet" type="text/css" href="style/game.css">
 
 </head>
@@ -57,7 +56,7 @@ function drawStatic (n_sounds)
 		ctx.stroke();
 		var character = String.fromCharCode(map_track_key[i]);
 		ctx.font="30px Arial";
-		console.log(character);
+		ctx.fillStyle="#000000";
 		ctx.fillText(character, padding + spacing*i, time_position);
 	}
 }
@@ -230,28 +229,49 @@ playbackSound = null;
 
 audio = [];
 soundIndex = [];
-loadAudio();
 var score = 0;
 var error_range = 200;
 time_position = 350
 var time = 0;
-var ctx = null;
+
+// We get the canvas in which the game is displayed:
+var c = document.getElementById("game");
+var ctx = c.getContext("2d");
+
 var new_song = null;
 var counter = 0; 
-var c = null;
 var metronome_state = 1;
 var m = null;
 var metronome = null;
 var lastTime = 0;
 
+new_song = sendSongRequest();
+circles = makeCircles()
+loadAudio();
+
+
+ctx.fillStyle="#000000";
+ctx.font="50px Arial";
+ctx.fillText("LOADING...", 0, 50);
 
 function startoff()
 {
 	counter ++;
 	if( counter == map_track_sound.length )
-		start();
+		startScreen();
 }
 
+function startScreen()
+{
+	clearCanvas();
+	drawStatic(new_song.tracks);
+	ctx.fillStyle="#000000";
+	ctx.fillText("Press any key to start", 0, 50);
+	document.addEventListener('keypress', function (e){ 
+															this.removeEventListener('keypress',arguments.callee,false)
+															start();
+														}, false);
+}
 
 function start()
 {
@@ -259,13 +279,8 @@ function start()
 	metronome = m.getContext("2d");
 	metronome.fillStyle="#000000";
 
-	c = document.getElementById("game");
-	ctx = c.getContext("2d");
 	time = new Date().getTime();
-	circles = makeCircles()
 
-
-	new_song = sendSongRequest();
 	new_song.start(0.3);
 
 	document.addEventListener('keypress', function (e){keyHandler(e);}, false);
