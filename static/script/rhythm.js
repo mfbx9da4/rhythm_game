@@ -7,12 +7,20 @@ function Rhythm (beats, diff_time, rhythm_time){
   	this.diff_time = diff_time;
   	this.rhythm_time = rhythm_time;
 
-  	this.played = new Array(this.beats.length);
-	for( var i = 0; i < this.played.length ; i++ )
+  	this.playedPlayBack = new Array(this.beats.length);
+	for( var i = 0; i < this.playedPlayBack.length ; i++ )
 	{
-		this.played[i] = new Array(this.beats[i].length);
-		for( j = 0; j < this.played[i].length ; j++)
-			this.played[i][j] = 0;
+		this.playedPlayBack[i] = new Array(this.beats[i].length);
+		for( j = 0; j < this.playedPlayBack[i].length ; j++)
+			this.playedPlayBack[i][j] = 0;
+	}
+
+	this.playedPlayer = new Array(this.beats.length);
+	for( var i = 0; i < this.playedPlayer.length ; i++ )
+	{
+		this.playedPlayer[i] = new Array(this.beats[i].length);
+		for( j = 0; j < this.playedPlayer[i].length ; j++)
+			this.playedPlayer[i][j] = 0;
 	}
 	
 	
@@ -41,8 +49,9 @@ function Rhythm (beats, diff_time, rhythm_time){
 		{
 			var beat_offset = this.beats[track][j] * this.rhythm_time;
 			var beat_time = rhythm_start_time + beat_offset
-			if ( Math.abs(beat_time - current_time) < error_range )
+			if ( this.playedPlayer[track][j] == 0 && Math.abs(beat_time - current_time) < error_range  )
 			{
+				this.playedPlayer[track][j] = 1;
 				return beat_time;
 			}
 		}
@@ -56,9 +65,9 @@ function Rhythm (beats, diff_time, rhythm_time){
 		{
 			var beat_offset = this.beats[track][j] * this.rhythm_time;
 			var beat_time = rhythm_start_time + beat_offset
-			if ( beat_time - current_time < 3  && this.played[track][j] == 0 )
+			if ( this.playedPlayBack[track][j] == 0 && beat_time - current_time < 3 )
 			{
-				this.played[track][j] = 1;
+				this.playedPlayBack[track][j] = 1;
 				return 1;
 			}
 		}

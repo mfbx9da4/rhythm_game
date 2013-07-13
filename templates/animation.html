@@ -75,7 +75,8 @@ function drawStatic (n_sounds)
 function keyHandler(e){
 	var keyCode = String(e.keyCode);
 	updateScore(keyCode);
-	$('#p1').html(e.keyCode);
+	var p1 = document.getElementById("p1");
+	p1.html = e.keyCode;
 	//playSound(map_key_track[keyCode])
 	
 }
@@ -86,7 +87,6 @@ function playSound(track){
 	else
 		soundIndex[track] = 0;
 	audio[track][soundIndex[track]].play();
-	console.log("ok");
 }
 
 function playback(t){
@@ -103,6 +103,8 @@ function playback(t){
 function updateScore (keyCode){
 	var t = new Date().getTime();
 	var track = map_key_track[keyCode];
+	if( track == undefined || track >= new_song.tracks )
+	  	return;
 	var cur_beat_time = new_song.getCurrentBeatTime(t, track);
 	if (cur_beat_time == -1){
 		update = - 1;
@@ -110,10 +112,14 @@ function updateScore (keyCode){
 	else
 	{
 		update = (1 / (Math.abs(cur_beat_time - t))) * 100;
+		if ( update > 100 )
+			update = 100;
 	}
 	score = score + update
-	$('#update').html(update);
-	$('#score').html(score);
+	var updateTag = document.getElementById("update");
+	var scoreTag = document.getElementById("score");
+	updateTag.innerHTML = update;
+	scoreTag.innerHTML = score;
 }
 
 
@@ -265,6 +271,7 @@ function start()
 	new_song.start(0.3);
 
 	document.addEventListener('keypress', function (e){keyHandler(e);}, false);
+
 
 	setInterval(function () { flip(); }, 1000);
 	setInterval(function () { animate(); }, 10);
