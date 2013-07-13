@@ -55,6 +55,10 @@ function drawStatic (n_sounds)
 		ctx.beginPath();
 		ctx.arc(padding + spacing*i, time_position, 40, 0 , 2 * Math.PI);
 		ctx.stroke();
+		var character = String.fromCharCode(map_track_key[i]);
+		ctx.font="30px Arial";
+		console.log(character);
+		ctx.fillText(character, padding + spacing*i, time_position);
 	}
 }
 
@@ -175,6 +179,7 @@ function parseXml( xml)
 
 function loadAudio()
 {
+	playbackSound = new Audio("/backgroundsong/{{back}}")
 	for( i = 0; i < map_track_sound.length ; i++)
 	{
 		soundIndex[i] = 0;
@@ -203,10 +208,14 @@ function flip()
 
 
 map_key_track={
-     "101":0, 
+     "113":0, 
      "119":1, 
-     "113":2
+     "101":2,
+     "114":3, 
+     "116":4, 
+     "121":5
 };
+map_track_key = [ "113", "119", "101", "114", "116", "121" ];
 
 map_track_color = ['green', 'red', 'blue'];
 map_track_sound = [
@@ -216,6 +225,8 @@ map_track_sound = [
 	"sound/54014__domingus__djembe-hi-1.wav", 
     "sound/54015__domingus__djembe-hi-2.wav", 
 	"sound/54014__domingus__djembe-hi-1.wav"];
+
+playbackSound = null;
 
 audio = [];
 soundIndex = [];
@@ -262,6 +273,8 @@ function start()
 
 	setInterval(function () { flip(); }, 1000);
 	setInterval(function () { animate(); }, 10);
+	playbackSound.volume = 0.1;
+	playbackSound.play();
 	
 }
 

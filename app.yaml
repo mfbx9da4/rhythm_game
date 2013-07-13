@@ -10,7 +10,9 @@ handlers:
 - url: /song
   static_dir: static/songs
 - url: /sound
-  static_dir: static/audioRessource
+  static_dir: static/audioRessource/instrument
+- url: /backgroundsong
+  static_dir: static/audioRessource/backgroundsong
 - url: /style
   static_dir: static/style
 
