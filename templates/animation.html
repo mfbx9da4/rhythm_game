@@ -1,30 +1,17 @@
 <html>
 <head>
-  <script src="script/rhythm.js"></script>
-  <script src="script/song.js"></script>
-  <script src="script/circle.js"></script>
+  	<script src="script/rhythm.js"></script>
+  	<script src="script/song.js"></script>
+  	<script src="script/circle.js"></script>
 
-<style type="text/css">
-body {
-	margin-right: auto;*/
-	position: relative;
-	width: 800px;
-    margin: 0 auto;
-    padding: 10px;
-}
+	<link rel="stylesheet" type="text/css" href="style/game.css">
 
-</style>
 </head>
 <body>
 
-<p id="p1">  </p>
-<p id="p2">  </p>
-<p id="pos">  </p>
-
-<p id="update" style="color:green;"></p>
-<p> Score: </p> <p id="score"></p>
-
-<span> Speed: <pre id="speed">  </pre> </span>
+<p> Last key pressed: </p><p id="keypressed">none</p>
+<p> Update: </p><p id="update" style="color:green;">0</p>
+<p> Score: </p>  <p id="score">0</p>
 
 <canvas id="metronome" width="30" height="30" style="border:1px solid #000000;">
 </canvas>
@@ -75,17 +62,17 @@ function drawStatic (n_sounds)
 function keyHandler(e){
 	var keyCode = String(e.keyCode);
 	updateScore(keyCode);
-	var p1 = document.getElementById("p1");
-	p1.html = e.keyCode;
-	//playSound(map_key_track[keyCode])
+	var p1 = document.getElementById("keypressed");
+	p1.innerHTML = e.keyCode;
+	playSound(map_key_track[keyCode])
 	
 }
 
 function playSound(track){
-	if( soundIndex[track] == 0 )
-		soundIndex[track] = 1
-	else
+	soundIndex[track]++;
+	if( soundIndex[track] > 2)
 		soundIndex[track] = 0;
+
 	audio[track][soundIndex[track]].play();
 }
 
@@ -192,7 +179,7 @@ function loadAudio()
 	{
 		soundIndex[i] = 0;
 		audio[i] = new Array();
-		for( j = 0; j < 2 ; j++)
+		for( j = 0; j < 3 ; j++)
 		{
 			var snd = new Audio(map_track_sound[i]);
 			snd.load();

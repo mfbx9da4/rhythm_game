@@ -5,16 +5,14 @@ api_version: 1
 threadsafe: true
 
 handlers:
-- url: /style
-  static_dir: style
-- url: /images
-  static_dir: images
 - url: /script
   static_dir: static/script
 - url: /song
   static_dir: static/songs
 - url: /sound
   static_dir: static/audioRessource
+- url: /style
+  static_dir: static/style
 
 - url: /.*
   script: main.app
