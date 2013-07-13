@@ -1,17 +1,33 @@
-import wsgiref.handlers
-from google.appengine.ext import webapp
+"""
+export PATH=$PATH:/home/david/Dropbox/Programming/Python/Miscellaneous/extensions/google_appengine
+dev_appserver.py helloworld/
+appcfg.py update helloworld/
 
-class MainPage(webapp.RequestHandler):
-  # Method gets executed on HTTP GET
-  def get(self): 
-    self.response.headers['Content-Type'] = 'text/plain'
-    self.response.out.write("Hello App Engine !")
+"""
 
-def main():
-  application = webapp.WSGIApplication(
-                                        [('/', MainPage)],
-                                        debug=True)
-  wsgiref.handlers.CGIHandler().run(application)
+__website__ = 'http://rhythmludus.appspot.com/'
 
-if __name__ == "__main__":
-  main()
+
+import os
+import re
+
+import webapp2
+import jinja2
+
+from udacity.blog.object_models import BaseHandler
+from rhythmgame import game
+
+
+class Home(BaseHandler):
+      def get(self): 
+            self.write('HOME')
+    
+config = {}
+config['webapp2_extras.sessions'] = {
+    'secret_key': 'my-super-secret-key',
+}
+
+app = webapp2.WSGIApplication([('/', Home),
+                               ('/game', game)],
+                               debug=True,
+                                config=config)
