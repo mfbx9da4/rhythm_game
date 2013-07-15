@@ -16,7 +16,8 @@ import jinja2
 
 from udacity.blog.object_models import BaseHandler
 from rhythmgame import game
-
+from gamesetup import CreateChannel
+from gamesetup import GameRequest
 
 class Home(BaseHandler):
       def get(self): 
@@ -30,4 +31,4 @@ config['webapp2_extras.sessions'] = {
 app = webapp2.WSGIApplication([('/', Home),
                                ('/game', game)],
                                debug=True,
-                                config=config)
+                               config=config)

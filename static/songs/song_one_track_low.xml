@@ -1,150 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <song>
+       <backgroundsong>backgroundsong/file.mp3</backgroundsong>
+	<tracks>
+		<sound>sound/54014__domingus__djembe-hi-1.wav</sound>
+	</tracks>
+
  	<rhythm>
+
  		<start>0</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>1000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>2000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>3000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>4000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>5000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>6000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>8000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>9000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>10000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>11000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>12000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>13000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>14000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>15000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>16000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>17000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>18000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>19000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>20000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>21000</start>
  		<length>1000</length>
  		<track>
-<note>0.25</note> <note>0.75</note>
+              <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
 
