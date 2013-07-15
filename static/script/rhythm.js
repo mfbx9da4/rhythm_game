@@ -26,16 +26,28 @@ function Rhythm (beats, diff_time, rhythm_time){
 	
 	this.play = function(start_time, time, yscale, draw)
 	{
+		// Compute the position of the start of the rhyhtm:
 	  	var start_time_position = ( time_position - ( start_time + this.diff_time - time ) * yscale )
 	    for( track = 0; track < this.tracks ; track ++ )
 	    {
+	      // Compute the x position of the track:
 	      var x = track * this.xscale + this.offset;
 	      for( j = 0; j < this.beats[track].length; j ++ )
 	      {
+	      	// Compute the y position of the beat:
       		var beat_offest = this.beats[track][j] * this.rhythm_time * yscale;
 	        var y =  start_time_position - beat_offest;
+
+	        // Use the color of the track:
 	        var color = map_track_color[track];
-	        var circle = new Circle(x, y, color);
+	        
+	        // Draw the circle bigger if the player played in time:
+	        var radius = 40;
+	        if( this.playedPlayer[track][j] == 1 )
+	        	radius *= 1.5;
+
+	        // Draw te circle:
+	        var circle = new Circle(x, y, radius, color);
 	        if( draw == 1)
 	        	circle.draw();
 	      }
