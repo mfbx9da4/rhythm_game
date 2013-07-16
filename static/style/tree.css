@@ -1,0 +1,117 @@
+#nav ul,
+#nav li
+{
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+#nav input
+{
+	position: absolute;
+}
+
+#nav
+{
+	font: normal 11px "Segoe UI", Arial, Sans-serif;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+#nav a
+{
+	color: 'white';
+	text-decoration: none;
+}
+
+#nav a:hover
+{
+	text-decoration: underline;
+}
+
+#nav input + label + ul
+{
+	margin: 0 0 0 22px;
+}
+
+#nav input + label + ul
+{
+	display: none;
+}
+
+#nav label,
+#nav label::before
+{
+	cursor: pointer;
+}
+
+#nav input:disabled + label
+{
+	cursor: default;
+	opacity: .6;
+}
+
+#nav input:checked:not(:disabled) + label + ul
+{
+	display: block;
+}
+
+#nav label,
+#nav label::before
+{
+	background: url("icons.png") no-repeat;
+}
+
+#nav label,
+#nav a,
+#nav label::before
+{
+	display: inline-block;
+	height: 16px;
+	line-height: 16px;,
+	vertical-align: middle;
+}
+
+#nav label
+{
+	background-position: 18px 0;
+}
+
+#nav label::before
+{
+	content: "";
+	width: 16px;
+	margin: 0 22px 0 0;
+	vertical-align: middle;
+	background-position: 0 -32px;
+}
+
+#nav input:checked + label::before
+{
+	background-position: 0 -16px;
+}
+
+/* webkit adjacent element selector bugfix */
+@media screen and (-webkit-min-device-pixel-ratio:0)
+{
+	#nav 
+	{
+		-webkit-animation: webkit-adjacent-element-selector-bugfix infinite 1s;
+	}
+	
+	@-webkit-keyframes webkit-adjacent-element-selector-bugfix 
+	{
+		from 
+		{ 
+			padding: 0;
+		} 
+		to 
+		{ 
+			padding: 0;
+		}
+	}
+}
+
+
+

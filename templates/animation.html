@@ -3,21 +3,42 @@
   	<script src="script/rhythm.js"></script>
   	<script src="script/song.js"></script>
   	<script src="script/circle.js"></script>
+  	<script src="script/xml_parsing.js"></script>
+  	<script src="script/scoring.js"></script>
 	<link rel="stylesheet" type="text/css" href="style/game.css">
+	<link rel="stylesheet" type="text/css" href="style/tree.css">
 
 </head>
 <body>
 
-<p> Last key pressed: </p><p id="keypressed">none</p>
-<p> Update: </p><p id="update" style="color:green;">0</p>
-<p> Score: </p>  <p id="score">0</p>
 
-<canvas id="metronome" width="30" height="30" style="border:1px solid #000000;">
-</canvas>
+<canvas id="metronome" width="30" height="30" style="border:1px solid #000000;"></canvas>
 
+<div id="container" style="width: 806px; height:402px; background-color:#e8e2e2;">
+	<div id="nav" class="side-pane">
+		<ul>
+			<li class="continent"><input type="checkbox" id="item-0-0-0" /><label for="item-0-0-0">Look Ma - No Hands!</label>African</li>
+			<ul>
+				<li class="rhythm"><input type="checkbox" id="item-0-0-0" /><label for="item-0-0-0">Look Ma - No Hands!</label>Gedsum</li>
+				<ul>
+					<li class="game"><a>Playback (should be able to activate play back with keypress)</a></li>
+					<li class="game"><a>Audio and visual</a></li>
+					<li class="game"><a>Audio only</a></li>
+					<li class="game"><a>Metronome only</a></li>
+				</ul>
+			</ul>
+		</ul>		
+	</div>
+		<!-- <img> -->
+		<canvas id="game" width="600" height="400" style="border:1px solid #000000; background-color:#ffffff;">
+		</canvas>
+	<div id="score-pane" class="side-pane" >
+		<p> Last key pressed: </p><p id="keypressed">none</p>
+		<p> Update: </p><p id="update" style="color:green;">0</p>
+		<p> Score: </p>  <p id="score">0</p>
+	</div>
 
-<canvas id="game" width="600" height="400" style="border:1px solid #000000;">
-</canvas>
+</div>
 
 </body>
 <script> 
@@ -29,7 +50,7 @@ function animate()
 {
 	var time = new Date().getTime();
 	var draw = 0;
-	playback(time);
+	// playback(time);
 	if( time - lastTime >= 20 )
 	{
 		draw = 1;
@@ -42,6 +63,7 @@ function animate()
 		draw = 0;
 	}
 	new_song.play(time, draw);
+
 }
 
 // Clear the canvas ( the canvs is white after calling this function)
@@ -52,28 +74,49 @@ function clearCanvas () {
 // This function draw the circle at the bottom of the page as well as the letters in the circle ( corresponding to key for the track)
 function drawStatic (n_sounds) 
 {
-	spacing = c.width / n_sounds
-	padding = c.width % n_sounds + (spacing/2)
+	var spacing = c.width / n_sounds
+	var padding = c.width % n_sounds + (spacing/2)
 	for (i=0; i<n_sounds; i++){
+		var x_pos = padding + spacing*i
 		ctx.beginPath();
-		ctx.arc(padding + spacing*i, time_position, 40, 0 , 2 * Math.PI);
+		ctx.arc(x_pos, time_position, 40, 0 , 2 * Math.PI);
 		ctx.stroke();
 		var character = String.fromCharCode(map_track_key[i]);
-		ctx.font="30px Arial";
+		ctx.font="30px Impact";
 		ctx.fillStyle="#000000";
-		ctx.fillText(character, padding + spacing*i, time_position);
+		ctx.fillText(character, x_pos - 8, time_position + 5);
 	}
 }
 
+// Maybe make this a method of a DrawStatic object
+function drawPlayed(track, n_sounds) 
+{
+	var spacing = c.width / n_sounds
+	var padding = c.width % n_sounds + (spacing/2)
+	var x_pos = padding + spacing*track
+	ctx.beginPath();
+	ctx.arc(x_pos, time_position, 40, 0 , 2 * Math.PI);
+	ctx.fillStyle="red";
+	ctx.fill();
+	ctx.stroke();
+	var character = String.fromCharCode(map_track_key[track]);
+	ctx.font="30px Impact";
+	ctx.fillStyle="#ffffff";
+	ctx.fillText(character, x_pos - 8, time_position + 5);
+}
 
 // This function is called when the player pressa key, if the key key correspond to a track then the scroe is update and the notes is 
 // played
+// make the relevant static circle change color each time the key is played
+// regardless of whether the player is in time
 function keyHandler(e){
 	var keyCode = String(e.keyCode);
 	updateScore(keyCode);
 	var p1 = document.getElementById("keypressed");
 	p1.innerHTML = e.keyCode;
-	playSound(map_key_track[keyCode])
+	var track = map_key_track[keyCode];
+	drawPlayed(track, new_song.tracks);
+	playSound(track);
 	
 }
 
@@ -81,9 +124,15 @@ function keyHandler(e){
 // Play the sound corresponding to a particular track
 function playSound(track){
 	soundIndex[track]++;
-	if( soundIndex[track] > 2)
+	if( soundIndex[track] > 2) 
+	{
 		soundIndex[track] = 0;
-
+	}
+	// -- DEBUGGING --
+	console.log(track)
+	console.log(soundIndex)
+	console.log(audio[track][soundIndex[track]])
+	// ---
 	audio[track][soundIndex[track]].play();
 }
 
@@ -101,50 +150,7 @@ function playback(t)
 }
 
 
-// This function is respomsible for upadting the scores:
-function updateScore (keyCode){
-	var t = new Date().getTime();
-	var track = map_key_track[keyCode];
-	if( track == undefined || track >= new_song.tracks )
-	  	return;
-	var cur_beat_time = new_song.getCurrentBeatTime(t, track);
-	if (cur_beat_time == -1){
-		update = - 1;
-	}
-	else
-	{
-		update = (1 / (Math.abs(cur_beat_time - t))) * 100;
-		if ( update > 100 )
-			update = 100;
-	}
-	score = score + update
-	var updateTag = document.getElementById("update");
-	var scoreTag = document.getElementById("score");
-	updateTag.innerHTML = update;
-	scoreTag.innerHTML = score;
-}
 
-
-// This function returns an XMLHttpRequest:
-function getXMLHttpRequest() {
-    var xhr = null;
-     
-    if (window.XMLHttpRequest || window.ActiveXObject) {
-        if (window.ActiveXObject) {
-            try {
-                xhr = new ActiveXObject("Msxml2.XMLHTTP");
-            } catch(e) {
-                xhr = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-        } else {
-            xhr = new XMLHttpRequest(); 
-        }
-    } else {
-        alert("Your webbrowser doesn't suppot XMLHTTP!");
-        return null;
-    }     
-    return xhr;
-}
 
 function sendSongRequest()
 {
@@ -152,44 +158,6 @@ function sendSongRequest()
 	xhr.open("GET", "song/{{song}}", false);
 	xhr.send(null);
 	return parseXml( xhr.responseXML );
-}
-
-function parseXml( xml)
-{
-	var new_rhythms = [];
-	
-	// Load the notes:
-	var rhythms = xml.getElementsByTagName("rhythm");
-	for( var i = 0; i < rhythms.length; i++)
-	{
-		var rhythm = rhythms[i];
-		var tracks = rhythm.getElementsByTagName("track");
-		var beats = [];
-		for( k = 0; k <tracks.length; k++ )
-		{
-			var track = tracks[k];
-			var beatsT = [];
-			var notes = track.getElementsByTagName("note");
-			for( j = 0; j < notes.length; j++) {
-				beatsT[j] = Number(notes[j].childNodes[0].nodeValue);
-			}
-			beats[k] = beatsT;
-		}
-		new_rhythms[i] = new Rhythm( beats, Number( rhythm.getElementsByTagName("start")[0].childNodes[0].nodeValue ), 
-											Number( rhythm.getElementsByTagName("length")[0].childNodes[0].nodeValue ) );
-	}
-	
-	// Load the name of the soud to play for each track:
-	var sounds = xml.getElementsByTagName("sound");
-	for( var i = 0; i < sounds.length; i++)
-		map_track_sound.push(sounds[i].childNodes[0].nodeValue);
-	
-	// Load the name of the background sound:
-	var song_background = xml.getElementsByTagName("backgroundsong");
-	if( song_background.length == 1 )
-		backgroundsong = song_background[0].childNodes[0].nodeValue;
-
-	return new Song(new_rhythms, "ij");
 }
 
 function loadAudio()
@@ -206,7 +174,9 @@ function loadAudio()
 			for( j = 0; j < 3 ; j++)
 			{
 				var snd = new Audio(map_track_sound[i]);
+
 				snd.load();
+				// what does the line below do?
 				snd.addEventListener('canplaythrough', function() { 
 		   				startoff();
 					}, false);
@@ -216,10 +186,11 @@ function loadAudio()
 	}
 }
 
+// TODO: get rid replace with horizontal line
 function flip()
 {
 	if( metronome_state == 1)
-		metronome.fillRect(0,0,c.width, c.height);
+		metronome.fillRect(0, 0, c.width, c.height);
 	else
 		metronome.clearRect(0, 0, c.width, c.height);
 	metronome_state = -metronome_state;
@@ -228,16 +199,10 @@ function flip()
 
 
 
-map_key_track={
-     "113":0, 
-     "119":1, 
-     "101":2,
-     "114":3, 
-     "116":4, 
-     "121":5
-};
-map_track_key = [ "113", "119", "101", "114", "116", "121" ];
-map_track_color = ['green', 'red', 'blue', 'yellow', 'black', 'orange'];
+map_key_track = {"113":0, "119":1, "101":2, "114":3, "116":4, "121":5};
+map_track_key = ["113", "119", "101", "114", "116", "121"];
+// TO DO: albert munsell color scale matched on grey of background
+map_track_color = ['#44d735', '#d73535', '#3572d7', '#ded526', '#28a330', '#d78135'];
 map_track_sound = [];
 
 playbackSound = null;
@@ -247,7 +212,7 @@ audio = [];
 soundIndex = [];
 var score = 0;
 var error_range = 200;
-time_position = 350
+var time_position = 350
 var time = 0;
 
 // We get the canvas in which the game is displayed:
@@ -273,20 +238,20 @@ ctx.font="50px Arial";
 function startoff()
 {
 	counter ++;
-	if( counter == map_track_sound.length )
+	if ( counter == map_track_sound.length )
 		startScreen();
 }
 
 function startScreen()
 {
+	// TODO: choose nice fonts scheme 
 	clearCanvas();
 	drawStatic(new_song.tracks);
-	ctx.fillStyle="#000000";
 	ctx.fillText("Press any key to start", 0, 50);
 	document.addEventListener('keypress', function (e){ 
-															this.removeEventListener('keypress',arguments.callee,false)
-															start();
-														}, false);
+								this.removeEventListener('keypress',arguments.callee,false)
+								start();
+							}, false);
 }
 
 function start()

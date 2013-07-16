@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <song>
-       <backgroundsong>backgroundsong/file.mp3</backgroundsong>
+       <!-- <backgroundsong>backgroundsong/file.mp3</backgroundsong> -->
 	<tracks>
-		<sound>sound/54014__domingus__djembe-hi-1.wav</sound>
+              <sound>sound/djembe/djembe-hi-1.wav</sound>
+              <sound>sound/djembe/djembe-lo-1.wav</sound>
+              <sound>sound/djembe/djembe-lo-2.wav</sound>
 	</tracks>
 
  	<rhythm>
@@ -10,14 +12,23 @@
  		<start>0</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+                     <note>0.25</note> <note>0.75</note>
+              </track>
+              <track>
+                     <note>0.25</note> <note>0.75</note>
+              </track>
+              <track>
+                     <note>0.25</note> <note>0.75</note>
+              </track>
+              <track>
+                     <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>1000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+                     <note>0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
