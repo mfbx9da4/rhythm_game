@@ -8,6 +8,7 @@
     <script src="script/load.js"></script>
   	<script src="script/main.js"></script>
 	<link rel="stylesheet" type="text/css" href="style/game.css">
+	<link rel="stylesheet" type="text/css" href="style/tree.css">
 
 </head>
 <body>
@@ -16,12 +17,33 @@
 <p> Update: </p><p id="update" style="color:green;">0</p>
 <p> Score: </p>  <p id="score">0</p>
 
-<canvas id="metronome" width="30" height="30" style="border:1px solid #000000;">
-</canvas>
+<canvas id="metronome" width="30" height="30" style="border:1px solid #000000;"></canvas>
 
+<div id="container" style="width: 806px; height:402px; background-color:#e8e2e2;">
+	<div id="nav" class="side-pane">
+		<ul>
+			<li class="continent"><input type="checkbox" id="item-0-0-0" /><label for="item-0-0-0">Look Ma - No Hands!</label>African</li>
+			<ul>
+				<li class="rhythm"><input type="checkbox" id="item-0-0-0" /><label for="item-0-0-0">Look Ma - No Hands!</label>Gedsum</li>
+				<ul>
+					<li class="game"><a>Playback (should be able to activate play back with keypress)</a></li>
+					<li class="game"><a>Audio and visual</a></li>
+					<li class="game"><a>Audio only</a></li>
+					<li class="game"><a>Metronome only</a></li>
+				</ul>
+			</ul>
+		</ul>		
+	</div>
+		<!-- <img> -->
+		<canvas id="game" width="600" height="400" style="border:1px solid #000000; background-color:#ffffff;">
+		</canvas>
+	<div id="score-pane" class="side-pane" >
+		<p> Last key pressed: </p><p id="keypressed">none</p>
+		<p> Update: </p><p id="update" style="color:green;">0</p>
+		<p> Score: </p>  <p id="score">0</p>
+	</div>
 
-<canvas id="game" width="600" height="400" style="border:1px solid #000000;">
-</canvas>
+</div>
 
 </body>
 <script> 
@@ -46,7 +68,7 @@ audio = [];
 soundIndex = [];
 var score = 0;
 var error_range = 200;
-time_position = 350
+var time_position = 350
 var time = 0;
 
 var d = document;
@@ -54,6 +76,7 @@ var d = document;
 // We get the canvas in which the game is displayed:
 var c = d.getElementById("game");
 var ctx = c.getContext("2d");
+ctx.fillText("LOADING...", 0, 50);
 
 var new_song = null;
 var counter = 0; 
