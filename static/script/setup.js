@@ -15,7 +15,7 @@ function startScreen()
 {
 	clearCanvas();
 	drawStatic(new_song.tracks);
-	ctx.fillStyle="#000000";
+	// TODO: choose nice fonts scheme
 	ctx.fillText("Press any key to start", 0, 50);
 	d.addEventListener('keypress', function (e){ 
 															this.removeEventListener('keypress',arguments.callee,false)
