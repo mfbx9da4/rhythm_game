@@ -1,0 +1,71 @@
+<html>
+<head>
+    <script src="script/beat.js"></script>
+  	<script src="script/rhythm.js"></script>
+  	<script src="script/song.js"></script>
+  	<script src="script/circle.js"></script>
+  	<script src="script/setup.js"></script>
+    <script src="script/load.js"></script>
+  	<script src="script/main.js"></script>
+	<link rel="stylesheet" type="text/css" href="style/game.css">
+
+</head>
+<body>
+
+<p> Last key pressed: </p><p id="keypressed">none</p>
+<p> Update: </p><p id="update" style="color:green;">0</p>
+<p> Score: </p>  <p id="score">0</p>
+
+<canvas id="metronome" width="30" height="30" style="border:1px solid #000000;">
+</canvas>
+
+
+<canvas id="game" width="600" height="400" style="border:1px solid #000000;">
+</canvas>
+
+</body>
+<script> 
+
+
+map_key_track = {
+     "113":0, 
+     "119":1, 
+     "101":2,
+     "114":3, 
+     "116":4, 
+     "121":5
+};
+map_track_key = [ "113", "119", "101", "114", "116", "121" ];
+map_track_color = ['green', 'red', 'blue', 'yellow', 'black', 'orange'];
+map_track_sound = [];
+
+playbackSound = null;
+backgroundsong = null;
+
+audio = [];
+soundIndex = [];
+var score = 0;
+var error_range = 200;
+time_position = 350
+var time = 0;
+
+var d = document;
+
+// We get the canvas in which the game is displayed:
+var c = d.getElementById("game");
+var ctx = c.getContext("2d");
+
+var new_song = null;
+var counter = 0; 
+var metronome_state = 1;
+var m = null;
+var metronome = null;
+var lastTime = 0;
+var start_metronome = 0;
+var metronome_speed = 0;
+
+loadGameElements(0, "song/{{song}}");
+
+
+  </script>
+</html>
