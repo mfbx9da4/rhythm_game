@@ -1,6 +1,9 @@
 TO DO:
 - metronome ( horitzontal line )
-- rhythm enterer
+- rhythm enterer (checkbox tables, allow for different time signatures and expandable to demi/semi quavers later)
 - playback
+- "graphy.png" aligned with time_position
+- nav pane CSS treeview
+- welcome/about page
 
 DONE:
