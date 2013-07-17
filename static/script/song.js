@@ -8,6 +8,12 @@ function Song(rhythms, sound_track)
 		track_numbers.push(rhythms[i].tracks);
 	}
 	this.tracks = Math.max.apply( Math, track_numbers);
+
+	this.xscale = c.width / this.tracks;
+  	this.offset = c.width % this.tracks + ( this.xscale / 2 );
+	for ( var i = 0; i < rhythms.length; i ++){
+		this.rhythms[i].initialise(this.xscale, this.offset);
+	}
 	
 
 	this.start = function(yscale)
@@ -43,10 +49,13 @@ function Song(rhythms, sound_track)
 	{
 		for ( i = 0; i < this.rhythms.length; i++ ) 
 		{
-			var cur_beat_time = this.rhythms[i].getCurrentBeatTime(current_time, this.start_time, track);
-			if ( cur_beat_time != -1)
+			if( track < this.rhythms[i].tracks )
 			{
-				return cur_beat_time;
+				var cur_beat_time = this.rhythms[i].getCurrentBeatTime(current_time, this.start_time, track);
+				if ( cur_beat_time != -1)
+				{
+					return cur_beat_time;
+				}
 			}
 		}
 		return -1;
@@ -57,10 +66,13 @@ function Song(rhythms, sound_track)
 	{
 		for ( i = 0; i < this.rhythms.length; i++ ) 
 		{
-			var audio_index = this.rhythms[i].getCurrentBeatTimePlayback(current_time, this.start_time, track);
-			if ( audio_index != -1)
+			if( track < this.rhythms[i].tracks )
 			{
-				return 1;
+				var audio_index = this.rhythms[i].getCurrentBeatTimePlayback(current_time, this.start_time, track);
+				if ( audio_index != -1)
+				{
+					return 1;
+				}
 			}
 		}
 		return -1;

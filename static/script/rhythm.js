@@ -2,10 +2,16 @@ function Rhythm (beats, diff_time, rhythm_time){
 
 	this.tracks = beats.length;
 	this.beats = beats;
-  	this.xscale = c.width / this.tracks;
-  	this.offset = c.width % this.tracks + ( this.xscale / 2 );
+  	this.xscale = 0;
+  	this.offset = 0;
   	this.diff_time = diff_time;
   	this.rhythm_time = rhythm_time;
+
+  	this.initialise = function(xscale, offset)
+  	{
+  		this.xscale = xscale;
+  		this.offset = offset;
+  	}
 	
 	this.play = function(start_time, time, yscale, draw)
 	{

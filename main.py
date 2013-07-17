@@ -31,6 +31,6 @@ config['webapp2_extras.sessions'] = {
 
 app = webapp2.WSGIApplication([('/', Home),
                                ('/game', game),
-                               ('/randomsong'), RandomSong],
+                               ('/randomsong', RandomSong)],
                                debug=True,
                                config=config)
