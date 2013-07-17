@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <song>
-	<tracks>
+       <metronome> 
+              <start>250</start>
+              <speed>500</speed>
+       </metronome>
+	
+       <tracks>
 			<sound>sound/54014__domingus__djembe-hi-1.wav</sound>
 	</tracks>
  	

@@ -1,8 +1,12 @@
 <html>
 <head>
+    <script src="script/beat.js"></script>
   	<script src="script/rhythm.js"></script>
   	<script src="script/song.js"></script>
   	<script src="script/circle.js"></script>
+  	<script src="script/setup.js"></script>
+    <script src="script/load.js"></script>
+  	<script src="script/main.js"></script>
 	<link rel="stylesheet" type="text/css" href="style/game.css">
 
 </head>
@@ -23,212 +27,7 @@
 <script> 
 
 
-// This function is responisble to call all the other functions to: draw the static content ( circle at the bottom ), to
-// draw the notes, and to play the notes.
-function animate()
-{
-	var time = new Date().getTime();
-	var draw = 0;
-	playback(time);
-	if( time - lastTime >= 20 )
-	{
-		draw = 1;
-		lastTime = time;
-		clearCanvas();
-		drawStatic(new_song.tracks);
-	}
-	else
-	{
-		draw = 0;
-	}
-	new_song.play(time, draw);
-}
-
-// Clear the canvas ( the canvs is white after calling this function)
-function clearCanvas () {
-  	ctx.clearRect(0, 0, c.width, c.height);
-}
-
-// This function draw the circle at the bottom of the page as well as the letters in the circle ( corresponding to key for the track)
-function drawStatic (n_sounds) 
-{
-	spacing = c.width / n_sounds
-	padding = c.width % n_sounds + (spacing/2)
-	for (i=0; i<n_sounds; i++){
-		ctx.beginPath();
-		ctx.arc(padding + spacing*i, time_position, 40, 0 , 2 * Math.PI);
-		ctx.stroke();
-		var character = String.fromCharCode(map_track_key[i]);
-		ctx.font="30px Arial";
-		ctx.fillStyle="#000000";
-		ctx.fillText(character, padding + spacing*i, time_position);
-	}
-}
-
-
-// This function is called when the player pressa key, if the key key correspond to a track then the scroe is update and the notes is 
-// played
-function keyHandler(e){
-	var keyCode = String(e.keyCode);
-	updateScore(keyCode);
-	var p1 = document.getElementById("keypressed");
-	p1.innerHTML = e.keyCode;
-	playSound(map_key_track[keyCode])
-	
-}
-
-
-// Play the sound corresponding to a particular track
-function playSound(track){
-	soundIndex[track]++;
-	if( soundIndex[track] > 2)
-		soundIndex[track] = 0;
-
-	audio[track][soundIndex[track]].play();
-}
-
-// Play the notes in song.xml at the right time:
-function playback(t)
-{
-	for ( track = 0; track < new_song.tracks; track ++)
-	{
-		var play = new_song.getCurrentBeatTimePlayback(t, track);
-		if ( play == 1)
-		{
-			playSound(track);
-		}
-	}
-}
-
-
-// This function is respomsible for upadting the scores:
-function updateScore (keyCode){
-	var t = new Date().getTime();
-	var track = map_key_track[keyCode];
-	if( track == undefined || track >= new_song.tracks )
-	  	return;
-	var cur_beat_time = new_song.getCurrentBeatTime(t, track);
-	if (cur_beat_time == -1){
-		update = - 1;
-	}
-	else
-	{
-		update = (1 / (Math.abs(cur_beat_time - t))) * 100;
-		if ( update > 100 )
-			update = 100;
-	}
-	score = score + update
-	var updateTag = document.getElementById("update");
-	var scoreTag = document.getElementById("score");
-	updateTag.innerHTML = update;
-	scoreTag.innerHTML = score;
-}
-
-
-// This function returns an XMLHttpRequest:
-function getXMLHttpRequest() {
-    var xhr = null;
-     
-    if (window.XMLHttpRequest || window.ActiveXObject) {
-        if (window.ActiveXObject) {
-            try {
-                xhr = new ActiveXObject("Msxml2.XMLHTTP");
-            } catch(e) {
-                xhr = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-        } else {
-            xhr = new XMLHttpRequest(); 
-        }
-    } else {
-        alert("Your webbrowser doesn't suppot XMLHTTP!");
-        return null;
-    }     
-    return xhr;
-}
-
-function sendSongRequest()
-{
-	var xhr = getXMLHttpRequest();
-	xhr.open("GET", "song/{{song}}", false);
-	xhr.send(null);
-	return parseXml( xhr.responseXML );
-}
-
-function parseXml( xml)
-{
-	var new_rhythms = [];
-	
-	// Load the notes:
-	var rhythms = xml.getElementsByTagName("rhythm");
-	for( var i = 0; i < rhythms.length; i++)
-	{
-		var rhythm = rhythms[i];
-		var tracks = rhythm.getElementsByTagName("track");
-		var beats = [];
-		for( k = 0; k <tracks.length; k++ )
-		{
-			var track = tracks[k];
-			var beatsT = [];
-			var notes = track.getElementsByTagName("note");
-			for( j = 0; j < notes.length; j++) {
-				beatsT[j] = Number(notes[j].childNodes[0].nodeValue);
-			}
-			beats[k] = beatsT;
-		}
-		new_rhythms[i] = new Rhythm( beats, Number( rhythm.getElementsByTagName("start")[0].childNodes[0].nodeValue ), 
-											Number( rhythm.getElementsByTagName("length")[0].childNodes[0].nodeValue ) );
-	}
-	
-	// Load the name of the soud to play for each track:
-	var sounds = xml.getElementsByTagName("sound");
-	for( var i = 0; i < sounds.length; i++)
-		map_track_sound.push(sounds[i].childNodes[0].nodeValue);
-	
-	// Load the name of the background sound:
-	var song_background = xml.getElementsByTagName("backgroundsong");
-	if( song_background.length == 1 )
-		backgroundsong = song_background[0].childNodes[0].nodeValue;
-
-	return new Song(new_rhythms, "ij");
-}
-
-function loadAudio()
-{
-	playbackSound = new Audio(backgroundsong)
-	if( map_track_sound.length == 0 )
-		startScreen();
-	else
-	{
-		for( i = 0; i < map_track_sound.length ; i++)
-		{
-			soundIndex[i] = 0;
-			audio[i] = new Array();
-			for( j = 0; j < 3 ; j++)
-			{
-				var snd = new Audio(map_track_sound[i]);
-				snd.load();
-				snd.addEventListener('canplaythrough', function() { 
-		   				startoff();
-					}, false);
-				audio[i][j] = snd;
-			}
-		}
-	}
-}
-
-function flip()
-{
-	if( metronome_state == 1)
-		metronome.fillRect(0,0,c.width, c.height);
-	else
-		metronome.clearRect(0, 0, c.width, c.height);
-	metronome_state = -metronome_state;
-
-}
-
-
-
-map_key_track={
+map_key_track = {
      "113":0, 
      "119":1, 
      "101":2,
@@ -250,10 +49,11 @@ var error_range = 200;
 time_position = 350
 var time = 0;
 
+var d = document;
+
 // We get the canvas in which the game is displayed:
-var c = document.getElementById("game");
+var c = d.getElementById("game");
 var ctx = c.getContext("2d");
-ctx.fillText("LOADING...", 0, 50);
 
 var new_song = null;
 var counter = 0; 
@@ -261,51 +61,10 @@ var metronome_state = 1;
 var m = null;
 var metronome = null;
 var lastTime = 0;
+var start_metronome = 0;
+var metronome_speed = 0;
 
-new_song = sendSongRequest();
-loadAudio();
-
-
-ctx.fillStyle="#000000";
-ctx.font="50px Arial";
-
-
-function startoff()
-{
-	counter ++;
-	if( counter == map_track_sound.length )
-		startScreen();
-}
-
-function startScreen()
-{
-	clearCanvas();
-	drawStatic(new_song.tracks);
-	ctx.fillStyle="#000000";
-	ctx.fillText("Press any key to start", 0, 50);
-	document.addEventListener('keypress', function (e){ 
-															this.removeEventListener('keypress',arguments.callee,false)
-															start();
-														}, false);
-}
-
-function start()
-{
-	m = document.getElementById("metronome");
-	metronome = m.getContext("2d");
-	metronome.fillStyle="#000000";
-
-	new_song.start(0.3);
-
-	document.addEventListener('keypress', function (e){keyHandler(e);}, false);
-
-
-	setInterval(function () { flip(); }, 1000);
-	setInterval(function () { animate(); }, 10);
-	playbackSound.volume = 0.1;
-	playbackSound.play();
-	
-}
+loadGameElements(0, "song/{{song}}");
 
 
   </script>

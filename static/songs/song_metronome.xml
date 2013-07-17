@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <song>
+
+	<metronome> 
+		<start>0</start>
+		<speed>1000</speed>
+	</metronome>
+	
 	<tracks>
 		<sound>sound/54014__domingus__djembe-hi-1.wav</sound>
 		<sound>sound/54015__domingus__djembe-hi-2.wav</sound>
@@ -15,40 +21,10 @@
  		<track>
 <note>1</note>
  		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>1000</start>
  		<length>1000</length>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  		<track>
 <note>1</note>
  		</track>
@@ -59,40 +35,10 @@
  		<track>
 <note>1</note>
  		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>3000</start>
  		<length>1000</length>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  		<track>
 <note>1</note>
  		</track>
@@ -103,40 +49,10 @@
  		<track>
 <note>1</note>
  		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>5000</start>
  		<length>1000</length>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  		<track>
 <note>1</note>
  		</track>
@@ -147,40 +63,10 @@
  		<track>
 <note>1</note>
  		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>8000</start>
  		<length>1000</length>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  		<track>
 <note>1</note>
  		</track>
@@ -191,40 +77,10 @@
  		<track>
 <note>1</note>
  		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>10000</start>
  		<length>1000</length>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  		<track>
 <note>1</note>
  		</track>
@@ -235,40 +91,10 @@
  		<track>
 <note>1</note>
  		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>12000</start>
  		<length>1000</length>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  		<track>
 <note>1</note>
  		</track>
@@ -279,40 +105,10 @@
  		<track>
 <note>1</note>
  		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>14000</start>
  		<length>1000</length>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  		<track>
 <note>1</note>
  		</track>
@@ -323,40 +119,10 @@
  		<track>
 <note>1</note>
  		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>16000</start>
  		<length>1000</length>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  		<track>
 <note>1</note>
  		</track>
@@ -367,40 +133,10 @@
  		<track>
 <note>1</note>
  		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>18000</start>
  		<length>1000</length>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  		<track>
 <note>1</note>
  		</track>
@@ -411,21 +147,6 @@
  		<track>
 <note>1</note>
  		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>20000</start>
@@ -433,40 +154,10 @@
  		<track>
 <note>1</note>
  		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  	</rhythm>
  	<rhythm>
  		<start>21000</start>
  		<length>1000</length>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
- 		<track>
-<note>1</note>
- 		</track>
  		<track>
 <note>1</note>
  		</track>

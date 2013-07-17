@@ -18,6 +18,7 @@ from udacity.blog.object_models import BaseHandler
 from rhythmgame import game
 from gamesetup import CreateChannel
 from gamesetup import GameRequest
+from song import RandomSong
 
 class Home(BaseHandler):
       def get(self): 
@@ -29,6 +30,7 @@ config['webapp2_extras.sessions'] = {
 }
 
 app = webapp2.WSGIApplication([('/', Home),
-                               ('/game', game)],
+                               ('/game', game),
+                               ('/randomsong'), RandomSong],
                                debug=True,
                                config=config)
