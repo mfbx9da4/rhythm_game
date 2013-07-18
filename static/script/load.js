@@ -108,5 +108,6 @@ function loadGameElements(backGroundSong, song_name)
 
 	ctx.fillText("LOADING...", 0, 50);
 	new_song = sendSongRequest(song_name);
+	staticCircles = new StaticCircles(new_song.tracks);
 	loadAudio(backGroundSong);
 }

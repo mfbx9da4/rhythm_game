@@ -10,7 +10,7 @@ function animate()
 		draw = 1;
 		lastTime = time;
 		clearCanvas();
-		drawStatic(new_song.tracks);
+		staticCircles.drawStatic(time);
 	}
 	else
 	{
@@ -24,40 +24,6 @@ function clearCanvas () {
   	ctx.clearRect(0, 0, c.width, c.height);
 }
 
-// This function draw the circle at the bottom of the page as well as the letters in the circle ( corresponding to key for the track)
-function drawStatic (n_sounds) 
-{
-	var spacing = c.width / n_sounds
-	var padding = c.width % n_sounds + (spacing/2)
-	for (i=0; i<n_sounds; i++){
-		ctx.beginPath();
-		var x_pos = padding + spacing*i
-		ctx.arc(x_pos, time_position, 40, 0 , 2 * Math.PI);
-		ctx.stroke();
-		var character = String.fromCharCode(map_track_key[i]);
-		ctx.font="30px Impact";
-		ctx.fillStyle="#000000";
-		ctx.fillText(character, x_pos - 8, time_position + 5);
-	}
-}
-
-// Maybe make this a method of a DrawStatic object
-function drawPlayed(track, n_sounds) 
-{
-  var spacing = c.width / n_sounds
-  var padding = c.width % n_sounds + (spacing/2)
-  var x_pos = padding + spacing*track
-  ctx.beginPath();
-  ctx.arc(x_pos, time_position, 40, 0 , 2 * Math.PI);
-  ctx.fillStyle="red";
-  ctx.fill();
-  ctx.stroke();
-  var character = String.fromCharCode(map_track_key[track]);
-  ctx.font="30px Impact";
-  ctx.fillStyle="#ffffff";
-  ctx.fillText(character, x_pos - 8, time_position + 5);
-}
-
 
 // This function is called when the player pressa key, if the key key correspond to a track then the scroe is update and the notes is 
 // played
@@ -69,7 +35,7 @@ function keyHandler(e){
 	var p1 = d.getElementById("keypressed");
 	p1.innerHTML = e.keyCode;
 	var track = map_key_track[keyCode];
-  	drawPlayed(track, new_song.tracks);
+  	staticCircles.playedNote(track, new Date().getTime());
   	playSound(track);
 	
 }
