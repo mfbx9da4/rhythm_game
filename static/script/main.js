@@ -102,29 +102,6 @@ function playback(t)
 }
 
 
-// This function is respomsible for upadting the scores:
-function updateScore (keyCode){
-	var t = new Date().getTime();
-	var track = map_key_track[keyCode];
-	if( track == undefined || track >= new_song.tracks )
-	  	return;
-	var cur_beat_time = new_song.getCurrentBeatTime(t, track);
-	if (cur_beat_time == -1){
-		update = - 1;
-	}
-	else
-	{
-		update = (1 / (Math.abs(cur_beat_time - t))) * 100;
-		if ( update > 100 )
-			update = 100;
-	}
-	score = score + update
-	var updateTag = d.getElementById("update");
-	var scoreTag = d.getElementById("score");
-	updateTag.innerHTML = update;
-	scoreTag.innerHTML = score;
-}
-
 // TODO: get rid replace with horizontal line
 function flip()
 {

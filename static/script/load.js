@@ -38,7 +38,7 @@ function parseXml( xml)
 		var rhythm = rhythms[i];
 		var tracks = rhythm.getElementsByTagName("track");
 		var beats = [];
-		for( k = 0; k <tracks.length; k++ )
+		for( var k = 0; k <tracks.length; k++ )
 		{
 			var track = tracks[k];
 			var beatsT = [];

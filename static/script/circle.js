@@ -1,10 +1,10 @@
 
-function Circle (x, y, color)
+function Circle (x, y, radius, color)
 {
 	this.x = x;
 	this.y = y;
 	this.color = color;
-	this.radius = 40;
+	this.radius = radius;
 
 	this.draw = function ()
 	{
