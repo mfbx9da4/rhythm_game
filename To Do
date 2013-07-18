@@ -9,9 +9,15 @@ TO DO:
   rhythm is variable (when mixing rhythms in the game need to ensure that time signatures match).
   * (Advanced) make the columns expandable and collapsable to allow for demi/semi quaver notes.
 }
-- playback
+- playback (playback XML)
 - "graphy.png" aligned with time_position
 - nav pane CSS treeview
 - welcome/about page
+- Header image {
+ * located above game, with word rhythmludus written and below it an interactive globe. 
+ * Hovering over continents activates colour/shade changing. 
+ * Clicking continents navigates to games with rhythms from that continent.
+ * Active continent is coloured/shaded accordingly
+}
 
 DONE:
