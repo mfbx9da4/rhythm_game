@@ -1,0 +1,55 @@
+body {
+	margin-right: auto;
+	position: relative;
+	width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+    font-family: sans-serif;
+    background:url(images/bgnoise_lg.png);
+}
+table{
+    margin: 0 auto;
+    padding: 0 0;
+    border-spacing: 0;
+    text-align: center;
+}
+
+#main_table{
+    font-family: courier;
+    background-color: white;
+    border-radius: 6px;
+    border: solid #3b3535 1px;
+
+}
+
+#main_table tr:nth-child(even) {
+    background-color: #E3E3E3;
+    /*border: solid black 2px;*/
+}
+
+#main_table col {
+    background-color: green;
+}
+
+input, td {
+    border: solid black 2px;
+}
+
+.hid{
+    visibility: hidden;
+    /*margin-left: 22px;*/
+}
+#enterer_container{
+    width: 800px;
+    border: solid #4F4A4A;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+button {
+    margin: 0 auto;
+}
+
+.table_header {
+    /*text-justify: "center";*/
+
+}

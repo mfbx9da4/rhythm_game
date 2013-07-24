@@ -8,27 +8,38 @@ body {
     background:url(images/bgnoise_lg.png);
 }
 
+#container {
+	width: 1006px; height:402px; background-color:#e8e2e2;
+}
+
 .side-pane {
-	width: 100px;  height:402px; 
-	background-color:#b7b1b1; 
+	width: 200px;  height:402px; 
+	background-color:#b7b1b1;
 	background:url(images/tweed_@2X.png);
 	color:white;
 }
 
 #nav {
 	float: left;
-	font-size: 12px;
+	font-size: 6px;
 	padding: 0px;
 	word-spacing: 0px; 	
 	margin: 0 0; 	
 }
 
+#nav ul {
+	/*margin: 0 -20px;*/
+	/*padding: 0 0;*/
+}
+
 #score-pane {
-	float: right;
+	float: left;
 	/*display: inline;*/
 }
 
 #game{
 	background:url(images/graphy.png);
+	background-position-y:35;
+	float: left;
 }
 

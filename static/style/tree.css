@@ -1,38 +1,43 @@
+#nav
+{
+	font-size: 11px;
+	font-family: sans-serif;
+	color: white;
+	background-color: #AAA;
+	width:200px;
+/*	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;*/
+}
+
 #nav ul,
 #nav li
 {
-	padding: 0;
+/*	padding: 0;
 	margin: 0;
-	list-style: none;
+	list-style: none;*/
 }
 
 #nav input
 {
-	position: absolute;
+	/*position: absolute;*/
 }
 
-#nav
-{
-	font: normal 11px "Segoe UI", Arial, Sans-serif;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
-}
 
 #nav a
 {
-	color: 'white';
-	text-decoration: none;
+/*	color: #00f;
+	text-decoration: none;*/
 }
 
 #nav a:hover
 {
-	text-decoration: underline;
+	/*text-decoration: underline;*/
 }
 
 #nav input + label + ul
 {
-	margin: 0 0 0 22px;
+	margin: 0 0 0 -25px;
 }
 
 #nav input + label + ul
@@ -68,14 +73,24 @@
 #nav label::before
 {
 	display: inline-block;
-	height: 16px;
-	line-height: 16px;,
+	height: 7px;
+	line-height: 7px;,
 	vertical-align: middle;
 }
 
-#nav label
+#nav input 
 {
 	background-position: 18px 0;
+	margin: 0 -20px;
+
+}
+
+#nav label,
+#nav a
+{
+	background-position: 18px 0;
+	margin: 0 -20px;
+
 }
 
 #nav label::before
