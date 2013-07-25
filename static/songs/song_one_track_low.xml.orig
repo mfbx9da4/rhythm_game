@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <song>
+<<<<<<< HEAD
+       <backgroundsong>backgroundsong/file.mp3</backgroundsong>
+       
+       <metronome> 
+              <start>250</start>
+              <speed>500</speed>
+       </metronome>
+	
+       <tracks>
+		<sound>sound/54014__domingus__djembe-hi-1.wav</sound>
+=======
        <!-- <backgroundsong>backgroundsong/file.mp3</backgroundsong> -->
 	<tracks>
               <sound>sound/djembe/djembe-hi-1.wav</sound>
               <sound>sound/djembe/djembe-lo-1.wav</sound>
               <sound>sound/djembe/djembe-lo-2.wav</sound>
+>>>>>>> 30f22061fe192b64d4d27c87f4bae263a01f11bd
 	</tracks>
-
-       <metronome> 
-              <start>0</start>
-              <speed>1000</speed>
-       </metronome>
 
  	<rhythm>
 
  		<start>0</start>
  		<length>1000</length>
  		<track>
+<<<<<<< HEAD
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
+=======
                      <note>0.25</note> <note>0.75</note>
               </track>
               <track>
@@ -27,146 +37,151 @@
               </track>
               <track>
                      <note>0.25</note> <note>0.75</note>
+>>>>>>> 30f22061fe192b64d4d27c87f4bae263a01f11bd
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>1000</start>
  		<length>1000</length>
  		<track>
+<<<<<<< HEAD
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
+=======
                      <note>0.25</note> <note>0.75</note>
+>>>>>>> 30f22061fe192b64d4d27c87f4bae263a01f11bd
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>2000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>3000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>4000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>5000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>6000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>8000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>9000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>10000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>11000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>12000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>13000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>14000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>15000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>16000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>17000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>18000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>19000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>20000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
  		<start>21000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0">0.25</note> <note visible="0">0.75</note>
  		</track>
  	</rhythm>
 

@@ -8,9 +8,13 @@ appcfg.py update helloworld/
 __website__ = 'http://rhythmludus.appspot.com/'
 
 
-import webapp2
+import os
+import re
 
-from object_models import BaseHandler
+import webapp2
+import jinja2
+
+from udacity.blog.object_models import BaseHandler
 from rhythmgame import game
 from gamesetup import CreateChannel
 from gamesetup import GameRequest
@@ -19,16 +23,6 @@ from song import RandomSong
 class Home(BaseHandler):
       def get(self): 
             self.write('HOME')
-
-class Enterer(BaseHandler):
-    def get(self):
-        self.render('rhythm_enterer.html')
-
-    def post(self):
-        pass
-
-
-
     
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -37,8 +31,6 @@ config['webapp2_extras.sessions'] = {
 
 app = webapp2.WSGIApplication([('/', Home),
                                ('/game', game),
-                               ('/randomsong', RandomSong),
-                               ('/rhythm_enterer', Enterer)
-                               ],
+                               ('/randomsong', RandomSong)],
                                debug=True,
                                config=config)

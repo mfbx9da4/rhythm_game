@@ -37,8 +37,11 @@ config['webapp2_extras.sessions'] = {
 
 app = webapp2.WSGIApplication([('/', Home),
                                ('/game', game),
-                               ('/randomsong', RandomSong),
+<<<<<<< HEAD
                                ('/rhythm_enterer', Enterer)
                                ],
+=======
+                               ('/randomsong', RandomSong)],
+>>>>>>> cddb55c54ad15286acbf24627324dcdbdd13a946
                                debug=True,
                                config=config)
