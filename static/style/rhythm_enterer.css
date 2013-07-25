@@ -32,7 +32,7 @@ table{
 }
 
 input, td {
-    border: solid black 2px;
+    /*border: solid black 2px;*/
 }
 
 .hid{

@@ -1,7 +1,7 @@
 body {
 	margin-right: auto;
 	position: relative;
-	width: 900px;
+	width: 1006px;
     margin: 0 auto;
     padding: 10px;
     font-family: sans-serif;
@@ -15,7 +15,7 @@ body {
 .side-pane {
 	width: 200px;  height:402px; 
 	background-color:#b7b1b1;
-	background:url(images/tweed_@2X.png);
+	background:url(images/tweed.png);
 	color:white;
 }
 

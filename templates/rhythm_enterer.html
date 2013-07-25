@@ -41,7 +41,7 @@
     <td> <label class="table_header"> </label> </td>  
     <td> <label class="table_header"> </label> </td> </tr><tr id="row000">
 
-    <td> <input type="checkbox" id="cb001" value=""> </td>  
+    <td> <input type="checkbox" id="cb001" value=""> </td> 
     <td> <input type="checkbox" id="cb002" value=""> </td>  
     <td> <input type="checkbox" id="cb003" value=""> </td>  
     <td> <input type="checkbox" id="cb004" value=""> </td>  
@@ -301,7 +301,6 @@
 </tbody>
 </table>
 
-    TODO: tree view gifs and gradient circles like nature with darker border;
 
 
 
@@ -321,16 +320,16 @@ function submitRhythm(){
             var cb = col.childNodes[1]
             if (cb.checked)
             {
-                var cb_id = Number(cb.id.substr(2, 5));
-                var pos = ((cb_id-1) - (16 * (i)))
-                var note = pos / 16.0;
-                rhythm[i].track.push({'note': note});
+                // could just use var j?
+                var note_time = j / 16.0;
+                rhythm[i].track.push({'note': note_time});
+                console.log(cb);
             }
         }
         // check if track empty delete track else add sound  
     }
     // json2xml(eval(json))
-    console.log(JSON.stringify(rhythmx  ))
+    console.log(JSON.stringify(rhythm))
     return rhythm;
 }
 
