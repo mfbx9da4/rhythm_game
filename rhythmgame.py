@@ -1,4 +1,4 @@
-from udacity.blog.object_models import BaseHandler
+from object_models import BaseHandler
 import os
 import re
 

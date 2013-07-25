@@ -11,13 +11,15 @@ TO DO:
 }
 - playback (playback XML)
 - "graphy.png" aligned with time_position
-- nav pane CSS treeview
 - welcome/about page
 - Header image {
  * located above game, with word rhythmludus written and below it an interactive globe. 
  * Hovering over continents activates colour/shade changing. 
  * Clicking continents navigates to games with rhythms from that continent.
  * Active continent is coloured/shaded accordingly
+ * Like http://simplemaps.com/world
 }
 
+
 DONE:
+- tree view nav pane (although need to do icons e.g http://www.webappers.com/category/design/icons/page/2/ and CSS is messy!)

@@ -5,6 +5,8 @@
 	color: white;
 	background-color: #AAA;
 	width:200px;
+	overflow:scroll;
+	white-space: nowrap;
 /*	-moz-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;*/
@@ -13,31 +15,39 @@
 #nav ul,
 #nav li
 {
-/*	padding: 0;
-	margin: 0;
-	list-style: none;*/
+	/*margin: 0 -10px;*/
+	/*padding: 0;*/
+	list-style: none;
 }
 
 #nav input
 {
-	/*position: absolute;*/
+/*	position: absolute;
+	display: none;*/
 }
 
 
 #nav a
 {
-/*	color: #00f;
-	text-decoration: none;*/
+	color: #fff;
+	text-decoration: none;
 }
 
 #nav a:hover
 {
-	/*text-decoration: underline;*/
+	/*background-color: #CCC;*/
+	font-weight:bold;
 }
 
-#nav input + label + ul
+#nav label + ul
 {
-	margin: 0 0 0 -25px;
+	/*margin: 0 0 0 -25px;*/
+}
+
+#nav input + label:hover
+{
+	font-weight:bold;
+
 }
 
 #nav input + label + ul
@@ -73,31 +83,53 @@
 #nav label::before
 {
 	display: inline-block;
-	height: 7px;
-	line-height: 7px;,
 	vertical-align: middle;
+	height: 11px;
+	line-height: 11px;,
 }
 
 #nav input 
 {
-	background-position: 18px 0;
-	margin: 0 -20px;
+	/*background-position: 18px 0;*/
+	/*margin: 0 -20px;*/
+	/*visibility: hidden;*/
+	margin-right: -15px;
 
 }
+
+
 
 #nav label,
 #nav a
 {
 	background-position: 18px 0;
-	margin: 0 -20px;
+	/*margin: 0 -20px;*/
 
+}
+
+#nav a {
+	margin-left: 19px;
+}
+
+ul{
+  margin-left:-30px;
+}
+
+/* Second Level */
+ul > ul{
+  margin-left:0px;
+}
+
+/* Third Level */
+ul ul > ul{
+  margin-left:0px;
 }
 
 #nav label::before
 {
 	content: "";
 	width: 16px;
-	margin: 0 22px 0 0;
+	/*margin: 0 24px 0 0;*/
 	vertical-align: middle;
 	background-position: 0 -32px;
 }
@@ -130,3 +162,4 @@
 
 
 
+	
