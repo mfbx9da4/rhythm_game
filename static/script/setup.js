@@ -25,9 +25,6 @@ function startScreen()
 
 function start()
 {
-	m = d.getElementById("metronome");
-	metronome = m.getContext("2d");
-	metronome.fillStyle="#000000";
 
 	new_song.start(0.3);
 

@@ -17,6 +17,7 @@ function animate()
 		draw = 0;
 	}
 	new_song.play(time, draw);
+	displayMetronome();
 }
 
 // Clear the canvas ( the canvas is white after calling this function)
@@ -71,11 +72,16 @@ function playback(t)
 // TODO: get rid replace with horizontal line
 function flip()
 {
-	if( metronome_state == 1)
-		metronome.fillRect(0,0,c.width, c.height);
-	else
-		metronome.clearRect(0, 0, c.width, c.height);
 	metronome_state = -metronome_state;
-
+	metronome_sound.play();
 }
 
+
+function displayMetronome()
+{
+	ctx.fillStyle="#FFFFFF";
+	ctx.fillRect(5, 5, 30, 30);
+	ctx.fillStyle="#000000";
+	if( metronome_state == 1)
+		ctx.fillRect(5, 18, 30, 4);
+}

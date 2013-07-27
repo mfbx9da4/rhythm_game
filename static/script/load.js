@@ -78,6 +78,7 @@ function parseXml( xml)
 
 function loadAudio(backGroundSong)
 {
+	metronome_sound = new Audio("sound/metronome/klack.wav");
 	if( backGroundSong == 1)
 		playbackSound = new Audio(backgroundsong)
 	if( map_track_sound.length == 0 )

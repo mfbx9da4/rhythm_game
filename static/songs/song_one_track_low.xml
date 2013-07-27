@@ -8,7 +8,7 @@
 	</tracks>
 
        <metronome> 
-              <start>0</start>
+              <start>250</start>
               <speed>1000</speed>
        </metronome>
 
