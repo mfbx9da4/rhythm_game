@@ -9,14 +9,17 @@
   	<script src="script/setup.js"></script>
     <script src="script/load.js"></script>
   	<script src="script/main.js"></script>
+  	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+  	<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="style/game.css">
 	<link rel="stylesheet" type="text/css" href="style/tree.css">
 
 </head>
 <body>
 
-<canvas id="metronome" width="30" height="30" style="border:1px solid #000000;"></canvas>
+<div id="title">rhythmludus</div>
 
+<canvas width="1px" height="1px" id="metronome" ></canvas>
 <div id="container" >
 	<div id="nav" class="side-pane">
 	<ul>
@@ -51,9 +54,9 @@
 		<canvas id="game" width="600" height="400" style="border:1px solid #000000; background-color:#ffffff;">
 		</canvas>
 	<div id="score-pane" class="side-pane" >
-		<p> Last key pressed: </p><p id="keypressed">none</p>
-		<p> Update: </p><p id="update" style="color:green;">0</p>
-		<p> Score: </p>  <p id="score">0</p>
+		<p> Last key pressed: </p>	<p class='val' id="keypressed">none</p>
+		<p> Update: </p>			<p class='val' id="update" >0</p>
+		<p> Score: </p>  			<p class='val' id="score">0</p>
 	</div>
 
 </div>
@@ -64,7 +67,6 @@
 
 map_key_track = {"113":0, "119":1, "101":2, "114":3, "116":4, "121":5};
 map_track_key = ["113", "119", "101", "114", "116", "121"];
-// TO DO: albert munsell color scale matched on grey of background
 map_track_color = ['#44d735', '#d73535', '#3572d7', '#ded526', '#28a330', '#d78135'];
 map_track_sound = [];
 
@@ -83,7 +85,6 @@ var d = document;
 // We get the canvas in which the game is displayed:
 var c = d.getElementById("game");
 var ctx = c.getContext("2d");
-ctx.fillText("LOADING...", 0, 50);
 
 var new_song = null;
 var counter = 0; 

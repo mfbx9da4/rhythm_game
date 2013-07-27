@@ -1,15 +1,14 @@
 #nav
 {
-	font-size: 11px;
-	font-family: sans-serif;
+	font-size: 16px;
 	color: white;
 	background-color: #AAA;
 	width:200px;
 	overflow:scroll;
 	white-space: nowrap;
-/*	-moz-user-select: none;
+	-moz-user-select: none;
 	-webkit-user-select: none;
-	user-select: none;*/
+	user-select: none;
 }
 
 #nav ul,
@@ -85,7 +84,7 @@
 	display: inline-block;
 	vertical-align: middle;
 	height: 11px;
-	line-height: 11px;,
+	line-height: 11px;
 }
 
 #nav input 

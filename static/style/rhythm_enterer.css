@@ -1,10 +1,26 @@
+@font-face
+{
+font-family: myFirstFont;
+src: url('Sansation_Light.ttf'),
+     url('Sansation_Light.eot'); /* IE9 */
+}
+@media screen {
+@font-face {
+  font-family: 'Lobster';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Lobster'), local('Lobster'), url('style/fonts/Lobster/Lobster.ttf') format('truetype');
+}
+}
+
 body {
 	margin-right: auto;
 	position: relative;
 	width: 900px;
     margin: 0 auto;
     padding: 10px;
-    font-family: sans-serif;
+    /*font-family: sans-serif;*/
+    font-family: 'Lobster';
     background:url(images/bgnoise_lg.png);
 }
 table{

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<song>
+       <!-- <backgroundsong>backgroundsong/file.mp3</backgroundsong> -->
+	<tracks>
+              <sound>sound/conga/1.wav</sound>
+              <sound>sound/conga/2.wav</sound>
+              <sound>sound/conga/3.wav</sound>
+              <sound>sound/conga/4.wav</sound>
+              <sound>sound/conga/5.wav</sound>
+              <sound>sound/conga/6.wav</sound>
+              <sound>sound/conga/7.wav</sound>
+	</tracks>
+
+       <metronome> 
+              <start>0</start>
+              <speed>1000</speed>
+       </metronome>
+
+ 	<rhythm>
+
+ 		<start>0</start>
+ 		<length>1000</length>
+ 		<track>
+                     <note>0.25</note> 
+              </track>
+              <track></track>
+              <track></track>
+              <track></track>
+              <track></track>
+              <track></track>
+              <track></track>
+       </rhythm>
+</song>

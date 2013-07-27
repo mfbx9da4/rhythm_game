@@ -1,10 +1,31 @@
+@font-face
+{
+font-family: Lobster;
+src: url('fonts/Lobster/Lobster.ttf');
+}
+@font-face
+{
+font-family: rale;
+src: url('fonts/Raleway/Raleway-Light.ttf');
+}
+
+
+#title {
+    font-family: Lobster;
+    font-family: 'Lobster', cursive;
+    font-size: 100px;
+    margin: 15 250;
+    color: #20b8b6;
+    text-decoration: none;
+
+}
+
 body {
 	margin-right: auto;
 	position: relative;
 	width: 1006px;
     margin: 0 auto;
     padding: 10px;
-    font-family: sans-serif;
     background:url(images/bgnoise_lg.png);
 }
 
@@ -14,6 +35,8 @@ body {
 
 .side-pane {
 	width: 200px;  height:402px; 
+    font-family: rale;
+    font-family: 'Raleway', sans-serif;
 	background-color:#b7b1b1;
 	background:url(images/tweed.png);
 	color:white;
@@ -27,19 +50,18 @@ body {
 	margin: 0 0; 	
 }
 
-#nav ul {
-	/*margin: 0 -20px;*/
-	/*padding: 0 0;*/
-}
 
 #score-pane {
 	float: left;
-	/*display: inline;*/
+}
+#score-pane p {
+	margin-left: 10px;
 }
 
 #game{
 	background:url(images/graphy.png);
-	background-position-y:35;
+	background-position-y: 35;
 	float: left;
+	border: solid black 4px;
 }
 
