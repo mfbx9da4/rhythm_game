@@ -1,5 +1,5 @@
 TO DO:
-- metronome ( horitzontal line )
+- metronome ( horitzontal line from top to bottom of canvas )
 - rhythm enterer 
 {
   * a table of checkboxes which export to an XML.
@@ -20,6 +20,9 @@ TO DO:
  * Like http://simplemaps.com/world
 }
 - make nicer circles (gradient and border)
+- size of canvas
+- adjust radius of circles dynamically with n tracks
+- silent track for metronome
 
 
 DONE:
