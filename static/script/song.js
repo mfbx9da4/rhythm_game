@@ -1,5 +1,5 @@
 
-function Song(rhythms, sound_track)
+function Song(rhythms, sound_track, metronomeTemp)
 {
 
 	this.rhythms = rhythms;
@@ -14,6 +14,8 @@ function Song(rhythms, sound_track)
 	for ( var i = 0; i < rhythms.length; i ++){
 		this.rhythms[i].initialise(this.xscale, this.offset);
 	}
+
+	this.metronome = metronomeTemp;
 	
 
 	this.start = function(yscale)
@@ -25,7 +27,7 @@ function Song(rhythms, sound_track)
 
 	this.play = function(time, draw)
 	{
-
+		this.metronome.draw(this.start_time, time, this.yscale);
 		var i = this.start_rhythm;
 		for( ; i < this.rhythms.length; i ++)
 		{

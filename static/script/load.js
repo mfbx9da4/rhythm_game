@@ -69,11 +69,12 @@ function parseXml( xml)
 	var metronome = xml.getElementsByTagName("metronome");
 	if( metronome.length == 1 )
 	{
-		start_metronome = metronome[0].getElementsByTagName("start")[0].childNodes[0].nodeValue;
-		metronome_speed = metronome[0].getElementsByTagName("speed")[0].childNodes[0].nodeValue;
+		start_metronome = Number(metronome[0].getElementsByTagName("start")[0].childNodes[0].nodeValue);
+		metronome_speed = Number(metronome[0].getElementsByTagName("speed")[0].childNodes[0].nodeValue);
+		metronomeObject = new Metronome(start_metronome, metronome_speed);
 	}
 
-	return new Song(new_rhythms, "ij");
+	return new Song(new_rhythms, "ij", metronomeObject);
 }
 
 function loadAudio(backGroundSong)
