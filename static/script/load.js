@@ -45,9 +45,12 @@ function parseXml( xml)
 			var notes = track.getElementsByTagName("note");
 			for( j = 0; j < notes.length; j++) {
 				var visible = 1;
-				if( notes[j].attributes[0] != null )
-					visible = Number(notes[j].attributes[0].nodeValue);
-				beatsT[j] = new Beat( Number(notes[j].childNodes[0].nodeValue), map_track_color[k], 40, visible );
+				var silent = 0;
+				if( notes[j].attributes.getNamedItem("visible") != null )
+					visible = Number(notes[j].attributes.getNamedItem("visible").nodeValue);
+				if( notes[j].attributes.getNamedItem("silent") != null )
+					silent = Number(notes[j].attributes.getNamedItem("silent").nodeValue);
+				beatsT[j] = new Beat( Number(notes[j].childNodes[0].nodeValue), map_track_color[k], 40, visible, silent );
 			}
 			beats[k] = beatsT;
 		}

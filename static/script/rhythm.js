@@ -60,7 +60,7 @@ function Rhythm (beats, diff_time, rhythm_time){
 		{
 			var beat_offset = this.beats[track][j].time * this.rhythm_time;
 			var beat_time = rhythm_start_time + beat_offset
-			if ( this.beats[track][j].playedPlayBack == 0 && beat_time - current_time < 3 )
+			if ( this.beats[track][j].playedPlayBack == 0 && beat_time - current_time < 3 && this.beats[track][j].silent == 0 )
 			{
 				this.beats[track][j].playedPlayBack = 1;
 				return 1;

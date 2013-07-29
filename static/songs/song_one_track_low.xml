@@ -40,7 +40,7 @@
  		<start>2000</start>
  		<length>1000</length>
  		<track>
-              <note>0.25</note> <note>0.75</note>
+              <note visible="0" silent="1">0.25</note> <note>0.75</note>
  		</track>
  	</rhythm>
  	<rhythm>
