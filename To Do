@@ -23,6 +23,11 @@ TO DO:
 - size of canvas
 - adjust radius of circles dynamically with n tracks
 - silent track for metronome
+- link the view pane with the game
+- use a DB to store the song + usefull properties
+- create user account
+- ranking of players
+- multiplayer mode
 
 
 DONE:
