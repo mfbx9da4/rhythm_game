@@ -6,6 +6,15 @@ function Rhythm (beats, diff_time, rhythm_time){
   	this.offset = 0;
   	this.diff_time = diff_time;
   	this.rhythm_time = rhythm_time;
+  	
+  	nb = 0;
+  	for( t = 0; t < beats.length ; t++)
+  		for( l = 0; l < beats[t].length ; l++ )
+  			nb++;
+  	this.numberOfBeats = nb;
+
+  	this.counter = 0;
+  	this.played = 0;
 
   	this.duplicate = function()
   	{
@@ -25,6 +34,7 @@ function Rhythm (beats, diff_time, rhythm_time){
   	{
   		this.xscale = xscale;
   		this.offset = offset;
+  		this.played = 0;
   	}
 
   	this.setRhyhtmLength = function(newTime)
@@ -100,6 +110,9 @@ function Rhythm (beats, diff_time, rhythm_time){
 			{
 				this.beats[track][j].playedPlayer = 1;
 				this.beats[track][j].updateRadius( this.beats[track][j].radius * 1.5);
+				this.counter++;
+				if( this.counter == this.numberOfBeats )
+					this.played = 1;
 				return beat_time;
 			}
 		}
