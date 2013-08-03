@@ -8,6 +8,11 @@ function Beat( time, color, radius, visible, silent )
 	this.silent = silent;
 	this.circle = new Circle(0, 0, radius, color);
 
+	this.duplicate = function()
+	{
+		return new Beat( time, color, radius, visible, silent);
+	}
+
 	this.draw = function()
 	{
 		if( this.visible == 1)

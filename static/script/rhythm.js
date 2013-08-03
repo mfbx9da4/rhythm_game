@@ -7,12 +7,65 @@ function Rhythm (beats, diff_time, rhythm_time){
   	this.diff_time = diff_time;
   	this.rhythm_time = rhythm_time;
 
+  	this.duplicate = function()
+  	{
+  		var newBeats = new Array(this.tracks);
+  		for( track = 0 ; track < this.tracks; track ++)
+  		{
+  			newBeats[track] = new Array(this.beats[track].length);
+  			for( j = 0; j < this.beats[track].length; j ++ )
+	      	{
+	      		newBeats[track][j] = this.beats[track][j].duplicate();
+	      	}
+  		}
+  		return new Rhythm(newBeats, 0, this.rhythm_time);
+  	}
+
   	this.initialise = function(xscale, offset)
   	{
   		this.xscale = xscale;
   		this.offset = offset;
   	}
+
+  	this.setRhyhtmLength = function(newTime)
+  	{
+  		this.rhythm_time = newTime;
+  	}
+
+  	this.reinitialise = function()
+  	{
+  		for( track = 0 ; track < this.tracks; track ++)
+  		{
+  			for( j = 0; j < this.beats[track].length; j ++ )
+	      	{
+	      		this.beats[track][j].playedPlayBack = 0;
+	      		this.beats[track][j].playedPlayer = 0;
+	      	}
+  		}
+  	}
+
+  	this.setsilent = function(silent)
+  	{
+  		for( track = 0 ; track < this.tracks; track ++)
+  		{
+  			for( j = 0; j < this.beats[track].length; j ++ )
+	      	{
+	      		this.beats[track][j].silent = silent;
+	      	}
+  		}
+  	}
 	
+	this.setvisible = function(visible)
+  	{
+  		for( track = 0 ; track < this.tracks; track ++)
+  		{
+  			for( j = 0; j < this.beats[track].length; j ++ )
+	      	{
+	      		this.beats[track][j].visible = visible;
+	      	}
+  		}
+  	}
+
 	this.play = function(start_time, time, yscale, draw)
 	{
 		// Compute the position of the start of the rhyhtm:
