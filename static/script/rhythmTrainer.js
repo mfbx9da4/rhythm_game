@@ -16,10 +16,17 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 	this.nextDisplayedDiffTime = 0;
 	this.nextDisplayedState = 1;
 
+	// The number of time left the rhythm has be played to progress to the next level:
 	this.numberOfRhythmBeforeNextState = 0;
 
+	// The number of time the rhyhtms is played in each state ( it's an array ):
     this.stateRepitition = stateRepitition;
+
+    // This is used to know how many rhythm the player must got right in a state to progress to the next state:
     this.stateRepititionRequired = stateRepititionRequired;
+
+    // This variable is used to know how many "right" rhythms the player played in a state:
+    this.playerCounter = 0;
 
 	this.createNextRhyhthms = function()
 	{
@@ -51,26 +58,39 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 		}
 	}
 	
-	this.replayLastRhythm = function(diff_time)
+	this.replayLastRhythm = function()
 	{
-		this.rhythms.unshift( rhythm.duplicate().initialise(this.xscale, this.offset));
-		this.rhythms[0].diff_time = diff_time;
-		switch( this.timeNextDisplayedState )
+		for( i = 0; i < this.stateRepitition[this.state] ; i ++)
 		{
-			case this.states.playback:
-				this.rhythms[0].setvisible(1);
-				break;
-			case this.states.visual:
-				this.rhythms[0].setvisible(1);
-				break;
-			case this.states.speed1:
-				this.rhythms[0].setvisible(1);
-				break;
-			case this.states.speed2:
-				this.rhythms[0].setvisible(1);
-				break;
+			this.rhythms.splice( 1, 0, this.rhythm.duplicate());
+			this.rhythms[1].initialise(this.xscale, this.offset);
+			this.rhythms[1].diff_time = this.rhythms[0].diff_time + this.rhythms[0].rhythm_time;
+			switch( this.nextDisplayedState )
+			{
+				case this.states.playback:
+					this.rhythms[0].setvisible(1);
+					break;
+				case this.states.visual:
+					this.rhythms[0].setvisible(1);
+					break;
+				case this.states.speed1:
+					this.rhythms[0].setvisible(1);
+					break;
+				case this.states.speed2:
+					this.rhythms[0].setvisible(1);
+					break;
+			}
 		}
-		diff_time = diff_time + this.rhythms[0].rhythm_time;
+	}
+
+	this.updateOtherRhythms = function()
+	{
+		i = 1 + this.stateRepitition[this.state];
+		while( i < this.rhythms.length )
+		{
+			this.rhythms[i].diff_time = this.rhythms[i-1].diff_time + this.rhythms[i-1].rhythm_time;
+			i++;
+		}
 	}
 
 	this.start = function(yscale)
@@ -103,7 +123,16 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 				this.numberOfRhythmBeforeNextState--;
 				if( this.numberOfRhythmBeforeNextState == 0 )
 				{
-					this.state++;
+					if( this.playerCounter >= this.stateRepititionRequired[this.state] )
+					{
+						this.state++;
+						this.playerCounter = 0;
+					}
+					else
+					{
+						this.replayLastRhythm();
+						this.updateOtherRhythms();
+					}
 					this.numberOfRhythmBeforeNextState = this.stateRepitition[this.state];
 				}
 				this.rhythms.shift();

@@ -74,7 +74,7 @@ function parseXml( xml)
 		metronomeObject = new Metronome(start_metronome, metronome_speed);
 	}
 
-	return new RhythmTrainer(new_rhythm, metronomeObject, new Array(2,2,2,2,2,2,2,2,2,2,2));
+	return new RhythmTrainer(new_rhythm, metronomeObject, new Array(2,2,2,2,2,2), new Array(0,0,2,2,2,2));
 }
 /*
 function parseXml( xml)
