@@ -4,7 +4,7 @@
 	color: white;
 	background-color: #AAA;
 	width:200px;
-	overflow:scroll;
+	overflow:hidden;
 	white-space: nowrap;
 	-moz-user-select: none;
 	-webkit-user-select: none;

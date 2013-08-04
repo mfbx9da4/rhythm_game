@@ -1,15 +1,9 @@
-@font-face
-{
-font-family: myFirstFont;
-src: url('Sansation_Light.ttf'),
-     url('Sansation_Light.eot'); /* IE9 */
-}
 @media screen {
 @font-face {
   font-family: 'Lobster';
   font-style: normal;
   font-weight: normal;
-  src: local('Lobster'), local('Lobster'), url('style/fonts/Lobster/Lobster.ttf') format('truetype');
+  src: local('Lobster'), local('Lobster'), url('fonts/Lobster/Lobster.ttf') format('truetype');
 }
 }
 
@@ -62,7 +56,11 @@ input, td {
     border-radius: 10px;
 }
 button {
-    margin: 0 auto;
+    display: inline;
+}
+
+#button_container{
+    margin: 5px 30px;
 }
 
 .table_header {

@@ -9,6 +9,8 @@ handlers:
   static_dir: static/script
 - url: /song
   static_dir: static/songs
+- url: /rhythms
+  static_dir: static/rhythm_xmls
 - url: /sound
   static_dir: static/audioRessource/instrument
 - url: /backgroundsong

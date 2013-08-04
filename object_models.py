@@ -38,3 +38,6 @@ class BaseHandler(webapp2.RequestHandler):
 
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
+
+    def error(self, string, *args, **kwargs):
+        webapp2.logging.error(string, *args, **kwargs)
