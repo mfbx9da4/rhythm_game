@@ -151,6 +151,10 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 																									+ this.start_time )
 			{
 				this.numberOfRhythmBeforeNextState--;
+				
+				if( this.rhythms[0].played == 1)
+					this.playerCounter++;
+
 				if( this.numberOfRhythmBeforeNextState == 0 )
 				{
 					if( this.playerCounter >= this.stateRepititionRequired[this.state] )
@@ -166,8 +170,6 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 					}
 					this.numberOfRhythmBeforeNextState = this.stateRepitition[this.state];
 				}
-				if( this.rhythms[0].played == 1)
-					this.playerCounter++;
 				this.rhythms.shift();
 			}
 
@@ -195,8 +197,6 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 					var cur_beat_time = this.rhythms[i].getCurrentBeatTime(current_time, this.start_time, track);
 					if ( cur_beat_time != -1)
 					{
-						if( this.rhythms[i].played == 1 )
-							this.playerCounter++;
 						return cur_beat_time;
 					}
 				}
