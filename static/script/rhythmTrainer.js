@@ -40,6 +40,10 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
     // This variable is used to know how many "right" rhythms the player played in a state:
     this.playerCounter = 0;
 
+    this.playing = 1;
+
+    this.pauseTime = 0;
+
 	this.createNextRhythms = function()
 	{
 		for( i = 0; i < this.stateRepitition[this.nextDisplayedState] ; i ++)
@@ -140,7 +144,7 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 
 	this.play = function(time, draw)
 	{
-		if( this.state == this.states.end )
+		if( this.state == this.states.end || this.playing == false)
 		{
 
 			return;
@@ -161,6 +165,8 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 					{
 						this.state++;
 						this.playerCounter = 0;
+//						this.pause();
+//						d.addEventListener('keypress', function (e){ this.start();}, false);
 					}
 					else
 					{
@@ -184,6 +190,11 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 		  		this.rhythms[i].play(this.start_time, time, this.yscale, draw);
 			}
 		}
+	}
+
+	this.keyHandler = function(e)
+	{
+		this.play();
 	}
 
 	this.getCurrentBeatTime = function (current_time, track)
@@ -230,6 +241,30 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 		{
 			return -1;
 		}
+	}
+
+	this.pause = function()
+	{
+		this.playing = false;
+		this.pauseTime = new Date().getTime();
+	}
+
+	this.resume = function()
+	{
+		if( !this.playing)
+		{
+			var shift_time = new Date().getTime() - this.pauseTime;
+			this.shiftGame(shift_time);
+			this.playing = true;
+		}
+	}
+
+	this.shiftGame = function(shift_time)
+	{
+		for( var i = 0; i < this.rhythms.length; i++ )
+			this.rhythms[i].diff_time += shift_time;
+		this.nextDisplayedDiffTime += shift_time;
+		
 	}
 
 }
