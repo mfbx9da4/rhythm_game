@@ -15,8 +15,11 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 	this.xscale = c.width / this.tracks;
   	this.offset = c.width % this.tracks + ( this.xscale / 2 );
 
-  	// This is the metronome:
+  	// This is the template metronome:
 	this.metronome = metronomeTemp;
+
+	// This are the actual metronome:
+	this.metronomes = [];
 	
 	// This is used to know how long it takes a note to go from the top to the bottom of the screen:
 	this.screenTime = 0;
@@ -46,6 +49,8 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 
 	this.createNextRhythms = function()
 	{
+		this.metronomes.push( this.metronome.duplicate() );
+		this.metronomes[this.metronomes.length-1].start_time_window = this.nextDisplayedDiffTime;
 		for( i = 0; i < this.stateRepitition[this.nextDisplayedState] ; i ++)
 		{
 			this.rhythms.push( this.rhythm.duplicate());
@@ -74,6 +79,7 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 			this.nextDisplayedDiffTime = this.rhythms[this.rhythms.length - 1].diff_time 
 																+ this.rhythms[this.rhythms.length - 1].rhythm_time;
 		}
+		this.metronomes[this.metronomes.length-1].end_time_window = this.nextDisplayedDiffTime; 
 		this.nextDisplayedDiffTime = this.rhythms[this.rhythms.length - 1].diff_time 
 																+ this.rhythms[this.rhythms.length - 1].rhythm_time
 																+ this.screenTime;
@@ -190,6 +196,7 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 				this.nextDisplayedState++;
 			}
 
+			this.metronome.draw(this.start_time, time, this.yscale );
 			for( var i = 0; i < this.rhythms.length; i ++)
 			{
 		  		this.rhythms[i].play(this.start_time, time, this.yscale, draw);
