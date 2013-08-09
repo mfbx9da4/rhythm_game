@@ -18,6 +18,7 @@ from rhythmgame import game
 from gamesetup import CreateChannel
 from gamesetup import GameRequest
 from song import RandomSong
+import json
 
 class Home(BaseHandler):
       def get(self): 
@@ -35,18 +36,34 @@ class Enterer(BaseHandler):
         self.render('rhythm_enterer.html')
 
 
-
 class RhythmsQuery(BaseHandler):
     def get(self):
         self.rhythms = Rhythm.all()
-        if not self.request.get('arg'):
-            return self.write(str([r.title for r in self.rhythms]))
+        self.arg = self.request.get('arg')
+        title = self.request.get('title')
+        if title:
+          self.getNamedRhythm(title)
         else:
-            self.handleDiverse()
+          self.handleDiverse()
+
+    def getNamedRhythm(self, title):
+        q = Rhythm.all().filter('title =', title)
+        r = q.fetch(1)
+        if r:
+          out = self.response.body_file = r[0].xml
+          self.error(out)
+          return self.write(out)
+        else:
+          return self.write('not found')
 
     def handleDiverse(self):
-        if self.request.get('arg') == 'delete_all':
+        if self.arg == 'delete_all':
             self.deleteAll()
+        elif self.arg == 'all':
+            rhythms = dict([(str(r.title), [str(r.last_modified), str(r.xml)]) for r in self.rhythms])
+            encoder = json.JSONEncoder()
+            rhythms = encoder.encode(rhythms)
+            return self.write(rhythms)
 
     def deleteAll(self):
         for r in self.rhythms:
@@ -56,13 +73,20 @@ class RhythmsQuery(BaseHandler):
     def post(self):
         title, xml_str = self.request.body.split('|')
         xml = md.parseString(xml_str)
-        f = webapp2.os.open('this', 'r')
-        # f.write(xml.toxml())
-        # f.close()
-        rhy = Rhythm(title=title, xml=xml.toxml())
-        rhy.put()
+        if valid_rhythm(xml) and valid_title(title):
+          rhy = Rhythm(title=str(title), xml=xml.toxml())
+          rhy.put()
+        else:
+          return self.write('invalid rhythm')
 
-    
+def valid_rhythm(xml):
+    if xml.getElementsByTagName('note'):
+      return True
+
+def valid_title(title):
+    if not Rhythm.all().filter('title =', title).get():
+        return True
+
 config = {}
 config['webapp2_extras.sessions'] = {
     'secret_key': 'my-super-secret-key',

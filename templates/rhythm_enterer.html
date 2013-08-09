@@ -1,6 +1,7 @@
 <html>
 <head>
     <script src="script/xml_parsing.js"></script>
+    <script src="script/gridtoxml.js"></script>
     <link rel="stylesheet" type="text/css" href="style/rhythm_enterer.css">
 </head>
 
@@ -302,85 +303,33 @@
 </tbody>
 </table>
 
+<table id="all_rhythms">
+<tbody>
+    <tr>
+        <td>Title</td>
+        <td>Last Modified</td>
+    </tr>    
+</tbody>
+</table>
+
 
 <div id="button_container">
-    <button onclick="grid.submitRhythm()">Submit rhythm</button>
-    <button onclick="updateRhythms('')">Update rhythms</button>
+    <button onclick="g2x.submitRhythm()">Submit rhythm</button>
     <button onclick="updateRhythms('delete_all')">Delete all rhythms</button>
+    <button onclick="x2g.requestRhythm('this')">Get</button>
 </div>
 
 </div>
-<div id='rhythms'></div>
+<div id='rhythms' style="text-align: center;"></div>
+<b><div id='error' style="text-align: center; color: #d73535; "></div></b>
 </body>
 <script>
 
-var grid = new GridToXML();
+var g2x = new GridToXML();
+var x2g = new XMLToGrid();
+var all_rhythms = {};
 
-
-function GridToXML()
-{
-    this.submitRhythm = function ()
-    {
-        this.parseRhythm();
-        this.send();
-        updateRhythms('');
-    }
-
-    this.parseRhythm = function ()
-    {
-        this.xml = document.createElement('xml');
-        rhythm = document.createElement('rhythm');
-        this.xml.appendChild(rhythm);
-        var table = document.getElementById('main_table');
-        for (var i = 0, row; row = table.rows[i+1]; i++) 
-        {
-            track = document.createElement('track');
-            track.id = String(i);
-            rhythm.appendChild(track)
-            for (var j = 0, col; col = row.cells[j]; j++) 
-            {
-                // cb = checkbox
-                var cb = col.childNodes[1]
-                if (cb.checked)
-                {
-                    // (id - (row * 16)) / 16. 
-                    var note_time = j / 16.0;
-                    note = document.createElement('note');
-                    note.innerText = String(note_time)
-                    track.appendChild(note);
-                }
-            }
-            // check if track empty delete track else add sound
-            this.delEmptyTracks();
-        }
-    }
-
-    this.delEmptyTracks = function ()
-    {
-        var tracks = this.xml.getElementsByTagName('track');
-        for (var i = 0; i < tracks.length; i++)
-        {
-            if (tracks[i].innerText == ''){
-                tracks[i].remove();
-            }
-        }
-
-    }
-    
-    this.send = function () 
-    {
-        var xhr = getXMLHttpRequest();
-        xhr.open("POST", '/rhythm_db', false);
-        var xml_str = this.xml.innerHTML;
-        var title = document.getElementById('rhythm_title').value;
-        var request_body = title + '|' + xml_str
-        xhr.send(request_body);
-        console.log(request_body);
-        console.log(xhr.responseText);
-    }
-}
-
-
+document.onload = loadALlRhythms()
 
 function updateRhythms(string){
     var xhr = getXMLHttpRequest();
@@ -388,9 +337,33 @@ function updateRhythms(string){
     xhr.open("GET", url, false);
     xhr.send(null);
     document.getElementById('rhythms').innerHTML = xhr.responseText;
+    console.log(xhr.responseText);
+    all_rhythms = JSON.parse(xhr.responseText);
+    return xhr.responseText;
 }
 
+parseXml = function(xmlStr) {
+        return ( new window.DOMParser() ).parseFromString(xmlStr, "text/xml");
+    };
 
+
+function XMLToGrid (){
+    this.requestRhythm = function (rhythm_title){
+        var xhr = getXMLHttpRequest();
+        var url = '/rhythm_db?title=' + rhythm_title
+        xhr.open("GET", url, false);
+        xhr.send(null);
+        this.xml = xhr.responseXML;
+        console.log(xhr.responseXML)
+        return xhr.responseXML;       
+    }
+    this.parseRhythm = function (){
+        var a = 0;
+    }
+    this.displayRhythmOnGrid = function (){
+        var a = 0;
+    }
+}
 
 rhythm = [
     [

@@ -6,6 +6,12 @@
   src: local('Lobster'), local('Lobster'), url('fonts/Lobster/Lobster.ttf') format('truetype');
 }
 }
+@font-face
+{
+font-family: rale;
+src: url('fonts/Raleway/Raleway-Light.ttf');
+}
+
 
 body {
 	margin-right: auto;
@@ -13,8 +19,7 @@ body {
 	width: 900px;
     margin: 0 auto;
     padding: 10px;
-    /*font-family: sans-serif;*/
-    font-family: 'Lobster';
+    font-family: rale;
     background:url(images/bgnoise_lg.png);
 }
 table{
@@ -33,12 +38,13 @@ table{
 }
 
 #main_table tr:nth-child(even) {
-    background-color: #E3E3E3;
+    background-color: #CCC;
     /*border: solid black 2px;*/
 }
 
-#main_table col {
-    background-color: green;
+#all_rhythms {
+    background-color: white;
+
 }
 
 input, td {
@@ -51,17 +57,19 @@ input, td {
 }
 #enterer_container{
     width: 800px;
-    border: solid #4F4A4A;
+    border: dashed #4F4A4A 1px;
     margin: 0 auto;
     border-radius: 10px;
 }
 button {
     display: inline;
+    font-family: rale;
 }
 
 #button_container{
     margin: 5px 30px;
 }
+
 
 .table_header {
     /*text-justify: "center";*/
