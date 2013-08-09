@@ -17,7 +17,7 @@ function AdvancedMetronome(diff_time, speed, start_time_window, end_time_window)
 		}
 		var last = first;
 		var position = ( time_position - ( last  - time ) * yscale );
-		while( position >= 0 && last <= start_time + this.end_time_window )
+		while( position >= 0 && last <= ( start_time + this.end_time_window ) )
 		{
 			ctx.fillStyle="#000000";
 
@@ -31,6 +31,6 @@ function AdvancedMetronome(diff_time, speed, start_time_window, end_time_window)
 
 	this.duplicate = function()
 	{
-		return new AdvancedMetronome(this.diff_time, this.speed, this.start_time, 0, 0);
+		return new AdvancedMetronome(this.diff_time, this.speed, 0, 0);
 	}
 }
