@@ -86,7 +86,7 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 	this.replayLastRhythm = function()
 	{
 		var diff_time = this.rhythms[0].diff_time + this.screenTime;
-		this.metronomes.splice( 0, 0, this.metronome.duplicate() );
+		this.metronomes.unshift(  this.metronome.duplicate() );
 		this.metronomes[0].start_time_window = diff_time + this.rhythms[0].rhythm_time;
 		for( i = 0; i < this.stateRepitition[this.state] ; i ++)
 		{
@@ -177,7 +177,7 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 				{
 					if( this.playerCounter >= this.stateRepititionRequired[this.state] )
 					{
-						this.metronomes.unshift();
+						this.metronomes.shift();
 						this.state++;
 						this.playerCounter = 0;
 						this.pause();
@@ -190,7 +190,7 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 					}
 					else
 					{
-						this.metronomes.unshift();
+						this.metronomes.shift();
 						this.replayLastRhythm();
 						this.updateOtherRhythms();
 						this.playerCounter = 0;
