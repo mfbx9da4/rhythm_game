@@ -40,6 +40,10 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
     // This variable is used to know how many "right" rhythms the player played in a state:
     this.playerCounter = 0;
 
+    this.playing = 1;
+
+    this.pauseTime = 0;
+
 	this.createNextRhythms = function()
 	{
 		for( i = 0; i < this.stateRepitition[this.nextDisplayedState] ; i ++)
@@ -57,52 +61,68 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 					break;
 				case this.states.speed1:
 					this.rhythms[this.rhythms.length - 1].setvisible(1);
+					this.rhythms[this.rhythms.length - 1].setRhyhtmLength(this.rhythm.rhythm_time * 0.60);
 					break;
 				case this.states.speed2:
 					this.rhythms[this.rhythms.length - 1].setvisible(1);
+					this.rhythms[this.rhythms.length - 1].setRhyhtmLength(this.rhythm.rhythm_time * 0.40);
 					break;
 				default:
 					this.rhythms[this.rhythms.length - 1].setvisible(0);
 					break;
 			}
+			this.nextDisplayedDiffTime = this.rhythms[this.rhythms.length - 1].diff_time 
+																+ this.rhythms[this.rhythms.length - 1].rhythm_time;
 		}
 		this.nextDisplayedDiffTime = this.rhythms[this.rhythms.length - 1].diff_time 
-																		+ this.rhythms[this.rhythms.length - 1].rhythm_time;
+																+ this.rhythms[this.rhythms.length - 1].rhythm_time
+																+ this.screenTime;
 	}
 	
 	this.replayLastRhythm = function()
 	{
+		var diff_time = this.rhythms[0].diff_time + this.screenTime;
 		for( i = 0; i < this.stateRepitition[this.state] ; i ++)
 		{
-			this.rhythms.splice( 1, 0, this.rhythm.duplicate());
-			this.rhythms[1].initialise(this.xscale, this.offset);
-			this.rhythms[1].diff_time = this.rhythms[0].diff_time + this.rhythms[0].rhythm_time;
-			switch( this.nextDisplayedState )
+			this.rhythms.splice( i + 1, 0, this.rhythm.duplicate());
+			this.rhythms[i + 1].initialise(this.xscale, this.offset);
+			this.rhythms[i + 1].diff_time = diff_time + this.rhythms[i].rhythm_time;
+			switch( this.state )
 			{
 				case this.states.playback:
-					this.rhythms[0].setvisible(1);
+					this.rhythms[this.rhythms.length - 1].setvisible(0);
 					break;
 				case this.states.visual:
-					this.rhythms[0].setvisible(1);
+					this.rhythms[this.rhythms.length - 1].setvisible(1);
 					break;
 				case this.states.speed1:
-					this.rhythms[0].setvisible(1);
+					this.rhythms[this.rhythms.length - 1].setvisible(1);
+					this.rhythms[this.rhythms.length - 1].setRhyhtmLength(this.rhythm.rhythm_time * 0.60);
 					break;
 				case this.states.speed2:
-					this.rhythms[0].setvisible(1);
+					this.rhythms[this.rhythms.length - 1].setvisible(1);
+					this.rhythms[this.rhythms.length - 1].setRhyhtmLength(this.rhythm.rhythm_time * 0.40);
+					break;
+				default:
+					this.rhythms[this.rhythms.length - 1].setvisible(0);
 					break;
 			}
+			diff_time = this.rhythms[i+1].diff_time;
 		}
 	}
 
 	this.updateOtherRhythms = function()
 	{
-		i = 1 + this.stateRepitition[this.state];
+		var shift_time = this.screenTime + ( this.stateRepitition[this.state] * this.rhythms[1].rhythm_time );
+		var i = 1 + this.stateRepitition[this.state];
 		while( i < this.rhythms.length )
 		{
-			this.rhythms[i].diff_time = this.rhythms[i-1].diff_time + this.rhythms[i-1].rhythm_time;
+			this.rhythms[i].diff_time += shift_time;
 			i++;
 		}
+		this.nextDisplayedDiffTime = this.rhythms[this.rhythms.length-1].diff_time 
+		                                +  this.rhythms[this.rhythms.length-1].rhythm_time
+		                                + this.screenTime;
 	}
 
 	this.start = function(yscale)
@@ -124,32 +144,38 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 
 	this.play = function(time, draw)
 	{
-		if( this.state == this.states.end )
+		if( this.state == this.states.end || this.playing == false)
 		{
 
 			return;
 		}
 		else
 		{
-			if ( this.rhythms.length > 0 && time >= this.rhythms[0].diff_time + this.rhythms[0].rhythm_time + this.start_time )
+			if ( this.rhythms.length > 0 && time >= this.rhythms[0].diff_time + this.rhythms[0].rhythm_time 
+																									+ this.start_time )
 			{
 				this.numberOfRhythmBeforeNextState--;
+				
+				if( this.rhythms[0].played == 1)
+					this.playerCounter++;
+
 				if( this.numberOfRhythmBeforeNextState == 0 )
 				{
 					if( this.playerCounter >= this.stateRepititionRequired[this.state] )
 					{
 						this.state++;
 						this.playerCounter = 0;
+//						this.pause();
+//						d.addEventListener('keypress', function (e){ this.start();}, false);
 					}
 					else
 					{
 						this.replayLastRhythm();
 						this.updateOtherRhythms();
+						this.playerCounter = 0;
 					}
 					this.numberOfRhythmBeforeNextState = this.stateRepitition[this.state];
 				}
-				if( this.rhythms[0].played == 1)
-					this.playerCounter++;
 				this.rhythms.shift();
 			}
 
@@ -166,6 +192,11 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 		}
 	}
 
+	this.keyHandler = function(e)
+	{
+		this.play();
+	}
+
 	this.getCurrentBeatTime = function (current_time, track)
 	{
 		if( this.state != this.states.start && this.state != this.states.playback )
@@ -177,8 +208,6 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 					var cur_beat_time = this.rhythms[i].getCurrentBeatTime(current_time, this.start_time, track);
 					if ( cur_beat_time != -1)
 					{
-						if( this.rhythms[i].played == 1 )
-							this.playerCounter++;
 						return cur_beat_time;
 					}
 				}
@@ -212,6 +241,30 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 		{
 			return -1;
 		}
+	}
+
+	this.pause = function()
+	{
+		this.playing = false;
+		this.pauseTime = new Date().getTime();
+	}
+
+	this.resume = function()
+	{
+		if( !this.playing)
+		{
+			var shift_time = new Date().getTime() - this.pauseTime;
+			this.shiftGame(shift_time);
+			this.playing = true;
+		}
+	}
+
+	this.shiftGame = function(shift_time)
+	{
+		for( var i = 0; i < this.rhythms.length; i++ )
+			this.rhythms[i].diff_time += shift_time;
+		this.nextDisplayedDiffTime += shift_time;
+		
 	}
 
 }
