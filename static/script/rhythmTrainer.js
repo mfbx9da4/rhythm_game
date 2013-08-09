@@ -165,8 +165,11 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 					{
 						this.state++;
 						this.playerCounter = 0;
-//						this.pause();
-//						d.addEventListener('keypress', function (e){ this.start();}, false);
+						this.pause();
+						d.removeEventListener('keypress', playKeysFunction, false);
+ 						d.addEventListener('keypress', function (e){ 	d.removeEventListener('keypress',arguments.callee,false);
+ 																		d.addEventListener('keypress', playKeysFunction, false);
+ 																		new_song.resume();}, false);
 					}
 					else
 					{

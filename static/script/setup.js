@@ -18,17 +18,20 @@ function startScreen()
 	// TODO: choose nice fonts scheme
 	ctx.fillText("Press any key to start", 0, 50);
 	d.addEventListener('keypress', function (e){ 
-															this.removeEventListener('keypress',arguments.callee,false)
+															d.removeEventListener('keypress',arguments.callee,false)
 															start();
 														}, false);
 }
 
+
+playKeysFunction = null;
 function start()
 {
 
 	new_song.start(0.3);
 
-	d.addEventListener('keypress', function (e){keyHandler(e);}, false);
+	playKeysFunction = function(e){keyHandler(e);};
+	d.addEventListener('keypress', playKeysFunction, false);
 
 
 	// setInterval(function () { flip(); }, 1000);
