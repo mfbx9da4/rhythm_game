@@ -71,7 +71,7 @@ function parseXml( xml)
 	{
 		start_metronome = Number(metronome[0].getElementsByTagName("start")[0].childNodes[0].nodeValue);
 		metronome_speed = Number(metronome[0].getElementsByTagName("speed")[0].childNodes[0].nodeValue);
-		metronomeObject = new Metronome(start_metronome, metronome_speed);
+		metronomeObject = new AdvancedMetronome(start_metronome, metronome_speed, 0, 5000);
 	}
 
 	return new RhythmTrainer(new_rhythm, metronomeObject, new Array(2,2,2,2,2,2), new Array(0,0,2,2,2,2));

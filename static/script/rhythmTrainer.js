@@ -15,8 +15,11 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 	this.xscale = c.width / this.tracks;
   	this.offset = c.width % this.tracks + ( this.xscale / 2 );
 
-  	// This is the metronome:
+  	// This is the template metronome:
 	this.metronome = metronomeTemp;
+
+	// This are the actual metronome:
+	this.metronomes = [];
 	
 	// This is used to know how long it takes a note to go from the top to the bottom of the screen:
 	this.screenTime = 0;
@@ -46,6 +49,8 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 
 	this.createNextRhythms = function()
 	{
+		this.metronomes.push( this.metronome.duplicate() );
+		this.metronomes[this.metronomes.length-1].start_time_window = this.nextDisplayedDiffTime;
 		for( i = 0; i < this.stateRepitition[this.nextDisplayedState] ; i ++)
 		{
 			this.rhythms.push( this.rhythm.duplicate());
@@ -74,14 +79,15 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 			this.nextDisplayedDiffTime = this.rhythms[this.rhythms.length - 1].diff_time 
 																+ this.rhythms[this.rhythms.length - 1].rhythm_time;
 		}
-		this.nextDisplayedDiffTime = this.rhythms[this.rhythms.length - 1].diff_time 
-																+ this.rhythms[this.rhythms.length - 1].rhythm_time
-																+ this.screenTime;
+		this.metronomes[this.metronomes.length-1].end_time_window = this.nextDisplayedDiffTime; 
+		this.nextDisplayedDiffTime += this.screenTime;
 	}
 	
 	this.replayLastRhythm = function()
 	{
 		var diff_time = this.rhythms[0].diff_time + this.screenTime;
+		this.metronomes.unshift(  this.metronome.duplicate() );
+		this.metronomes[0].start_time_window = diff_time + this.rhythms[0].rhythm_time;
 		for( i = 0; i < this.stateRepitition[this.state] ; i ++)
 		{
 			this.rhythms.splice( i + 1, 0, this.rhythm.duplicate());
@@ -109,6 +115,7 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 			}
 			diff_time = this.rhythms[i+1].diff_time;
 		}
+		this.metronomes[0].end_time_window = this.nextDisplayedDiffTime; 
 	}
 
 	this.updateOtherRhythms = function()
@@ -118,6 +125,13 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 		while( i < this.rhythms.length )
 		{
 			this.rhythms[i].diff_time += shift_time;
+			i++;
+		}
+		i = 0;
+		while( i < this.metronomes.length )
+		{
+			this.metronomes[i].start_time_window += shift_time;
+			this.metronomes[i].end_time_window += shift_time;
 			i++;
 		}
 		this.nextDisplayedDiffTime = this.rhythms[this.rhythms.length-1].diff_time 
@@ -163,13 +177,20 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 				{
 					if( this.playerCounter >= this.stateRepititionRequired[this.state] )
 					{
+						this.metronomes.shift();
 						this.state++;
 						this.playerCounter = 0;
-//						this.pause();
-//						d.addEventListener('keypress', function (e){ this.start();}, false);
+						this.pause();
+						c.style.webkitFilter = "blur(3px)";
+						d.removeEventListener('keypress', playKeysFunction, false);
+ 						d.addEventListener('keypress', function (e){ 	d.removeEventListener('keypress',arguments.callee,false);
+ 																		d.addEventListener('keypress', playKeysFunction, false);
+ 																		new_song.resume();
+ 																		c.style.webkitFilter = "blur(0px)"; }, false);
 					}
 					else
 					{
+						this.metronomes.shift();
 						this.replayLastRhythm();
 						this.updateOtherRhythms();
 						this.playerCounter = 0;
@@ -183,6 +204,11 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 			{
 				this.createNextRhythms();
 				this.nextDisplayedState++;
+			}
+
+			for( var i = 0; i < this.metronomes.length; i ++)
+			{
+		  		this.metronomes[i].draw(this.start_time, time, this.yscale );
 			}
 
 			for( var i = 0; i < this.rhythms.length; i ++)
@@ -263,6 +289,11 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 	{
 		for( var i = 0; i < this.rhythms.length; i++ )
 			this.rhythms[i].diff_time += shift_time;
+		for( var i = 0; i < this.metronomes.length; i++ )
+		{
+			this.metronomes[i].start_time_window += shift_time;
+			this.metronomes[i].end_time_window += shift_time;
+		}
 		this.nextDisplayedDiffTime += shift_time;
 		
 	}
