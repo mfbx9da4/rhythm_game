@@ -2,6 +2,9 @@
 <head>
     <script src="script/xml_parsing.js"></script>
     <script src="script/gridtoxml.js"></script>
+    <script src="script/beat.js"></script>
+    <script src="script/rhythm.js"></script>
+
     <link rel="stylesheet" type="text/css" href="style/rhythm_enterer.css">
 </head>
 
@@ -26,6 +29,7 @@
 <table id="main_table">
     <tbody>
                                                             <tr id="table_header"> 
+    <td> <label class="table_header">Track Song </label> </td>
     <td> <label class="table_header">1 </label> </td>  
     <td> <label class="table_header"> </label> </td>  
     <td> <label class="table_header"> </label> </td>  
@@ -43,6 +47,7 @@
     <td> <label class="table_header"> </label> </td>  
     <td> <label class="table_header"> </label> </td> </tr><tr id="row000">
 
+    <td> <select class="song_dropdown" name="" id="1"> </select> </td> 
     <td> <input type="checkbox" id="cb001" value=""> </td> 
     <td> <input type="checkbox" id="cb002" value=""> </td>  
     <td> <input type="checkbox" id="cb003" value=""> </td>  
@@ -59,6 +64,8 @@
     <td> <input type="checkbox" id="cb014" value=""> </td>  
     <td> <input type="checkbox" id="cb015" value=""> </td>  
     <td> <input type="checkbox" id="cb016" value=""> </td> </tr><tr id="row001"> 
+
+    <td> <select class="song_dropdown" name="" id="2"> </select> </td> 
     <td> <input type="checkbox" id="cb017" value=""> </td>  
     <td> <input type="checkbox" id="cb018" value=""> </td>  
     <td> <input type="checkbox" id="cb019" value=""> </td>  
@@ -75,6 +82,8 @@
     <td> <input type="checkbox" id="cb030" value=""> </td>  
     <td> <input type="checkbox" id="cb031" value=""> </td>  
     <td> <input type="checkbox" id="cb032" value=""> </td> </tr><tr id="row002"> 
+
+    <td> <select class="song_dropdown" name="" id="3"> </select> </td> 
     <td> <input type="checkbox" id="cb033" value=""> </td>  
     <td> <input type="checkbox" id="cb034" value=""> </td>  
     <td> <input type="checkbox" id="cb035" value=""> </td>  
@@ -91,6 +100,8 @@
     <td> <input type="checkbox" id="cb046" value=""> </td>  
     <td> <input type="checkbox" id="cb047" value=""> </td>  
     <td> <input type="checkbox" id="cb048" value=""> </td> </tr><tr id="row003"> 
+
+    <td> <select class="song_dropdown" name="" id="4"> </select> </td> 
     <td> <input type="checkbox" id="cb049" value=""> </td>  
     <td> <input type="checkbox" id="cb050" value=""> </td>  
     <td> <input type="checkbox" id="cb051" value=""> </td>  
@@ -107,6 +118,8 @@
     <td> <input type="checkbox" id="cb062" value=""> </td>  
     <td> <input type="checkbox" id="cb063" value=""> </td>  
     <td> <input type="checkbox" id="cb064" value=""> </td> </tr><tr id="row004"> 
+
+    <td> <select class="song_dropdown" name="" id="5"> </select> </td> 
     <td> <input type="checkbox" id="cb065" value=""> </td>  
     <td> <input type="checkbox" id="cb066" value=""> </td>  
     <td> <input type="checkbox" id="cb067" value=""> </td>  
@@ -123,6 +136,8 @@
     <td> <input type="checkbox" id="cb078" value=""> </td>  
     <td> <input type="checkbox" id="cb079" value=""> </td>  
     <td> <input type="checkbox" id="cb080" value=""> </td> </tr><tr id="row005"> 
+
+    <td> <select class="song_dropdown" name="" id="6"> </select> </td> 
     <td> <input type="checkbox" id="cb081" value=""> </td>  
     <td> <input type="checkbox" id="cb082" value=""> </td>  
     <td> <input type="checkbox" id="cb083" value=""> </td>  
@@ -139,6 +154,8 @@
     <td> <input type="checkbox" id="cb094" value=""> </td>  
     <td> <input type="checkbox" id="cb095" value=""> </td>  
     <td> <input type="checkbox" id="cb096" value=""> </td> </tr><tr id="row006"> 
+
+    <td> <select class="song_dropdown" name="" id="7"> </select> </td> 
     <td> <input type="checkbox" id="cb097" value=""> </td>  
     <td> <input type="checkbox" id="cb098" value=""> </td>  
     <td> <input type="checkbox" id="cb099" value=""> </td>  
@@ -155,6 +172,8 @@
     <td> <input type="checkbox" id="cb110" value=""> </td>  
     <td> <input type="checkbox" id="cb111" value=""> </td>  
     <td> <input type="checkbox" id="cb112" value=""> </td> </tr><tr id="row007"> 
+
+    <td> <select class="song_dropdown" name="" id="8"> </select> </td> 
     <td> <input type="checkbox" id="cb113" value=""> </td>  
     <td> <input type="checkbox" id="cb114" value=""> </td>  
     <td> <input type="checkbox" id="cb115" value=""> </td>  
@@ -171,140 +190,11 @@
     <td> <input type="checkbox" id="cb126" value=""> </td>  
     <td> <input type="checkbox" id="cb127" value=""> </td>  
     <td> <input type="checkbox" id="cb128" value=""> </td> </tr><tr id="row008"> 
-    <td> <input type="checkbox" id="cb129" value=""> </td>  
-    <td> <input type="checkbox" id="cb130" value=""> </td>  
-    <td> <input type="checkbox" id="cb131" value=""> </td>  
-    <td> <input type="checkbox" id="cb132" value=""> </td>  
-    <td> <input type="checkbox" id="cb133" value=""> </td>  
-    <td> <input type="checkbox" id="cb134" value=""> </td>  
-    <td> <input type="checkbox" id="cb135" value=""> </td>  
-    <td> <input type="checkbox" id="cb136" value=""> </td>  
-    <td> <input type="checkbox" id="cb137" value=""> </td>  
-    <td> <input type="checkbox" id="cb138" value=""> </td>  
-    <td> <input type="checkbox" id="cb139" value=""> </td>  
-    <td> <input type="checkbox" id="cb140" value=""> </td>  
-    <td> <input type="checkbox" id="cb141" value=""> </td>  
-    <td> <input type="checkbox" id="cb142" value=""> </td>  
-    <td> <input type="checkbox" id="cb143" value=""> </td>  
-    <td> <input type="checkbox" id="cb144" value=""> </td> </tr><tr id="row009"> 
-    <td> <input type="checkbox" id="cb145" value=""> </td>  
-    <td> <input type="checkbox" id="cb146" value=""> </td>  
-    <td> <input type="checkbox" id="cb147" value=""> </td>  
-    <td> <input type="checkbox" id="cb148" value=""> </td>  
-    <td> <input type="checkbox" id="cb149" value=""> </td>  
-    <td> <input type="checkbox" id="cb150" value=""> </td>  
-    <td> <input type="checkbox" id="cb151" value=""> </td>  
-    <td> <input type="checkbox" id="cb152" value=""> </td>  
-    <td> <input type="checkbox" id="cb153" value=""> </td>  
-    <td> <input type="checkbox" id="cb154" value=""> </td>  
-    <td> <input type="checkbox" id="cb155" value=""> </td>  
-    <td> <input type="checkbox" id="cb156" value=""> </td>  
-    <td> <input type="checkbox" id="cb157" value=""> </td>  
-    <td> <input type="checkbox" id="cb158" value=""> </td>  
-    <td> <input type="checkbox" id="cb159" value=""> </td>  
-    <td> <input type="checkbox" id="cb160" value=""> </td> </tr><tr id="row010"> 
-    <td> <input type="checkbox" id="cb161" value=""> </td>  
-    <td> <input type="checkbox" id="cb162" value=""> </td>  
-    <td> <input type="checkbox" id="cb163" value=""> </td>  
-    <td> <input type="checkbox" id="cb164" value=""> </td>  
-    <td> <input type="checkbox" id="cb165" value=""> </td>  
-    <td> <input type="checkbox" id="cb166" value=""> </td>  
-    <td> <input type="checkbox" id="cb167" value=""> </td>  
-    <td> <input type="checkbox" id="cb168" value=""> </td>  
-    <td> <input type="checkbox" id="cb169" value=""> </td>  
-    <td> <input type="checkbox" id="cb170" value=""> </td>  
-    <td> <input type="checkbox" id="cb171" value=""> </td>  
-    <td> <input type="checkbox" id="cb172" value=""> </td>  
-    <td> <input type="checkbox" id="cb173" value=""> </td>  
-    <td> <input type="checkbox" id="cb174" value=""> </td>  
-    <td> <input type="checkbox" id="cb175" value=""> </td>  
-    <td> <input type="checkbox" id="cb176" value=""> </td> </tr><tr id="row011"> 
-    <td> <input type="checkbox" id="cb177" value=""> </td>  
-    <td> <input type="checkbox" id="cb178" value=""> </td>  
-    <td> <input type="checkbox" id="cb179" value=""> </td>  
-    <td> <input type="checkbox" id="cb180" value=""> </td>  
-    <td> <input type="checkbox" id="cb181" value=""> </td>  
-    <td> <input type="checkbox" id="cb182" value=""> </td>  
-    <td> <input type="checkbox" id="cb183" value=""> </td>  
-    <td> <input type="checkbox" id="cb184" value=""> </td>  
-    <td> <input type="checkbox" id="cb185" value=""> </td>  
-    <td> <input type="checkbox" id="cb186" value=""> </td>  
-    <td> <input type="checkbox" id="cb187" value=""> </td>  
-    <td> <input type="checkbox" id="cb188" value=""> </td>  
-    <td> <input type="checkbox" id="cb189" value=""> </td>  
-    <td> <input type="checkbox" id="cb190" value=""> </td>  
-    <td> <input type="checkbox" id="cb191" value=""> </td>  
-    <td> <input type="checkbox" id="cb192" value=""> </td> </tr><tr id="row012"> 
-    <td> <input type="checkbox" id="cb193" value=""> </td>  
-    <td> <input type="checkbox" id="cb194" value=""> </td>  
-    <td> <input type="checkbox" id="cb195" value=""> </td>  
-    <td> <input type="checkbox" id="cb196" value=""> </td>  
-    <td> <input type="checkbox" id="cb197" value=""> </td>  
-    <td> <input type="checkbox" id="cb198" value=""> </td>  
-    <td> <input type="checkbox" id="cb199" value=""> </td>  
-    <td> <input type="checkbox" id="cb200" value=""> </td>  
-    <td> <input type="checkbox" id="cb201" value=""> </td>  
-    <td> <input type="checkbox" id="cb202" value=""> </td>  
-    <td> <input type="checkbox" id="cb203" value=""> </td>  
-    <td> <input type="checkbox" id="cb204" value=""> </td>  
-    <td> <input type="checkbox" id="cb205" value=""> </td>  
-    <td> <input type="checkbox" id="cb206" value=""> </td>  
-    <td> <input type="checkbox" id="cb207" value=""> </td>  
-    <td> <input type="checkbox" id="cb208" value=""> </td> </tr><tr id="row013"> 
-    <td> <input type="checkbox" id="cb209" value=""> </td>  
-    <td> <input type="checkbox" id="cb210" value=""> </td>  
-    <td> <input type="checkbox" id="cb211" value=""> </td>  
-    <td> <input type="checkbox" id="cb212" value=""> </td>  
-    <td> <input type="checkbox" id="cb213" value=""> </td>  
-    <td> <input type="checkbox" id="cb214" value=""> </td>  
-    <td> <input type="checkbox" id="cb215" value=""> </td>  
-    <td> <input type="checkbox" id="cb216" value=""> </td>  
-    <td> <input type="checkbox" id="cb217" value=""> </td>  
-    <td> <input type="checkbox" id="cb218" value=""> </td>  
-    <td> <input type="checkbox" id="cb219" value=""> </td>  
-    <td> <input type="checkbox" id="cb220" value=""> </td>  
-    <td> <input type="checkbox" id="cb221" value=""> </td>  
-    <td> <input type="checkbox" id="cb222" value=""> </td>  
-    <td> <input type="checkbox" id="cb223" value=""> </td>  
-    <td> <input type="checkbox" id="cb224" value=""> </td> </tr><tr id="row014"> 
-    <td> <input type="checkbox" id="cb225" value=""> </td>  
-    <td> <input type="checkbox" id="cb226" value=""> </td>  
-    <td> <input type="checkbox" id="cb227" value=""> </td>  
-    <td> <input type="checkbox" id="cb228" value=""> </td>  
-    <td> <input type="checkbox" id="cb229" value=""> </td>  
-    <td> <input type="checkbox" id="cb230" value=""> </td>  
-    <td> <input type="checkbox" id="cb231" value=""> </td>  
-    <td> <input type="checkbox" id="cb232" value=""> </td>  
-    <td> <input type="checkbox" id="cb233" value=""> </td>  
-    <td> <input type="checkbox" id="cb234" value=""> </td>  
-    <td> <input type="checkbox" id="cb235" value=""> </td>  
-    <td> <input type="checkbox" id="cb236" value=""> </td>  
-    <td> <input type="checkbox" id="cb237" value=""> </td>  
-    <td> <input type="checkbox" id="cb238" value=""> </td>  
-    <td> <input type="checkbox" id="cb239" value=""> </td>  
-    <td> <input type="checkbox" id="cb240" value=""> </td> </tr><tr id="row015"> 
-    <td> <input type="checkbox" id="cb241" value=""> </td>  
-    <td> <input type="checkbox" id="cb242" value=""> </td>  
-    <td> <input type="checkbox" id="cb243" value=""> </td>  
-    <td> <input type="checkbox" id="cb244" value=""> </td>  
-    <td> <input type="checkbox" id="cb245" value=""> </td>  
-    <td> <input type="checkbox" id="cb246" value=""> </td>  
-    <td> <input type="checkbox" id="cb247" value=""> </td>  
-    <td> <input type="checkbox" id="cb248" value=""> </td>  
-    <td> <input type="checkbox" id="cb249" value=""> </td>  
-    <td> <input type="checkbox" id="cb250" value=""> </td>  
-    <td> <input type="checkbox" id="cb251" value=""> </td>  
-    <td> <input type="checkbox" id="cb252" value=""> </td>  
-    <td> <input type="checkbox" id="cb253" value=""> </td>  
-    <td> <input type="checkbox" id="cb254" value=""> </td>  
-    <td> <input type="checkbox" id="cb255" value=""> </td>  
-    <td> <input type="checkbox" id="cb256" value=""> </td> </tr>
-
 </tbody>
 </table>
 
-<table id="all_rhythms">
-<tbody>
+<table >
+<tbody id="all_rhythms">
     <tr>
         <td>Title</td>
         <td>Last Modified</td>
@@ -316,7 +206,7 @@
 <div id="button_container">
     <button onclick="g2x.submitRhythm()">Submit rhythm</button>
     <button onclick="updateRhythms('delete_all')">Delete all rhythms</button>
-    <button onclick="x2g.requestRhythm('this')">Get</button>
+    <button onclick="updateRhythmsList()">Update List Of Rhythm</button>
 </div>
 
 </div>
@@ -327,9 +217,11 @@
 
 var g2x = new GridToXML();
 var x2g = new XMLToGrid();
-var all_rhythms = {};
+var songs = new SongRequest();
+rhythms = null;
 
-document.onload = loadALlRhythms()
+updateRhythmsList();
+songs.updateDropDowns();
 
 function updateRhythms(string){
     var xhr = getXMLHttpRequest();
@@ -342,26 +234,131 @@ function updateRhythms(string){
     return xhr.responseText;
 }
 
-parseXml = function(xmlStr) {
-        return ( new window.DOMParser() ).parseFromString(xmlStr, "text/xml");
-    };
 
 
-function XMLToGrid (){
-    this.requestRhythm = function (rhythm_title){
+function updateRhythmsList()
+{
+    list = document.getElementById("all_rhythms");
+    x2g.requestAllRythms();
+    if( list == null)
+    {
+        alert("The list could not be found")
+        return;
+    }
+    list.innerHTML = "<tr> <td>Title</td> <td>Last Modified</td>  </tr>";
+    for( var i = 0 ; i < rhythms.length; i++)
+    {
+        title = document.createElement('td');
+        title.innerHTML = rhythms[i].title;
+        title.setAttribute("onclick","x2g.displayRhythmOnGrid(\""+rhythms[i].title+"\");");
+        
+        date = document.createElement('td');
+        date.innerHTML = rhythms[i].date;
+
+        new_entry = document.createElement('tr');
+        new_entry.appendChild(title);
+        new_entry.appendChild(date);
+
+        list.appendChild( new_entry );
+    }
+}
+
+function SongRequest()
+{
+    this.sendRequest = function (options){
         var xhr = getXMLHttpRequest();
-        var url = '/rhythm_db?title=' + rhythm_title
+        var url = '/song_db' + options
         xhr.open("GET", url, false);
         xhr.send(null);
-        this.xml = xhr.responseXML;
-        console.log(xhr.responseXML)
-        return xhr.responseXML;       
+        return xhr;       
     }
+
+    this.requestAllSongs = function()
+    {
+        xhr = this.sendRequest('');
+        this.songs = JSON.parse(xhr.responseText).songs;       
+    }
+
+    this.updateDropDowns = function()
+    {
+        this.requestAllSongs();
+        song_options = []
+        for( var i = 0; i < this.songs.length; i++)
+        {
+            song_option = document.createElement('option');
+            song_option.value = this.songs[i];
+            song_option.innerHTML = this.songs[i];
+            song_options.push(song_option);
+        }
+
+        dropDowns = document.getElementsByClassName("song_dropdown");
+        for(var i = 0; i < dropDowns.length; i++)
+        {
+            for( var j = 0; j < song_options.length; j++)
+            {
+                dropDowns[i].appendChild(song_options[j].cloneNode(true));
+            }
+        }
+    }
+}
+
+function XMLToGrid (){
+
+    this.requestAllRythms = function()
+    {
+        xhr = this.sendRequest('?arg=all');
+        rhythms = JSON.parse(xhr.responseText).rhythms;
+    }
+
+    this.requestRhythm  = function (rhythm_title)
+    {
+        xhr = this.sendRequest('?title=' + rhythm_title);
+        this.rhythm = xhr.responseXML;
+    }
+    
+    this.sendRequest = function (options){
+        var xhr = getXMLHttpRequest();
+        var url = '/rhythm_db' + options
+        xhr.open("GET", url, false);
+        xhr.send(null);
+        return xhr;       
+    }
+
     this.parseRhythm = function (){
         var a = 0;
     }
-    this.displayRhythmOnGrid = function (){
-        var a = 0;
+
+    this.displayRhythmOnGrid = function ( title){
+        this.requestRhythm(title);
+        loaded_rhythm = parseXml(this.rhythm);
+        for( var i = 0; i < loaded_rhythm.beats.length ; i ++)
+        {
+            for( var j = 0; j < loaded_rhythm.beats[i].length ; j ++)
+            {
+                var beat = loaded_rhythm.beats[i][j];
+                this.checkbox( beat / (1 / 16 ), i ); 
+            }
+        }
+    }
+
+    this.checkbox = function(index, track)
+    {
+        checkbox_number = track * 16 + index + 1;
+        if ( checkbox_number < 10 )
+        {
+            additional_zero = "00";
+        }
+        else if( checkbox_number < 100)
+        {
+            additional_zero = "0"
+        }
+        else
+        {
+            additional_zero = ""
+        }
+        checkbox_id = "cb" + additional_zero + checkbox_number;
+        checkbox = document.getElementById(checkbox_id);
+        checkbox.checked = true;
     }
 }
 

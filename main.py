@@ -35,6 +35,14 @@ class Enterer(BaseHandler):
     def get(self):
         self.render('rhythm_enterer.html')
 
+class SongsQuery(BaseHandler):
+  def get(self):
+      songName = ["one", "two", "threee"];
+      songName = {'songs': songName}
+      encoder = json.JSONEncoder()
+      songs = encoder.encode(songName)
+      return self.write(songs)
+
 
 class RhythmsQuery(BaseHandler):
     def get(self):
@@ -50,9 +58,9 @@ class RhythmsQuery(BaseHandler):
         q = Rhythm.all().filter('title =', title)
         r = q.fetch(1)
         if r:
-          out = self.response.body_file = r[0].xml
-          self.error(out)
-          return self.write(out)
+          out = r[0].xml
+          self.response.headers['Content-Type'] = "text/xml"
+          return self.response.out.write(out)
         else:
           return self.write('not found')
 
@@ -60,7 +68,8 @@ class RhythmsQuery(BaseHandler):
         if self.arg == 'delete_all':
             self.deleteAll()
         elif self.arg == 'all':
-            rhythms = dict([(str(r.title), [str(r.last_modified), str(r.xml)]) for r in self.rhythms])
+            rhythms = [{ 'title': str(r.title), 'date': str(r.last_modified), 'xml': str(r.xml) } for r in self.rhythms]
+            rhythms = {'rhythms': rhythms}
             encoder = json.JSONEncoder()
             rhythms = encoder.encode(rhythms)
             return self.write(rhythms)
@@ -96,7 +105,8 @@ app = webapp2.WSGIApplication([('/', Home),
                                ('/game', game),
                                ('/randomsong', RandomSong),
                                ('/rhythm_enterer', Enterer),
-                               ('/rhythm_db', RhythmsQuery)
+                               ('/rhythm_db', RhythmsQuery),
+                               ('/song_db', SongsQuery)
                                ],
                                debug=True,
                                config=config)
