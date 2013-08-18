@@ -11,6 +11,7 @@ __website__ = 'http://rhythmludus.appspot.com/'
 from xml.dom import minidom as md
 
 import webapp2
+import logging
 from google.appengine.ext import db
 
 from object_models import BaseHandler
@@ -31,13 +32,19 @@ class Rhythm(db.Model):
     created = db.DateTimeProperty(auto_now_add=True)
     last_modified = db.DateTimeProperty(auto_now=True)
 
+class Song(db.Model):
+    title = db.StringProperty(multiline=False, required=True)
+    created = db.DateTimeProperty(auto_now_add=True)
+
 class Enterer(BaseHandler):
     def get(self):
         self.render('rhythm_enterer.html')
 
 class SongsQuery(BaseHandler):
   def get(self):
-      songName = ["one", "two", "threee"];
+      song_db = Song.all().fetch(10)
+      songName = [ s.title for s in song_db ]
+      # songName=["one", "two", "three"]
       songName = {'songs': songName}
       encoder = json.JSONEncoder()
       songs = encoder.encode(songName)
@@ -96,6 +103,18 @@ def valid_title(title):
     if not Rhythm.all().filter('title =', title).get():
         return True
 
+class SongDb(BaseHandler):
+    def get(self):
+          db.delete(Song.all());
+          song = Song(title="sound/conga/1.wav")
+          song.put()
+          song = Song(title="sound/conga/2.wav")
+          song.put()
+          song = Song(title="sound/conga/3.wav")
+          song.put()
+          return self.write("DB initialised")
+
+
 config = {}
 config['webapp2_extras.sessions'] = {
     'secret_key': 'my-super-secret-key',
@@ -106,7 +125,8 @@ app = webapp2.WSGIApplication([('/', Home),
                                ('/randomsong', RandomSong),
                                ('/rhythm_enterer', Enterer),
                                ('/rhythm_db', RhythmsQuery),
-                               ('/song_db', SongsQuery)
+                               ('/song_db', SongsQuery),
+                               ('/init_db', SongDb)
                                ],
                                debug=True,
                                config=config)

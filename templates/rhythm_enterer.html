@@ -1,9 +1,14 @@
 <html>
 <head>
     <script src="script/xml_parsing.js"></script>
-    <script src="script/gridtoxml.js"></script>
-    <script src="script/beat.js"></script>
+    <script src="script/gridToRhythm.js"></script>
+    <script src="script/rhythmToXml.js"></script>
     <script src="script/rhythm.js"></script>
+    <script src="script/AdvancedRhythm.js"></script>
+    <script src="script/circle.js"></script>
+    <script src="script/beat.js"></script>
+    <script src="script/rhythmPlayer.js"></script>
+    
 
     <link rel="stylesheet" type="text/css" href="style/rhythm_enterer.css">
 </head>
@@ -189,7 +194,7 @@
     <td> <input type="checkbox" id="cb125" value=""> </td>  
     <td> <input type="checkbox" id="cb126" value=""> </td>  
     <td> <input type="checkbox" id="cb127" value=""> </td>  
-    <td> <input type="checkbox" id="cb128" value=""> </td> </tr><tr id="row008"> 
+    <td> <input type="checkbox" id="cb128" value=""> </td> </tr>
 </tbody>
 </table>
 
@@ -204,9 +209,11 @@
 
 
 <div id="button_container">
-    <button onclick="g2x.submitRhythm()">Submit rhythm</button>
+    <button onclick="submitRhythm()">Submit rhythm</button>
     <button onclick="updateRhythms('delete_all')">Delete all rhythms</button>
     <button onclick="updateRhythmsList()">Update List Of Rhythm</button>
+    <button onclick="playRhythm()">Play Rhythm</button>
+    <input type="number" id="time" value="">
 </div>
 
 </div>
@@ -215,7 +222,44 @@
 </body>
 <script>
 
-var g2x = new GridToXML();
+var gridToRhythm = new GridToRhythm();
+var rhythmToXml = new RhythmToXml();
+var rhythm_player = new RhythmPlayer();
+var w = window;
+
+function playRhythm()
+{
+    if( rhythm_player.canPlay == 0 )
+    {
+        var rhythm = gridToRhythm.parseRhythm();
+        var time = document.getElementById("time").value;
+        var time = parseInt(time);
+        rhythm_player.setUp(rhythm, time);
+    }
+    else
+    {
+        rhythm_player.start();
+    }
+
+}
+
+function submitRhythm()
+{
+    var rhythm = gridToRhythm.parseRhythm();
+    var xml = rhythmToXml.parseRhythm(rhythm);
+
+    var xhr = getXMLHttpRequest();
+    xhr.open("POST", '/rhythm_db', false);
+    var xml_str = xml.innerHTML;
+    var title = document.getElementById('rhythm_title').value;
+    var request_body = title + '|' + xml_str
+    xhr.send(request_body);
+    console.log(request_body);
+    console.log(xhr.responseText);
+    document.getElementById('error').innerHTML = xhr.responseText;
+}
+
+
 var x2g = new XMLToGrid();
 var songs = new SongRequest();
 rhythms = null;
@@ -302,6 +346,7 @@ function SongRequest()
     }
 }
 
+
 function XMLToGrid (){
 
     this.requestAllRythms = function()
@@ -338,6 +383,14 @@ function XMLToGrid (){
                 var beat = loaded_rhythm.beats[i][j];
                 this.checkbox( beat / (1 / 16 ), i ); 
             }
+        }
+
+
+        for( var i = 0; i < loaded_rhythm.trackNumber_to_trackID.length; i++)
+        {
+            var song = loaded_rhythm.track_to_song[loaded_rhythm.trackNumber_to_trackID[i]];
+            dropDown = document.getElementById(i+1);
+            dropDown.value = song;
         }
     }
 

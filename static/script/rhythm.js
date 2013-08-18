@@ -16,6 +16,13 @@ function Rhythm (beats, diff_time, rhythm_time){
   	this.counter = 0;
   	this.played = 0;
 
+  	this.setPlayback = function( value)
+  	{
+  		for( track = 0 ; track < this.tracks; track ++)  		
+  			for( j = 0; j < this.beats[track].length; j ++ )
+	      		this.beats[track][j].playedPlayBack = value;		
+  	}
+
   	this.duplicate = function()
   	{
   		var newBeats = new Array(this.tracks);
