@@ -4,12 +4,10 @@ function RhythmPlayer()
 
 	this.play = function()
 	{
-		console.log("pb");
 		var time =  new Date().getTime();
 		for ( track = 0; track < this.rhythm.tracks; track ++)
 		{
 			var play = this.rhythm.getCurrentBeatTimePlayback(time, this.startTime, track);
-			
 			if ( play == 1)
 			{
 				this.playSound(track);
@@ -49,6 +47,7 @@ function RhythmPlayer()
 	this.startoff = function()
 	{
 		this.counter++;
+		console.log( "Counter: " + this.counter + " Number: " + this.number );
 		if( this.counter >= this.number )
 			this.start();
 	}
@@ -57,11 +56,13 @@ function RhythmPlayer()
 	{
 		this.canPlay = 0;
 		this.startTime =  new Date().getTime();
+		this.play();
 		this.id = w.setInterval( function() { rhythm_player.play() }, 10);
 	}
 
 	this.playSound = function(track)
 	{
+		console.log( "Elapsed Time: " + (new Date().getTime() - this.startTime ) );
 		this.soundIndex[track]++;
 		if( this.soundIndex[track] > 2)
 			this.soundIndex[track] = 0;
