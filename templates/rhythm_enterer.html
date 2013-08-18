@@ -212,7 +212,7 @@
     <button onclick="submitRhythm()">Submit rhythm</button>
     <button onclick="updateRhythms('delete_all')">Delete all rhythms</button>
     <button onclick="updateRhythmsList()">Update List Of Rhythm</button>
-    <button onclick="playRhythm()">Play Rhythm</button>
+    <button onclick="playRhythm()" id="playRhythm">Play Rhythm</button>
     <input type="number" id="time" value="">
 </div>
 
@@ -229,18 +229,14 @@ var w = window;
 
 function playRhythm()
 {
-    if( rhythm_player.canPlay == 0 )
-    {
+    if( rhythm_player.canPlay == 1 )
+    {    
+        rhythm_player.canPlay = 0;
         var rhythm = gridToRhythm.parseRhythm();
         var time = document.getElementById("time").value;
         var time = parseInt(time);
         rhythm_player.setUp(rhythm, time);
     }
-    else
-    {
-        rhythm_player.start();
-    }
-
 }
 
 function submitRhythm()
@@ -257,6 +253,8 @@ function submitRhythm()
     console.log(request_body);
     console.log(xhr.responseText);
     document.getElementById('error').innerHTML = xhr.responseText;
+
+    updateRhythmsList();
 }
 
 
@@ -347,8 +345,20 @@ function SongRequest()
 }
 
 
+
 function XMLToGrid (){
 
+    this.emptyGrid = function()
+    {
+        var table = document.getElementById('main_table');
+        for (var i = 0, row; row = table.rows[i+1]; i++) 
+        {
+            for (var j = 0, col; col = row.cells[j]; j++) 
+            {           
+                col.childNodes[1].checked = false;
+            }
+        }       
+    }
     this.requestAllRythms = function()
     {
         xhr = this.sendRequest('?arg=all');
@@ -374,6 +384,7 @@ function XMLToGrid (){
     }
 
     this.displayRhythmOnGrid = function ( title){
+        this.emptyGrid();
         this.requestRhythm(title);
         loaded_rhythm = parseXml(this.rhythm);
         for( var i = 0; i < loaded_rhythm.beats.length ; i ++)

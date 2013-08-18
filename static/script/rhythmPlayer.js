@@ -1,6 +1,6 @@
 function RhythmPlayer()
 {
-	this.canPlay = 0;
+	this.canPlay = 1;
 
 	this.play = function()
 	{
@@ -29,7 +29,6 @@ function RhythmPlayer()
 		this.rhythm.rhythm_time = duration;
 		this.soundIndex = new Array();
 		this.audio = new Array();
-		this.canPlay = 0;
 		this.counter = 0;
 		
 		this.number = this.rhythm.trackNumber_to_trackID.length * 3; 
@@ -51,17 +50,14 @@ function RhythmPlayer()
 	{
 		this.counter++;
 		if( this.counter >= this.number )
-			this.canPlay = 1;
+			this.start();
 	}
 
 	this.start = function()
 	{
-		if( this.canPlay )
-		{
-			this.canPlay = 0;
-			this.startTime =  new Date().getTime();
-			this.id = w.setInterval( function() { rhythm_player.play() }, 10);
-		}
+		this.canPlay = 0;
+		this.startTime =  new Date().getTime();
+		this.id = w.setInterval( function() { rhythm_player.play() }, 10);
 	}
 
 	this.playSound = function(track)
