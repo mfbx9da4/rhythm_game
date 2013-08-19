@@ -9,11 +9,11 @@ function GridToRhythm()
         for (var i = 0, row; row = table.rows[i+1]; i++) 
         {
             var trackId = "track" + String(i);
-            trackNumber_to_trackID[i] = trackId;
+            trackNumber_to_trackID[i-1] = trackId;
             var beatsT = [];
             for (var j = 0, col; col = row.cells[j]; j++) 
             {           
-                var cb = col.childNodes[1]
+                var cb = col.childNodes[0]
                 if( j == 0 )
                 {    
                     track_to_song[trackId] = cb.options[cb.selectedIndex].value;

@@ -8,8 +8,8 @@ function Rhythm (beats, diff_time, rhythm_time){
   	this.rhythm_time = rhythm_time;
   	
   	nb = 0;
-  	for( t = 0; t < beats.length ; t++)
-  		for( l = 0; l < beats[t].length ; l++ )
+  	for( var t = 0; t < beats.length ; t++)
+  		for( var l = 0; l < beats[t].length ; l++ )
   			nb++;
   	this.numberOfBeats = nb;
 
