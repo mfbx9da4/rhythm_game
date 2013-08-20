@@ -1,0 +1,19 @@
+<div class="post">
+  <div class="post-heading">
+    <div class="post-title">
+      {{p.subject}}
+    </div>
+
+    <div class="post-date">
+<!--       entry.key().id()
+      .get_by_id(int(blog_id)) -->
+      <a href="/udacity/blog/{{p.key().id()}}" class="post-link">Permalink</a> |
+      <a href="/udacity/blog/edit/{{p.key().id()}}" class="post-link">Edit</a>
+      {{p.created.strftime("%b %d, %Y")}}
+    </div>
+  </div>
+
+  <div class="post-content">
+    {{p._render_text | safe}}
+  </div>
+</div>
