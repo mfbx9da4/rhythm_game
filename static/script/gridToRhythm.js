@@ -22,7 +22,7 @@ function GridToRhythm()
                 {
                     if (cb.checked)
                     {
-                        var note_time = ( j - 1 ) / 16.0;
+                        var note_time = ( j - 1 ) / number_columns;
                       	beatsT.push(new Beat(note_time, 0, 0, 1, 0));
                     }
                 }

@@ -6,6 +6,10 @@ function RhythmToXml()
         rhythm = document.createElement('rhythm');
         this.xml.appendChild(rhythm);
 
+        columns = document.createElement('numbercolumns');
+        columns.innerText = String(number_columns);
+        rhythm.appendChild(columns);
+
         tracks = document.createElement('tracks');
         rhythm.appendChild(tracks);
 

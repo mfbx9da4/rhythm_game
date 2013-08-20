@@ -48,6 +48,9 @@ function parseXml( xml)
         var track_id = songs[k].getAttribute("trackid");
         track_to_song[track_id] = song;
     }
-    
-    return new createAdvancedRhythm( beats, 0, 0, trackNumber_to_trackID, track_to_song );
+
+    var columns = rhythm.getElementsByTagName("numbercolumns");
+    var nbColumns = Number(columns[0].childNodes[0].nodeValue);
+
+    return new createAdvancedRhythm( beats, 0, 0, trackNumber_to_trackID, track_to_song, nbColumns );
 }
