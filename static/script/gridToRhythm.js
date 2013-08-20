@@ -9,7 +9,7 @@ function GridToRhythm()
         for (var i = 0, row; row = table.rows[i+1]; i++) 
         {
             var trackId = "track" + String(i);
-            trackNumber_to_trackID[i-1] = trackId;
+            trackNumber_to_trackID[i] = trackId;
             var beatsT = [];
             for (var j = 0, col; col = row.cells[j]; j++) 
             {           
