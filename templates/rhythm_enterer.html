@@ -342,6 +342,7 @@ function SongRequest()
     {
         this.requestAllSongs();
         song_options = []
+        this.songs.sort();
         for( var i = 0; i < this.songs.length; i++)
         {
             song_option = document.createElement('option');
@@ -364,6 +365,7 @@ function SongRequest()
     {
         this.requestAllSongs();
         song_options = []
+        this.songs.sort();
         for( var i = 0; i < this.songs.length; i++)
         {
             song_option = document.createElement('option');
