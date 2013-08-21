@@ -68,8 +68,11 @@
     <button onclick="addATrack()" >Add Track</button>
     <input type="number" id="time" value="">
     <button onclick="emptyGrid()" >Clear Grid</button>
+    
     <button onclick="addColumns(1, 1)" >Add a column</button>
     <button onclick="removeColumns(1, 1)" >Remove a column</button>
+    <button onclick="resizeGridColumns()" >Resize Grid</button>
+    <input type="number" id="nbColumns" value="">
 </div>
 
 </div>
@@ -127,6 +130,13 @@ function addATrack()
     songs.updateDropDown(number_line-1);
 }
 
+function resizeGridColumns()
+{
+    var new_number_columns= Number(document.getElementById("nbColumns").value);
+    if( new_number_columns > 0 && new_number_columns < 100)
+        resizeGrid(new_number_columns);
+}
+
 function resizeGrid(new_columns)
 {
     var difference = number_columns - new_columns;
@@ -169,7 +179,9 @@ function addColumns(nb_columns_to_add, row_number)
     var table = document.getElementById('main_table');
     for (var i = 0, row; row = table.rows[i+1]; i++) 
     {
-        for (var j = 0, col; col = row.cells[j]; j++) 
+        var j = 0;
+        var col = null;
+        for ( ; col = row.cells[j]; j++) 
         {           
             var cb = col.childNodes[0];
             if( j == row_number)
@@ -192,7 +204,19 @@ function addColumns(nb_columns_to_add, row_number)
                 cb.id = "cb"+getZeros(counter);
                 counter++;
             }
-            
+        }
+        if( j == row_number)
+        {
+            for( var k = 0; k < nb_columns_to_add; k++)
+            {
+                var new_cell = document.createElement("td");
+                var checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.id = "cb"+getZeros(counter); 
+                new_cell.appendChild(checkbox);
+                row.appendChild(new_cell);
+                counter++;
+            }
         }
     }     
     number_columns += nb_columns_to_add;  
