@@ -69,10 +69,17 @@
     <input type="number" id="time" value="">
     <button onclick="emptyGrid()" >Clear Grid</button>
     
-    <button onclick="addColumns(1, 1)" >Add a column</button>
-    <button onclick="removeColumns(1, 1)" >Remove a column</button>
+    <button onclick="addColumns(1, cursorAdd.getIndex())" >Add a column</button>
+    <button onclick="removeColumns(1, cursorRemove.getIndex())" >Remove a column</button>
     <button onclick="resizeGridColumns()" >Resize Grid</button>
     <input type="number" id="nbColumns" value="">
+
+    <button onclick="cursorAdd.moveCursorLeft()" > Left </button>
+    <button onclick="cursorAdd.moveCursorRight()" > Right </button>
+
+     <button onclick="cursorRemove.moveCursorLeft()" > Left </button>
+    <button onclick="cursorRemove.moveCursorRight()" > Right </button>
+    
 </div>
 
 </div>
@@ -99,6 +106,11 @@ var number_columns = 16;
 var counter = 1;
 var sortedDate = 0;
 var sortedTitle = 0;
+var cursor_index = 1;
+var cursorAdd = null;
+var cursorRemove = null;
+
+
 
 function getZeros(number)
 {
@@ -108,6 +120,136 @@ function getZeros(number)
         return "0" + number
     else
         return "" + number
+}
+
+function updateCursors()
+{
+    if( cursorAdd != null )
+        cursorAdd.updateCursor();
+    if( cursorRemove != null )
+        cursorRemove.updateCursor();
+}
+
+function CreateAddCursor(image)
+{
+    var cursor = new Cursor(image);
+
+    cursor.getMax = function()
+    {
+        return number_columns + 1;
+    }
+
+    cursor.updateCursor = function ()
+    {   
+        if( this.index > (number_columns + 1) )
+            this.index = number_columns + 1;
+        if( this.index < ( number_columns + 1 ) )
+        {
+            var number = ( number_line - 1 ) * number_columns + this.index;
+            var rectObj = this.getRectObj(number);
+            this.cursor.style.left = rectObj.left - ( this.getDistanceBetweenTwoCheckbox() / 2 ) - ( this.cursor.width / 2);
+            this.cursor.style.top = rectObj.top + rectObj.height;
+        }
+        else
+        {
+            var number = ( number_line - 1 ) * number_columns + ( this.index - 1 );
+            var rectObj = this.getRectObj(number);
+            this.cursor.style.left = rectObj.left + rectObj.width + ( this.getDistanceBetweenTwoCheckbox() / 2 ) - ( this.cursor.width / 2);
+            this.cursor.style.top =rectObj.top + rectObj.height;
+        }
+    }
+    cursor.cursor.onload = function(){ cursor.updateCursor(); };
+    return cursor;
+}
+
+function CreateRemoveCursor(image)
+{
+    var cursor = new Cursor(image);
+
+    cursor.getMax = function()
+    {
+        return number_columns;
+    }
+
+    cursor.updateCursor = function ()
+    {   
+        if( this.index > number_columns  )
+            this.index = number_columns;
+        var number = ( number_line - 1 ) * number_columns + this.index;
+        var rectObj = this.getRectObj(number);
+        this.cursor.style.left = rectObj.left + ( rectObj.width / 2 ) - ( this.cursor.width / 2);
+        this.cursor.style.top = rectObj.top + rectObj.height;
+    }
+    cursor.cursor.onload = function() { cursor.updateCursor(); };
+    return cursor;
+}
+
+function findPos(obj) 
+{
+    var curleft = curtop = 0;
+    var width = obj.offsetWidth;
+    var height = obj.offsetHeight;
+    if (obj.offsetParent) 
+    {
+        while ( obj != document.body )
+        {
+            curleft += obj.offsetLeft;
+            curtop += obj.offsetTop;
+            obj = obj.offsetParent;
+        } 
+    }
+    return new function(){ this.left = curleft; this.top = curtop; this.width = width; this.height = height };
+}
+
+function Cursor( image )
+{
+
+    this.getDistanceBetweenTwoCheckbox = function()
+    {
+        var number = ( number_line - 1 ) * number_columns + 1;
+        var number_other = ( number_line - 1 ) * number_columns + 2;
+        return this.getRectObj(number_other).left - ( this.getRectObj(number).left + this.getRectObj(number).width );
+    }
+
+    this.getRectObj = function( number)
+    {
+        var element = document.getElementById("cb"+getZeros(number));
+        //return element.getBoundingClientRect();
+        return findPos(element);
+    }
+    this.moveCursorLeft = function(  )
+    {
+        if( this.index > 1 )
+        {
+            this.index -= 1;
+            this.updateCursor();
+        }
+    }
+
+    this.moveCursorRight = function(  )
+    {
+        if( this.index < this.getMax() )
+        {
+            this.index += 1;
+            this.updateCursor();
+        }
+    }
+
+    this.createCursor = function(image)
+    {
+        this.cursor = document.createElement("img");
+        this.cursor.src = image;
+        this.cursor.style.position = 'absolute';
+        document.body.appendChild(this.cursor);
+    }
+
+    this.getIndex = function()
+    {
+        return this.index;
+    }
+
+    this.index = 1;
+    this.createCursor(image);
 }
 
 function addATrack()
@@ -158,6 +300,8 @@ function removeColumns(nb_columns_to_remove, row_number)
             var cb = col.childNodes[0];
             if( j == row_number && deleted_columns < nb_columns_to_remove)
             {
+                if( number_columns < 3)
+                    return;
                 deleted_columns++;
                 row.removeChild(col);
                 j--;
@@ -171,6 +315,7 @@ function removeColumns(nb_columns_to_remove, row_number)
         }
     }   
     number_columns -= nb_columns_to_remove;  
+    updateCursors();
 }
 
 function addColumns(nb_columns_to_add, row_number)
@@ -220,11 +365,14 @@ function addColumns(nb_columns_to_add, row_number)
         }
     }     
     number_columns += nb_columns_to_add;  
-
+    updateCursors();
 }
 
 for( var j = 0; j < 6 ; j++)
     addATrack();
+
+cursorAdd = CreateAddCursor( 'img/addCursor.png');
+cursorRemove = CreateRemoveCursor( 'img/removeCursor.png');
 
 
 function compareByName(a,b)
@@ -407,7 +555,6 @@ function SongRequest()
 }
 
 
-
 function emptyGrid()
 {
     var table = document.getElementById('main_table');
@@ -453,7 +600,6 @@ function XMLToGrid (){
         this.requestRhythm(title);
         loaded_rhythm = parseXml(this.rhythm);
         resizeGrid(loaded_rhythm.nbColumns);
-        alert( number_columns + "   " + loaded_rhythm.nbColumns);
         for( var i = 0; i < loaded_rhythm.beats.length ; i ++)
         {
             for( var j = 0; j < loaded_rhythm.beats[i].length ; j ++)
@@ -489,7 +635,6 @@ function XMLToGrid (){
         }
         checkbox_id = "cb" + additional_zero + checkbox_number;
         checkbox = document.getElementById(checkbox_id);
-        alert(checkbox_id);
         checkbox.checked = true;
     }
 }
