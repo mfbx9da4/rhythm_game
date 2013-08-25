@@ -36,9 +36,13 @@ class Song(db.Model):
     title = db.StringProperty(multiline=False, required=True)
     created = db.DateTimeProperty(auto_now_add=True)
 
-class Enterer(BaseHandler):
+class RhythmEnterer(BaseHandler):
     def get(self):
         self.render('rhythm_enterer.html')
+
+class SongEnterer(BaseHandler):
+    def get(self):
+        self.render('song_enterer.html')
 
 class SongsQuery(BaseHandler):
   def get(self):
@@ -123,7 +127,8 @@ config['webapp2_extras.sessions'] = {
 app = webapp2.WSGIApplication([('/', Home),
                                ('/game', game),
                                ('/randomsong', RandomSong),
-                               ('/rhythm_enterer', Enterer),
+                               ('/rhythm_enterer', RhythmEnterer),
+                               ('/song_enterer', SongEnterer),
                                ('/rhythm_db', RhythmsQuery),
                                ('/song_db', SongsQuery),
                                ('/init_db', SongDb)

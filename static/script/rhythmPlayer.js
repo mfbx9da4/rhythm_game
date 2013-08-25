@@ -38,10 +38,15 @@ function RhythmPlayer()
 			{
 				var snd = new Audio(rhythm.track_to_song[rhythm.trackNumber_to_trackID[i]]);
 				snd.load();
-				snd.addEventListener('canplaythrough', rhythm_player.startoff() , false);
 				this.audio[i][j] = snd;
 			}
 		}
+		for( i = 0; i < this.rhythm.trackNumber_to_trackID.length ; i++)
+			for( j = 0; j < 3 ; j++)
+			{
+				this.audio[i][j].addEventListener('canplaythrough', function(event) {this.removeEventListener('canplaythrough',arguments.callee,false); 
+																						rhythm_player.startoff()} , false);
+			}
 	}
 
 	this.startoff = function()
@@ -49,11 +54,13 @@ function RhythmPlayer()
 		this.counter++;
 		console.log( "Counter: " + this.counter + " Number: " + this.number );
 		if( this.counter >= this.number )
-			this.start();
+			// window.setTimeout(function(){rhythm_player.start(); }, 500);
+			rhythm_player.start();
 	}
 
 	this.start = function()
 	{
+		console.log("Started");
 		this.canPlay = 0;
 		this.startTime =  new Date().getTime();
 		this.play();
@@ -66,7 +73,7 @@ function RhythmPlayer()
 		this.soundIndex[track]++;
 		if( this.soundIndex[track] > 2)
 			this.soundIndex[track] = 0;
-
+		console.log( track + "  " + this.soundIndex[track]);
 		this.audio[track][this.soundIndex[track]].play();
 	}
 }
