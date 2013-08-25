@@ -64,8 +64,9 @@
     <button onclick="submitRhythm()">Submit rhythm</button>
     <button onclick="updateRhythms('delete_all')">Delete all rhythms</button>
     <button onclick="updateRhythmsList()">Update List Of Rhythm</button>
-    <button onclick="playRhythm()" id="playRhythm">Play Rhythm</button>
     <button onclick="addATrack()" >Add Track</button>
+    <button onclick="removeATrack()" >Remove Track</button>
+    <button onclick="playRhythm()" id="playRhythm">Play Rhythm</button>
     <input type="number" id="time" value="1">
     <button onclick="emptyGrid()" >Clear Grid</button>
     
@@ -103,7 +104,6 @@ var w = window;
 
 var number_line = 0;
 var number_columns = 16;
-var counter = 1;
 var sortedDate = 0;
 var sortedTitle = 0;
 var cursor_index = 1;
@@ -145,14 +145,14 @@ function CreateAddCursor(image)
             this.index = number_columns + 1;
         if( this.index < ( number_columns + 1 ) )
         {
-            var number = ( number_line - 1 ) * number_columns + this.index;
+            var number = ( number_line - 1 ) * number_columns - 1 + this.index;
             var rectObj = this.getRectObj(number);
             this.cursor.style.left = rectObj.left - ( this.getDistanceBetweenTwoCheckbox() / 2 ) - ( this.cursor.width / 2);
             this.cursor.style.top = rectObj.top + rectObj.height;
         }
         else
         {
-            var number = ( number_line - 1 ) * number_columns + ( this.index - 1 );
+            var number = ( number_line - 1 ) * number_columns - 1 + ( this.index - 1 );
             var rectObj = this.getRectObj(number);
             this.cursor.style.left = rectObj.left + rectObj.width + ( this.getDistanceBetweenTwoCheckbox() / 2 ) - ( this.cursor.width / 2);
             this.cursor.style.top =rectObj.top + rectObj.height;
@@ -175,7 +175,7 @@ function CreateRemoveCursor(image)
     {   
         if( this.index > number_columns  )
             this.index = number_columns;
-        var number = ( number_line - 1 ) * number_columns + this.index;
+        var number = ( number_line - 1 ) * number_columns - 1 + this.index;
         var rectObj = this.getRectObj(number);
         this.cursor.style.left = rectObj.left + ( rectObj.width / 2 ) - ( this.cursor.width / 2);
         this.cursor.style.top = rectObj.top + rectObj.height;
@@ -252,6 +252,17 @@ function Cursor( image )
     this.createCursor(image);
 }
 
+function resizeGridTracks(new_tracks)
+{
+    var difference = number_line - new_tracks;
+    if( difference < 0)
+        for( var i = 0; i > difference; i--)
+            addATrack();
+    else if ( difference > 0 )
+        for( var i = 0; i < difference; i++)
+            removeATrack();
+}
+
 function addATrack()
 {
     number_line++;
@@ -262,6 +273,8 @@ function addATrack()
     var first_row = document.createElement("td");
     new_line.appendChild(first_row);
     first_row.innerHTML = "<select class=\"song_dropdown\" name=\"\" id="+number_line+"> </select>";
+    var counter = ( number_line - 1 ) * number_columns;
+    console.log( counter + " " + number_line + " " + number_columns);
     for( var i = 0; i < number_columns ; i++)
     {
         var next_row = document.createElement("td");
@@ -270,6 +283,15 @@ function addATrack()
         counter++;
     }
     songs.updateDropDown(number_line-1);
+    updateCursors();
+}
+
+function removeATrack()
+{
+    number_line--;
+    var lineToDelete = document.getElementById("row"+getZeros(number_line));
+    lineToDelete.remove();
+    updateCursors();
 }
 
 function resizeGridColumns()
@@ -290,7 +312,7 @@ function resizeGrid(new_columns)
 
 function removeColumns(nb_columns_to_remove, row_number)
 {
-    var counter = 1;
+    var counter = 0;
     var table = document.getElementById('main_table');
     for (var i = 0, row; row = table.rows[i+1]; i++) 
     {
@@ -320,7 +342,7 @@ function removeColumns(nb_columns_to_remove, row_number)
 
 function addColumns(nb_columns_to_add, row_number)
 {
-    var counter = 1;
+    var counter = 0;
     var table = document.getElementById('main_table');
     for (var i = 0, row; row = table.rows[i+1]; i++) 
     {
@@ -600,11 +622,13 @@ function XMLToGrid (){
         this.requestRhythm(title);
         loaded_rhythm = parseXml(this.rhythm);
         resizeGrid(loaded_rhythm.nbColumns);
+        resizeGridTracks(loaded_rhythm.beats.length);
         for( var i = 0; i < loaded_rhythm.beats.length ; i ++)
         {
             for( var j = 0; j < loaded_rhythm.beats[i].length ; j ++)
             {
                 var beat = loaded_rhythm.beats[i][j];
+                var number = beat / (1 / number_columns );
                 this.checkbox( Math.round(beat / (1 / number_columns )), i ); 
             }
         }
@@ -620,7 +644,7 @@ function XMLToGrid (){
 
     this.checkbox = function(index, track)
     {
-        checkbox_number = track * number_columns + index + 1;
+        checkbox_number = track * number_columns + index;
         if ( checkbox_number < 10 )
         {
             additional_zero = "00";
