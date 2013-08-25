@@ -23,6 +23,11 @@ function RhythmPlayer()
 
 	this.setUp = function(rhythm, duration)
 	{	
+		if( isNaN(duration) || duration <= 0 )
+		{
+			this.canPlay = 1;
+			return;
+		}
 		this.rhythm = rhythm;
 		this.rhythm.rhythm_time = duration;
 		this.soundIndex = new Array();

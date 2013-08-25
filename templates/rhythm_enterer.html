@@ -66,7 +66,7 @@
     <button onclick="updateRhythmsList()">Update List Of Rhythm</button>
     <button onclick="playRhythm()" id="playRhythm">Play Rhythm</button>
     <button onclick="addATrack()" >Add Track</button>
-    <input type="number" id="time" value="">
+    <input type="number" id="time" value="1">
     <button onclick="emptyGrid()" >Clear Grid</button>
     
     <button onclick="addColumns(1, cursorAdd.getIndex())" >Add a column</button>
@@ -424,7 +424,7 @@ function playRhythm()
         rhythm_player.canPlay = 0;
         var rhythm = gridToRhythm.parseRhythm();
         var time = document.getElementById("time").value;
-        var time = parseInt(time);
+        var time = parseInt(time) * 1000;
         rhythm_player.setUp(rhythm, time);
     }
 }
