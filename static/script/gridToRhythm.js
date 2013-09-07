@@ -30,7 +30,7 @@ function GridToRhythm()
             }
             beats[i] = beatsT;       
         }       
-        var rhythm = createAdvancedRhythm( beats, 0, 0, trackNumber_to_trackID, track_to_song );
+        var rhythm = createAdvancedRhythm( beats, 0, 0, trackNumber_to_trackID, track_to_song, number_columns, type );
         this.delEmptyTracks(rhythm);
         return rhythm;
     }

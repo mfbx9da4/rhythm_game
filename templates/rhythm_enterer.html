@@ -33,25 +33,26 @@
 </table>
 <table id="main_table">
     <tbody id="rhythm_table">
-                                                            <tr id="table_header"> 
-    <td> <label class="table_header">Track Song </label> </td>
-    <td> <label class="table_header">1 </label> </td>  
-    <td> <label class="table_header"> </label> </td>  
-    <td> <label class="table_header"> </label> </td>  
-    <td> <label class="table_header"> </label> </td>  
-    <td> <label class="table_header">2 </label> </td>  
-    <td> <label class="table_header"> </label> </td>  
-    <td> <label class="table_header"> </label> </td>  
-    <td> <label class="table_header"> </label> </td>  
-    <td> <label class="table_header">3 </label> </td>  
-    <td> <label class="table_header"> </label> </td>  
-    <td> <label class="table_header"> </label> </td>  
-    <td> <label class="table_header"> </label> </td>  
-    <td> <label class="table_header">4 </label> </td>  
-    <td> <label class="table_header"> </label> </td>  
-    <td> <label class="table_header"> </label> </td>  
-    <td> <label class="table_header"> </label> </td> </tr>
-</tbody>
+        <tr id="table_header"> 
+            <td> <label class="table_header">Track Song </label> </td>
+            <td> <label class="table_header">1 </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header">2 </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header">3 </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header">4 </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td> 
+        </tr>
+    </tbody>
 </table>
 
 <table >
@@ -78,8 +79,16 @@
     <button onclick="cursorAdd.moveCursorLeft()" > Left </button>
     <button onclick="cursorAdd.moveCursorRight()" > Right </button>
 
-     <button onclick="cursorRemove.moveCursorLeft()" > Left </button>
+    <button onclick="cursorRemove.moveCursorLeft()" > Left </button>
     <button onclick="cursorRemove.moveCursorRight()" > Right </button>
+
+    <select name="type" id="type">
+        {% if admin %}
+            <option value="1" >Official</option>
+        {% endif %}
+        <option value="3">Public</option>
+        <option value="2">Private</option>
+    </select>
     
 </div>
 
@@ -106,6 +115,8 @@ var number_line = 0;
 var number_columns = 16;
 var sortedDate = 0;
 var sortedTitle = 0;
+var sortedOwner = 0;
+var sortedType = 0;
 var cursor_index = 1;
 var cursorAdd = null;
 var cursorRemove = null;
@@ -414,7 +425,9 @@ function sortListByName()
     else
         rhythms.reverse();
     sortedTitle = 1;
+    sortedOwner = 0;
     sortedDate = 0;
+    sortedType = 0;
     displayRhythmsInList();
 }
 
@@ -435,7 +448,55 @@ function sortListByDate()
     else
         rhythms.reverse();
     sortedTitle = 0;
+    sortedOwner = 0;
     sortedDate = 1;
+    sortedType = 0;
+    displayRhythmsInList();
+}
+
+function compareByOwner(a,b)
+{
+    if( a.owner < b.owner)
+        return -1;
+    else if( a.owner > b.owner)
+        return 1;
+    else
+        return 0;
+}
+
+function sortListByOwner()
+{
+    if( sortedOwner == 0)
+        rhythms.sort(compareByOwner);
+    else
+        rhythms.reverse();
+    sortedTitle = 0;
+    sortedOwner = 1;
+    sortedDate = 0;
+    sortedType = 0;
+    displayRhythmsInList();
+}
+
+function compareByType(a,b)
+{
+    if( a.type < b.type)
+        return -1;
+    else if( a.type > b.type)
+        return 1;
+    else
+        return 0;
+}
+
+function sortListByType()
+{
+    if( sortedType == 0)
+        rhythms.sort(compareByType);
+    else
+        rhythms.reverse();
+    sortedTitle = 0;
+    sortedOwner = 0;
+    sortedDate = 0;
+    sortedType = 1;
     displayRhythmsInList();
 }
 
@@ -460,7 +521,9 @@ function submitRhythm()
     xhr.open("POST", '/rhythm_db', false);
     var xml_str = xml.innerHTML;
     var title = document.getElementById('rhythm_title').value;
-    var request_body = title + '|' + xml_str
+    var type_drop_down = document.getElementById('type');
+    var type = type_drop_down.options[type_drop_down.selectedIndex].value;
+    var request_body = title + '|' + type + '|' + xml_str 
     xhr.send(request_body);
     console.log(request_body);
     console.log(xhr.responseText);
@@ -498,7 +561,7 @@ function displayRhythmsInList()
         alert("The list could not be found")
         return;
     }
-    list.innerHTML = "<tr> <td onclick=\"sortListByName()\">Title</td> <td onclick=\"sortListByDate()\">Last Modified</td>  </tr>";
+    list.innerHTML = "<tr> <td onclick=\"sortListByName()\">Title</td> <td onclick=\"sortListByOwner()\">Owner</td> <td onclick=\"sortListByType()\">Type</td> <td onclick=\"sortListByDate()\">Last Modified</td>  </tr>";
     for( var i = 0 ; i < rhythms.length; i++)
     {
         title = document.createElement('td');
@@ -507,8 +570,17 @@ function displayRhythmsInList()
         
         date = document.createElement('td');
         date.innerHTML =rhythms[i].date.toUTCString();
+
+        owner = document.createElement('td');
+        owner.innerHTML = rhythms[i].owner;
+
+        type = document.createElement('td');
+        type.innerHTML = rhythms[i].type;
+
         new_entry = document.createElement('tr');
         new_entry.appendChild(title);
+        new_entry.appendChild(owner);
+        new_entry.appendChild(type);
         new_entry.appendChild(date);
 
         list.appendChild( new_entry );
@@ -593,7 +665,7 @@ function XMLToGrid (){
 
     this.requestAllRythms = function()
     {
-        xhr = this.sendRequest('?arg=all');
+        xhr = this.sendRequest('rhythm_info?arg=all_templates');
         rhythms = JSON.parse(xhr.responseText).rhythms;
         for( var i = 0; i < rhythms.length ; i++)
             rhythms[i].date = new Date( Date.parse(rhythms[i].date));
@@ -601,13 +673,12 @@ function XMLToGrid (){
 
     this.requestRhythm  = function (rhythm_title)
     {
-        xhr = this.sendRequest('?title=' + rhythm_title);
+        xhr = this.sendRequest('rhythm_db?arg=get&title=' + rhythm_title);
         this.rhythm = xhr.responseXML;
     }
     
-    this.sendRequest = function (options){
+    this.sendRequest = function (url){
         var xhr = getXMLHttpRequest();
-        var url = '/rhythm_db' + options
         xhr.open("GET", url, false);
         xhr.send(null);
         return xhr;       

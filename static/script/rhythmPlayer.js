@@ -59,8 +59,8 @@ function RhythmPlayer()
 		this.counter++;
 		console.log( "Counter: " + this.counter + " Number: " + this.number );
 		if( this.counter >= this.number )
-			// window.setTimeout(function(){rhythm_player.start(); }, 500);
-			rhythm_player.start();
+			window.setTimeout(function(){rhythm_player.start(); }, 500);
+			//rhythm_player.start();
 	}
 
 	this.start = function()
