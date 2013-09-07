@@ -86,8 +86,8 @@
         {% if admin %}
             <option value="1" >Official</option>
         {% endif %}
-        <option value="3">Public</option>
         <option value="2">Private</option>
+        <option value="3">Public</option>
     </select>
     
 </div>
@@ -98,9 +98,13 @@
 </body>
 <script>
 
+var codes = [ "Undefined", "Official", "Private", "Public"]
+
+
 var gridToRhythm = new GridToRhythm();
 var rhythmToXml = new RhythmToXml();
 var rhythm_player = new RhythmPlayer();
+
 
 var x2g = new XMLToGrid();
 var songs = new SongRequest();
@@ -122,6 +126,13 @@ var cursorAdd = null;
 var cursorRemove = null;
 
 
+function convertType(type)
+{
+    if( type >= 0 && type < codes.length )
+        return codes[type];
+    else
+        return "";
+}
 
 function getZeros(number)
 {
@@ -575,7 +586,7 @@ function displayRhythmsInList()
         owner.innerHTML = rhythms[i].owner;
 
         type = document.createElement('td');
-        type.innerHTML = rhythms[i].type;
+        type.innerHTML = convertType( rhythms[i].type );
 
         new_entry = document.createElement('tr');
         new_entry.appendChild(title);
