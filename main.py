@@ -11,7 +11,6 @@ __website__ = 'http://rhythmludus.appspot.com/'
 from xml.dom import minidom as md
 import xml.etree.cElementTree as ET
 
-
 import webapp2
 from google.appengine.ext import db
 
@@ -22,6 +21,7 @@ from gamesetup import CreateChannel
 from gamesetup import GameRequest
 from song import RandomSong
 
+from login import FBEndPoint
 from login import SignUp
 from login import Login
 from login import CreateUser
@@ -30,6 +30,11 @@ from userDB import User
 from RhythmAuto import RhythmAutorisation 
 
 import json
+
+class ManageRhythms(BaseHandler):
+      def get(self): 
+            params = {}
+            self.response.write(render_str('my_rhythm.html', params))
 
 class Home(BaseHandler):
       def get(self): 
@@ -111,7 +116,7 @@ class RhythmInfo(BaseHandler):
         elif self.arg == 'all_publicly_shared':
           self.rhythms = Rhythm.all().filter('rhythm_type = ', 3).fetch(limit=None)
           return self.write(getEncodedRhythms)
-        elif self.arg == 'all_editable':
+        elif self.arg == 'all_personal':
           self.rhythms = Rhythm.all().filter('owner = ', self.getUser().username).fetch(limit=None)
           return self.write(self.getEncodedRhythms())
         elif self.arg == 'all_personally_shared':
@@ -201,6 +206,7 @@ class ReceiveEmail (BaseHandler):
     def post(self):
       self.mime = self.get('MIME')
 
+
 config = {}
 config['webapp2_extras.sessions'] = {
     'secret_key': 'my-super-secret-key',
@@ -220,7 +226,9 @@ app = webapp2.WSGIApplication([('/home', Home),
                                ('/init_db', SongDb),
                                ('/rhythm_info', RhythmInfo),
                                ('/validation', ValidationEmail),
-                               ('/_ah/mail/support@rhythmludus.appspotmail.com', ReceiveEmail)
+                               ('/my_rhythms', ManageRhythms),
+                               ('/_ah/mail/support@rhythmludus.appspotmail.com', ReceiveEmail),
+                               ('/fb_endpoint', FBEndPoint)
                                ],
                                debug=True,
                                config=config)

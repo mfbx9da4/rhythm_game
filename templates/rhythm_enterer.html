@@ -8,6 +8,11 @@
     <script src="script/circle.js"></script>
     <script src="script/beat.js"></script>
     <script src="script/rhythmPlayer.js"></script>
+    <script src="script/modifyNbColumns.js"></script>
+    <script src="script/modifyNbTracks.js"></script>
+    <script src="script/cursor.js"></script>
+    <script src="script/sortRhythmList.js"></script>
+    <script src="script/xmlToGrid.js"></script>
     
 
     <link rel="stylesheet" type="text/css" href="style/rhythm_enterer.css">
@@ -108,7 +113,7 @@ var rhythm_player = new RhythmPlayer();
 
 var x2g = new XMLToGrid();
 var songs = new SongRequest();
-rhythms = null;
+rhythmsInfo = null;
 
 updateRhythmsList();
 songs.updateDropDowns();
@@ -144,178 +149,6 @@ function getZeros(number)
         return "" + number
 }
 
-function updateCursors()
-{
-    if( cursorAdd != null )
-        cursorAdd.updateCursor();
-    if( cursorRemove != null )
-        cursorRemove.updateCursor();
-}
-
-function CreateAddCursor(image)
-{
-    var cursor = new Cursor(image);
-
-    cursor.getMax = function()
-    {
-        return number_columns + 1;
-    }
-
-    cursor.updateCursor = function ()
-    {   
-        if( this.index > (number_columns + 1) )
-            this.index = number_columns + 1;
-        if( this.index < ( number_columns + 1 ) )
-        {
-            var number = ( number_line - 1 ) * number_columns - 1 + this.index;
-            var rectObj = this.getRectObj(number);
-            this.cursor.style.left = rectObj.left - ( this.getDistanceBetweenTwoCheckbox() / 2 ) - ( this.cursor.width / 2);
-            this.cursor.style.top = rectObj.top + rectObj.height;
-        }
-        else
-        {
-            var number = ( number_line - 1 ) * number_columns - 1 + ( this.index - 1 );
-            var rectObj = this.getRectObj(number);
-            this.cursor.style.left = rectObj.left + rectObj.width + ( this.getDistanceBetweenTwoCheckbox() / 2 ) - ( this.cursor.width / 2);
-            this.cursor.style.top =rectObj.top + rectObj.height;
-        }
-    }
-    cursor.cursor.onload = function(){ cursor.updateCursor(); };
-    return cursor;
-}
-
-function CreateRemoveCursor(image)
-{
-    var cursor = new Cursor(image);
-
-    cursor.getMax = function()
-    {
-        return number_columns;
-    }
-
-    cursor.updateCursor = function ()
-    {   
-        if( this.index > number_columns  )
-            this.index = number_columns;
-        var number = ( number_line - 1 ) * number_columns - 1 + this.index;
-        var rectObj = this.getRectObj(number);
-        this.cursor.style.left = rectObj.left + ( rectObj.width / 2 ) - ( this.cursor.width / 2);
-        this.cursor.style.top = rectObj.top + rectObj.height;
-    }
-    cursor.cursor.onload = function() { cursor.updateCursor(); };
-    return cursor;
-}
-
-function findPos(obj) 
-{
-    var curleft = curtop = 0;
-    var width = obj.offsetWidth;
-    var height = obj.offsetHeight;
-    if (obj.offsetParent) 
-    {
-        while ( obj != document.body )
-        {
-            curleft += obj.offsetLeft;
-            curtop += obj.offsetTop;
-            obj = obj.offsetParent;
-        } 
-    }
-    return new function(){ this.left = curleft; this.top = curtop; this.width = width; this.height = height };
-}
-
-function Cursor( image )
-{
-
-    this.getDistanceBetweenTwoCheckbox = function()
-    {
-        var number = ( number_line - 1 ) * number_columns + 1;
-        var number_other = ( number_line - 1 ) * number_columns + 2;
-        return this.getRectObj(number_other).left - ( this.getRectObj(number).left + this.getRectObj(number).width );
-    }
-
-    this.getRectObj = function( number)
-    {
-        var element = document.getElementById("cb"+getZeros(number));
-        //return element.getBoundingClientRect();
-        return findPos(element);
-    }
-    this.moveCursorLeft = function(  )
-    {
-        if( this.index > 1 )
-        {
-            this.index -= 1;
-            this.updateCursor();
-        }
-    }
-
-    this.moveCursorRight = function(  )
-    {
-        if( this.index < this.getMax() )
-        {
-            this.index += 1;
-            this.updateCursor();
-        }
-    }
-
-    this.createCursor = function(image)
-    {
-        this.cursor = document.createElement("img");
-        this.cursor.src = image;
-        this.cursor.style.position = 'absolute';
-        document.body.appendChild(this.cursor);
-    }
-
-    this.getIndex = function()
-    {
-        return this.index;
-    }
-
-    this.index = 1;
-    this.createCursor(image);
-}
-
-function resizeGridTracks(new_tracks)
-{
-    var difference = number_line - new_tracks;
-    if( difference < 0)
-        for( var i = 0; i > difference; i--)
-            addATrack();
-    else if ( difference > 0 )
-        for( var i = 0; i < difference; i++)
-            removeATrack();
-}
-
-function addATrack()
-{
-    number_line++;
-    var table = document.getElementById("rhythm_table");
-    var new_line = document.createElement("tr");
-    new_line.id = "row" + getZeros(number_line-1);
-    table.appendChild(new_line);
-    var first_row = document.createElement("td");
-    new_line.appendChild(first_row);
-    first_row.innerHTML = "<select class=\"song_dropdown\" name=\"\" id="+number_line+"> </select>";
-    var counter = ( number_line - 1 ) * number_columns;
-    console.log( counter + " " + number_line + " " + number_columns);
-    for( var i = 0; i < number_columns ; i++)
-    {
-        var next_row = document.createElement("td");
-        next_row.innerHTML = "<input type=\"checkbox\" id=\"cb"+ getZeros(counter)+"\" value=\"\">";
-        new_line.appendChild(next_row);
-        counter++;
-    }
-    songs.updateDropDown(number_line-1);
-    updateCursors();
-}
-
-function removeATrack()
-{
-    number_line--;
-    var lineToDelete = document.getElementById("row"+getZeros(number_line));
-    lineToDelete.remove();
-    updateCursors();
-}
-
 function resizeGridColumns()
 {
     var new_number_columns= Number(document.getElementById("nbColumns").value);
@@ -323,193 +156,11 @@ function resizeGridColumns()
         resizeGrid(new_number_columns);
 }
 
-function resizeGrid(new_columns)
-{
-    var difference = number_columns - new_columns;
-    if( difference < 0)
-        addColumns(-difference, 1);
-    else if ( difference > 0 )
-        removeColumns(difference, 1);
-}
-
-function removeColumns(nb_columns_to_remove, row_number)
-{
-    var counter = 0;
-    var table = document.getElementById('main_table');
-    for (var i = 0, row; row = table.rows[i+1]; i++) 
-    {
-        var deleted_columns = 0;
-        for (var j = 0, col; col = row.cells[j]; j++) 
-        {           
-            var cb = col.childNodes[0];
-            if( j == row_number && deleted_columns < nb_columns_to_remove)
-            {
-                if( number_columns < 3)
-                    return;
-                deleted_columns++;
-                row.removeChild(col);
-                j--;
-            }
-            else if( j > 0 )
-            {
-                cb.id = "cb"+getZeros(counter);
-                counter++;
-            }
-            
-        }
-    }   
-    number_columns -= nb_columns_to_remove;  
-    updateCursors();
-}
-
-function addColumns(nb_columns_to_add, row_number)
-{
-    var counter = 0;
-    var table = document.getElementById('main_table');
-    for (var i = 0, row; row = table.rows[i+1]; i++) 
-    {
-        var j = 0;
-        var col = null;
-        for ( ; col = row.cells[j]; j++) 
-        {           
-            var cb = col.childNodes[0];
-            if( j == row_number)
-            {
-                var nextCell = row.cells[j];
-                for( var k = 0; k < nb_columns_to_add; k++)
-                {
-                    var new_cell = document.createElement("td");
-                    var checkbox = document.createElement("input");
-                    checkbox.type = "checkbox";
-                    checkbox.id = "cb"+getZeros(counter); 
-                    new_cell.appendChild(checkbox);
-                    row.insertBefore(new_cell, nextCell );
-                    counter++;
-                }
-                j += ( nb_columns_to_add - 1);
-            }
-            else if( j > 0 )
-            {
-                cb.id = "cb"+getZeros(counter);
-                counter++;
-            }
-        }
-        if( j == row_number)
-        {
-            for( var k = 0; k < nb_columns_to_add; k++)
-            {
-                var new_cell = document.createElement("td");
-                var checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.id = "cb"+getZeros(counter); 
-                new_cell.appendChild(checkbox);
-                row.appendChild(new_cell);
-                counter++;
-            }
-        }
-    }     
-    number_columns += nb_columns_to_add;  
-    updateCursors();
-}
-
 for( var j = 0; j < 6 ; j++)
     addATrack();
 
 cursorAdd = CreateAddCursor( 'img/addCursor.png');
 cursorRemove = CreateRemoveCursor( 'img/removeCursor.png');
-
-
-function compareByName(a,b)
-{
-    if( a.title < b.title)
-        return -1;
-    else if( a.title > b.title)
-        return 1;
-    else
-        return 0;
-}
-
-function sortListByName()
-{
-    if( sortedTitle == 0)
-        rhythms.sort(compareByName);
-    else
-        rhythms.reverse();
-    sortedTitle = 1;
-    sortedOwner = 0;
-    sortedDate = 0;
-    sortedType = 0;
-    displayRhythmsInList();
-}
-
-function compareByDate(a,b)
-{
-    if( a.date > b.date)
-        return -1;
-    else if( a.date < b.date)
-        return 1;
-    else
-        return 0;
-}
-
-function sortListByDate()
-{
-    if( sortedDate == 0)
-        rhythms.sort(compareByDate);
-    else
-        rhythms.reverse();
-    sortedTitle = 0;
-    sortedOwner = 0;
-    sortedDate = 1;
-    sortedType = 0;
-    displayRhythmsInList();
-}
-
-function compareByOwner(a,b)
-{
-    if( a.owner < b.owner)
-        return -1;
-    else if( a.owner > b.owner)
-        return 1;
-    else
-        return 0;
-}
-
-function sortListByOwner()
-{
-    if( sortedOwner == 0)
-        rhythms.sort(compareByOwner);
-    else
-        rhythms.reverse();
-    sortedTitle = 0;
-    sortedOwner = 1;
-    sortedDate = 0;
-    sortedType = 0;
-    displayRhythmsInList();
-}
-
-function compareByType(a,b)
-{
-    if( a.type < b.type)
-        return -1;
-    else if( a.type > b.type)
-        return 1;
-    else
-        return 0;
-}
-
-function sortListByType()
-{
-    if( sortedType == 0)
-        rhythms.sort(compareByType);
-    else
-        rhythms.reverse();
-    sortedTitle = 0;
-    sortedOwner = 0;
-    sortedDate = 0;
-    sortedType = 1;
-    displayRhythmsInList();
-}
 
 function playRhythm()
 {
@@ -559,7 +210,7 @@ function updateRhythms(string){
 function updateRhythmsList()
 {
     list = document.getElementById("all_rhythms");
-    x2g.requestAllRythms();
+    rhythmsInfo = getRhythmsInfo('all_templates');
     displayRhythmsInList();
     sortedTitle = 0;
     sortedDate = 0;
@@ -573,20 +224,20 @@ function displayRhythmsInList()
         return;
     }
     list.innerHTML = "<tr> <td onclick=\"sortListByName()\">Title</td> <td onclick=\"sortListByOwner()\">Owner</td> <td onclick=\"sortListByType()\">Type</td> <td onclick=\"sortListByDate()\">Last Modified</td>  </tr>";
-    for( var i = 0 ; i < rhythms.length; i++)
+    for( var i = 0 ; i < rhythmsInfo.length; i++)
     {
         title = document.createElement('td');
-        title.innerHTML = rhythms[i].title;
-        title.setAttribute("onclick","x2g.displayRhythmOnGrid(\""+rhythms[i].title+"\");");
+        title.innerHTML = rhythmsInfo[i].title;
+        title.setAttribute("onclick","x2g.displayRhythmOnGrid(\""+rhythmsInfo[i].title+"\");");
         
         date = document.createElement('td');
-        date.innerHTML =rhythms[i].date.toUTCString();
+        date.innerHTML =rhythmsInfo[i].date.toUTCString();
 
         owner = document.createElement('td');
-        owner.innerHTML = rhythms[i].owner;
+        owner.innerHTML = rhythmsInfo[i].owner;
 
         type = document.createElement('td');
-        type.innerHTML = convertType( rhythms[i].type );
+        type.innerHTML = convertType( rhythmsInfo[i].type );
 
         new_entry = document.createElement('tr');
         new_entry.appendChild(title);
@@ -672,77 +323,16 @@ function emptyGrid()
     }       
 }
 
-function XMLToGrid (){
-
-    this.requestAllRythms = function()
-    {
-        xhr = this.sendRequest('rhythm_info?arg=all_templates');
-        rhythms = JSON.parse(xhr.responseText).rhythms;
-        for( var i = 0; i < rhythms.length ; i++)
-            rhythms[i].date = new Date( Date.parse(rhythms[i].date));
-    }
-
-    this.requestRhythm  = function (rhythm_title)
-    {
-        xhr = this.sendRequest('rhythm_db?arg=get&title=' + rhythm_title);
-        this.rhythm = xhr.responseXML;
-    }
-    
-    this.sendRequest = function (url){
-        var xhr = getXMLHttpRequest();
-        xhr.open("GET", url, false);
-        xhr.send(null);
-        return xhr;       
-    }
-
-    this.parseRhythm = function (){
-        var a = 0;
-    }
-
-    this.displayRhythmOnGrid = function ( title){
-        emptyGrid();
-        this.requestRhythm(title);
-        loaded_rhythm = parseXml(this.rhythm);
-        resizeGrid(loaded_rhythm.nbColumns);
-        resizeGridTracks(loaded_rhythm.beats.length);
-        for( var i = 0; i < loaded_rhythm.beats.length ; i ++)
-        {
-            for( var j = 0; j < loaded_rhythm.beats[i].length ; j ++)
-            {
-                var beat = loaded_rhythm.beats[i][j];
-                var number = beat / (1 / number_columns );
-                this.checkbox( Math.round(beat / (1 / number_columns )), i ); 
-            }
-        }
-
-
-        for( var i = 0; i < loaded_rhythm.trackNumber_to_trackID.length; i++)
-        {
-            var song = loaded_rhythm.track_to_song[loaded_rhythm.trackNumber_to_trackID[i]];
-            dropDown = document.getElementById(i+1);
-            dropDown.value = song;
-        }
-    }
-
-    this.checkbox = function(index, track)
-    {
-        checkbox_number = track * number_columns + index;
-        if ( checkbox_number < 10 )
-        {
-            additional_zero = "00";
-        }
-        else if( checkbox_number < 100)
-        {
-            additional_zero = "0"
-        }
-        else
-        {
-            additional_zero = ""
-        }
-        checkbox_id = "cb" + additional_zero + checkbox_number;
-        checkbox = document.getElementById(checkbox_id);
-        checkbox.checked = true;
-    }
+function getRhythmsInfo(arg)
+{
+    var url = 'rhythm_info?arg=' + arg;
+    var xhr = getXMLHttpRequest();
+    xhr.open("GET", url, false);
+    xhr.send(null);
+    var rhythmsInfos = JSON.parse(xhr.responseText).rhythms;
+    for( var i = 0; i < rhythmsInfos.length ; i++)
+        rhythmsInfos[i].date = new Date( Date.parse(rhythmsInfos[i].date));
+    return rhythmsInfos;
 }
 
 rhythm = [
@@ -754,9 +344,6 @@ rhythm = [
     ],
     {'track':[{'note': 0.2}, {'note': 0.4}]}
 ]
-
-
-
 
 </script>
 </html>
