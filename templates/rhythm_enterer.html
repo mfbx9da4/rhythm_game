@@ -23,7 +23,12 @@
     <tbody>
         <tr>
             <td><label>Number rows</label><input type="text" id="num_rows" value="16"/></td>
-            <td><label>Title</label><input type="text" id="rhythm_title" value="Some new rhythm"/></td>
+            {% if title and edit %}
+                <td><label>Title</label><input type="text" id="rhythm_title" value="{{title}}" readonly="readonly"/>
+            {% else %}
+                <td><label>Title</label><input type="text" id="rhythm_title" value="Some new rhythm"/>
+            {% endif %}
+            </td>
         </tr>
     </tbody>
 </table>
@@ -171,7 +176,11 @@ function submitRhythm()
     var xml = rhythmToXml.parseRhythm(rhythm);
 
     var xhr = getXMLHttpRequest();
-    xhr.open("POST", '/rhythm_db', false);
+    {% if edit %}
+        xhr.open("POST", '/rhythm_db?arg=edit', false);
+    {% else %}
+        xhr.open("POST", '/rhythm_db', false);
+    {% endif %}
     var xml_str = xml.innerHTML;
     var title = document.getElementById('rhythm_title').value;
     var type_drop_down = document.getElementById('type');
@@ -336,6 +345,9 @@ rhythm = [
     {'track':[{'note': 0.2}, {'note': 0.4}]}
 ]
 
+{% if edit and title %}
+    x2g.displayRhythmOnGrid("{{title}}");
+{% endif %}
 </script>
 {% endblock %}
 

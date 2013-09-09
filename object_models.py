@@ -81,7 +81,6 @@ class BaseHandler(webapp2.RequestHandler):
             return True
 
     def getUser(self):
-        print "getUser: " + str(self.isLoggedIn())
         if self.isLoggedIn():
             username = self.session.get('user')
             user_query = User.all().filter('username =', username)

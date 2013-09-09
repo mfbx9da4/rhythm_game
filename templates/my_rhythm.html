@@ -68,6 +68,10 @@ function displayRhythmsInList()
         type = document.createElement('td');
         type.innerHTML = convertType( rhythmsInfo[i].type );
 
+        editButton = document.createElement('button');
+        editButton.innerHTML = "Edit";
+        editButton.setAttribute("onclick","editRhythm(\""+rhythmsInfo[i].title+"\");");
+
         deleteButton = document.createElement('button');
         deleteButton.innerHTML = "Delete";
         deleteButton.setAttribute("onclick","deleteRhythm(\""+rhythmsInfo[i].title+"\");");
@@ -77,6 +81,7 @@ function displayRhythmsInList()
         new_entry.appendChild(title);
         new_entry.appendChild(type);
         new_entry.appendChild(date);
+        new_entry.appendChild(editButton);
         new_entry.appendChild(deleteButton);
 
 
@@ -91,6 +96,11 @@ function deleteRhythm(title)
     xhr.open("GET", url, false);
     xhr.send(null);
     updateRhythmsList();
+}
+
+function editRhythm(title)
+{
+    window.location.replace("rhythm_enterer?edit=1&title="+title);
 }
 
 function getRhythmsInfo(arg)

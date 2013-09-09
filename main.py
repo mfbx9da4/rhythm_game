@@ -64,6 +64,9 @@ class RhythmEnterer(BaseHandler):
           params["admin"] = True
         else:
           params["admin"] = False
+        if self.request.get('edit') and self.request.get('title'):
+          params["edit"] = True
+          params["title"] = self.request.get('title')
         self.response.write(render_str('rhythm_enterer.html', params))
 
 class SongEnterer(BaseHandler):
@@ -174,15 +177,20 @@ class RhythmsQuery(BaseHandler):
         title, type_str, xml_str = self.request.body.split('|')
         xml = md.parseString(xml_str)
         type = int(type_str)
-        if valid_rhythm(xml) and valid_title(title) and self.validType(type):
+        if valid_rhythm(xml) and self.validType(type):
           if self.request.get('arg') == 'edit':
             rhy = Rhythm.all().filter('title = ', title).get()
-            rhy.xml = xml.toxml()
-          else:
+            if rhy.owner == self.getUser().username:
+              rhy.xml = xml.toxml()
+              rhy.rhythm_type = type
+            else:
+              return self.write('Invalid rhythm or owner')
+          elif valid_title(title):
             rhy = Rhythm(title=str(title), xml=xml.toxml(), owner=self.getUser().username, rhythm_type = type )
           rhy.put()
         else:
           return self.write('invalid rhythm')
+
 
 def valid_rhythm(xml):
     if xml.getElementsByTagName('note'):
