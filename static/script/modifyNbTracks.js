@@ -29,7 +29,6 @@ function addATrack()
         counter++;
     }
     songs.updateDropDown(number_line-1);
-    updateCursors();
 }
 
 function removeATrack()
@@ -37,5 +36,4 @@ function removeATrack()
     number_line--;
     var lineToDelete = document.getElementById("row"+getZeros(number_line));
     lineToDelete.remove();
-    updateCursors();
 }

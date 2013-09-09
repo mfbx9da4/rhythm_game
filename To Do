@@ -1,6 +1,4 @@
 TO DO:
-- User login with facebook
-- Manage your rythms
 - rhythm enterer 
 {
   * First row should be reserved for the "strong beat" to determine time signatures
@@ -21,12 +19,12 @@ TO DO:
 - silent track for metronome
 - link the view pane with the game
 - use a DB to store the song + usefull properties
-- create user account
 - ranking of players
 - multiplayer mode
 
 
 DONE:
+- create user account
 - tree view nav pane (although need to do icons e.g http://www.webappers.com/category/design/icons/page/2/ and CSS is messy!)
 - metronome ( horitzontal line from top to bottom of canvas )
 - rhythm enterer 
@@ -38,3 +36,5 @@ DONE:
 }
 - playback (playback XML)
 - User login with email
+- User login with facebook
+- Manage your rythms

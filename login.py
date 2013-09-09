@@ -178,8 +178,8 @@ class FBEndPoint(SignUp):
 			self.validation.addErrorMessage('The facebook account is already registered.')
 
 	def get(self):
-		code = urllib.pathname2url(self.request.get('code'))
-		url = "https://graph.facebook.com/oauth/access_token?client_id=539751139430183&redirect_uri=https%3A%2F%2Frhythmludus.appspot.com%2Ffb_endpoint&client_secret=30b536df7633cc10c255ec66d73090fd&code="+code	
+		code = self.request.get('code')
+		url = "https://graph.facebook.com/oauth/access_token?client_id=539751139430183&redirect_uri=https%3A%2F%2Frhythmludus.appspot.com%2Ffb_endpoint&client_secret=30b536df7633cc10c255ec66d73090fd&code="+code
 		response = urllib2.urlopen(url).read()
 		regex = "^access_token=(.+)&expires=(.+)$"
 		regexResult = re.search(regex, response)
@@ -207,7 +207,7 @@ class FBEndPoint(SignUp):
 				else:
 					self.redirect('/home')
 			else:
-				return self.write('User unregistred')
+				return self.redirect('/facebook_sign_up')
 		else:
 			return self.write('Error')
 
@@ -249,10 +249,23 @@ class FBEndPoint(SignUp):
 
 			fbUser = FBUser( username=username, userID=userId )
 			fbUser.put()
-			return self.write( 'Succesfully registered!' )
+			return self.redirect("https://www.facebook.com/dialog/oauth?client_id=539751139430183&redirect_uri=https%3A%2F%2Frhythmludus.appspot.com%2Ffb_endpoint")
 		else:
 			return self.write(self.validation.getMessage())
 
+class ValidationEmail(BaseHandler):
+  def get(self):
+    code = self.request.get('code')     
+    username = self.request.get('username')
+    user_query = EmailUser.all().filter('username = ', username)
+    user = user_query.get()
+    if user != None and user.code == code:
+      user.emailValidated = True
+      user.code = ''
+      user.put()
+      self.write('Email Validated')
+    else:
+      self.write('Error')
 
 class FieldValidation:
 	def __init__(self):

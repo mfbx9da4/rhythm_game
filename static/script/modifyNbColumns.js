@@ -34,7 +34,6 @@ function removeColumns(nb_columns_to_remove, row_number)
         }
     }   
     number_columns -= nb_columns_to_remove;  
-    updateCursors();
 }
 
 function addColumns(nb_columns_to_add, row_number)
@@ -84,5 +83,4 @@ function addColumns(nb_columns_to_add, row_number)
         }
     }     
     number_columns += nb_columns_to_add;  
-    updateCursors();
 }

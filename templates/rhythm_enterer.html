@@ -11,7 +11,6 @@
     <script src="script/rhythmPlayer.js"></script>
     <script src="script/modifyNbColumns.js"></script>
     <script src="script/modifyNbTracks.js"></script>
-    <script src="script/cursor.js"></script>
     <script src="script/sortRhythmList.js"></script>
     <script src="script/xmlToGrid.js"></script>
     <link rel="stylesheet" type="text/css" href="style/rhythm_enterer.css">
@@ -71,17 +70,8 @@
     <button onclick="playRhythm()" id="playRhythm">Play Rhythm</button>
     <input type="number" id="time" value="1">
     <button onclick="emptyGrid()" >Clear Grid</button>
-    
-    <button onclick="addColumns(1, cursorAdd.getIndex())" >Add a column</button>
-    <button onclick="removeColumns(1, cursorRemove.getIndex())" >Remove a column</button>
     <button onclick="resizeGridColumns()" >Resize Grid</button>
     <input type="number" id="nbColumns" value="">
-
-    <button onclick="cursorAdd.moveCursorLeft()" > Left </button>
-    <button onclick="cursorAdd.moveCursorRight()" > Right </button>
-
-    <button onclick="cursorRemove.moveCursorLeft()" > Left </button>
-    <button onclick="cursorRemove.moveCursorRight()" > Right </button>
 
     <select name="type" id="type">
         {% if admin %}
@@ -122,9 +112,6 @@ var sortedDate = 0;
 var sortedTitle = 0;
 var sortedOwner = 0;
 var sortedType = 0;
-var cursor_index = 1;
-var cursorAdd = null;
-var cursorRemove = null;
 
 
 function convertType(type)
@@ -155,8 +142,6 @@ function resizeGridColumns()
 for( var j = 0; j < 6 ; j++)
     addATrack();
 
-cursorAdd = CreateAddCursor( 'img/addCursor.png');
-cursorRemove = CreateRemoveCursor( 'img/removeCursor.png');
 
 function playRhythm()
 {

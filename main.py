@@ -21,6 +21,7 @@ from gamesetup import CreateChannel
 from gamesetup import GameRequest
 from song import RandomSong
 
+from login import ValidationEmail
 from login import FBEndPoint
 from login import SignUp
 from login import FBSignUp
@@ -83,19 +84,6 @@ class SongsQuery(BaseHandler):
       songs = encoder.encode(songName)
       return self.write(songs)
 
-class ValidationEmail(BaseHandler):
-  def get(self):
-    code = self.request.get('code')     
-    username = self.request.get('username')
-    user_query = User.all().filter('username = ', username)
-    user = user_query.get()
-    if user != None and user.code == code:
-      user.emailValidated = True
-      user.code = ''
-      user.put()
-      self.write('Email Validated')
-    else:
-      self.write('Error')
 
 class RhythmInfo(BaseHandler):
     def get(self):
