@@ -10,27 +10,19 @@ src: url('fonts/Raleway/Raleway-Light.ttf');
 }
 
 
-#title {
-    font-family: Lobster;
-    font-family: 'Lobster', cursive;
-    font-size: 100px;
-    margin: 15 250;
-    color: #20b8b6;
-    text-decoration: none;
-
-}
-
 body {
-	margin-right: auto;
 	position: relative;
-	width: 1006px;
     margin: 0 auto;
     padding: 10px;
     background:url(images/bgnoise_lg.png);
 }
 
 #container {
-	width: 1006px; height:402px; background-color:#e8e2e2;
+	width: 1006px; 
+	height:402px; 
+	background-color:#e8e2e2;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .side-pane {

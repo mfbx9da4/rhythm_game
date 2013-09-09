@@ -1,5 +1,6 @@
-<html>
-<head>
+{% extends "base.html" %}
+
+{% block head %}
     <script src="script/xml_parsing.js"></script>
     <script src="script/gridToRhythm.js"></script>
     <script src="script/rhythmToXml.js"></script>
@@ -13,20 +14,10 @@
     <script src="script/cursor.js"></script>
     <script src="script/sortRhythmList.js"></script>
     <script src="script/xmlToGrid.js"></script>
-    
-
     <link rel="stylesheet" type="text/css" href="style/rhythm_enterer.css">
-</head>
+{% endblock %}
 
-<style type="text/css">
-     /*
-    a = '<td> <input type="checkbox" id="cb%s" value=""> </td> %s '
-    b = '</tr><br><tr id="row%s">'
-    for i in range(1, 16**2+1):
-        print a % (str(i).zfill(3), b % str(i / 16).zfill(3) if not i % 16 else '')
-    */
-</style>
-<body>
+{% block core %}
 <div id="enterer_container">
 <table>
     <tbody>
@@ -346,4 +337,5 @@ rhythm = [
 ]
 
 </script>
-</html>
+{% endblock %}
+

@@ -21,6 +21,10 @@ import re
 
 facebookSecret= '30b536df7633cc10c255ec66d73090fd'
 
+class FBSignUp(BaseHandler):
+	def get(self):
+		self.render('facebook_sign_up.html')
+
 class SignUp(BaseHandler):
     def get(self):
         self.render('signup.html')

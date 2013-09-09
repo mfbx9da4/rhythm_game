@@ -23,6 +23,7 @@ from song import RandomSong
 
 from login import FBEndPoint
 from login import SignUp
+from login import FBSignUp
 from login import Login
 from login import CreateUser
 from login import Logout
@@ -228,7 +229,8 @@ app = webapp2.WSGIApplication([('/home', Home),
                                ('/validation', ValidationEmail),
                                ('/my_rhythms', ManageRhythms),
                                ('/_ah/mail/support@rhythmludus.appspotmail.com', ReceiveEmail),
-                               ('/fb_endpoint', FBEndPoint)
+                               ('/fb_endpoint', FBEndPoint),
+                               ('/facebook_sign_up', FBSignUp)
                                ],
                                debug=True,
                                config=config)

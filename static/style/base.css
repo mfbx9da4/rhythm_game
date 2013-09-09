@@ -1,0 +1,20 @@
+@font-face
+{
+font-family: Lobster;
+src: url('fonts/Lobster/Lobster.ttf');
+}
+
+#title {
+    font-family: Lobster;
+    font-family: 'Lobster', cursive;
+    font-size: 100px;
+    text-align: center;
+    color: #20b8b6;
+    text-decoration: none;
+}
+
+#userInfo {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}

@@ -1,0 +1,29 @@
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="style/base.css">
+{% block head %}{% endblock %}
+</head>
+
+<body>
+<div id="title">rhythmludus</div>
+
+<div id="userInfo" >
+{% if username %}
+	You are logged in as {{usename}}
+	<a href="/logout"> Logout </a>
+{% else %}
+	<form action="/login" method="post"  >
+		Username: <input type="text" name="username"><br>
+		Passworde: <input type="password" name="password"><br>
+		<input type="submit" value="Login">
+		<a href="https://www.facebook.com/dialog/oauth?client_id=539751139430183&redirect_uri=https%3A%2F%2Frhythmludus.appspot.com%2Ffb_endpoint"> Login with Facebook </a>
+	</form>
+	<p> Don't have an account? <a href="/sign_up">Register</a></p>
+{% endif %}
+</div>
+
+{% block core %}{% endblock %}
+</body>
+
+</html>
