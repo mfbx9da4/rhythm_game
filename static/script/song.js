@@ -29,9 +29,11 @@ function Song(rhythms, sound_track, metronomeTemp)
 	{
 		this.metronome.draw(this.start_time, time, this.yscale);
 		var i = this.start_rhythm;
+		// 
 		for( ; i < this.rhythms.length; i ++)
 		{
-			if( this.start_time + this.rhythms[i].diff_time + this.rhythms[i].rhythm_time > time )
+			var absolute_rhythm_end_time = this.start_time + this.rhythms[i].diff_time + this.rhythms[i].rhythm_time
+			if(  absolute_rhythm_end_time > time )
 				break;
 			else
 				this.start_rhythm = i + 1;
@@ -39,7 +41,8 @@ function Song(rhythms, sound_track, metronomeTemp)
 		
 		for( ; i < this.rhythms.length; i ++)
 		{
-			if(  this.start_time + this.rhythms[i].diff_time > time + ( 400 / this.yscale ) )
+			var absolute_rhythm_start_time = this.start_time + this.rhythms[i].diff_time
+			if(  absolute_rhythm_start_time > time + ( 400 / this.yscale ) )
 	  			break;
 	  		this.rhythms[i].play(this.start_time, time, this.yscale, draw);
 		}

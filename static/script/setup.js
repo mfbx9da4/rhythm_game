@@ -28,7 +28,7 @@ playKeysFunction = null;
 function start()
 {
 
-	new_song.start(0.3);
+	new_song.start(YSCALE);
 
 	playKeysFunction = function(e){keyHandler(e);};
 	d.addEventListener('keypress', playKeysFunction, false);

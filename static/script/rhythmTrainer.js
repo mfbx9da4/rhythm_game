@@ -1,3 +1,7 @@
+function log(str){
+	console.log(str);
+}
+
 function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRequired)
 {
 	// The rhythm to learn:
@@ -88,6 +92,7 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 		var diff_time = this.rhythms[0].diff_time + this.screenTime;
 		this.metronomes.unshift(  this.metronome.duplicate() );
 		this.metronomes[0].start_time_window = diff_time + this.rhythms[0].rhythm_time;
+		// recreates rhythms for given state
 		for( i = 0; i < this.stateRepitition[this.state] ; i ++)
 		{
 			this.rhythms.splice( i + 1, 0, this.rhythm.duplicate());
@@ -115,11 +120,15 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 			}
 			diff_time = this.rhythms[i+1].diff_time;
 		}
-		this.metronomes[0].end_time_window = this.nextDisplayedDiffTime; 
+		this.metronomes[0].end_time_window = diff_time + this.rhythms[i].rhythm_time; 
 	}
 
 	this.updateOtherRhythms = function()
 	{
+		log(this.rhythms[1].diff_time)
+		log(this.metronomes[0].start_time_window)
+		log(this.metronomes[0].end_time_window)
+
 		var shift_time = this.screenTime + ( this.stateRepitition[this.state] * this.rhythms[1].rhythm_time );
 		var i = 1 + this.stateRepitition[this.state];
 		while( i < this.rhythms.length )
@@ -127,7 +136,9 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 			this.rhythms[i].diff_time += shift_time;
 			i++;
 		}
-		i = 0;
+
+
+		i = 1;
 		while( i < this.metronomes.length )
 		{
 			this.metronomes[i].start_time_window += shift_time;
@@ -137,6 +148,9 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 		this.nextDisplayedDiffTime = this.rhythms[this.rhythms.length-1].diff_time 
 		                                +  this.rhythms[this.rhythms.length-1].rhythm_time
 		                                + this.screenTime;
+		log(this.rhythms[1].diff_time)
+		log(this.metronomes[0].start_time_window)
+		log(this.metronomes[0].end_time_window)
 	}
 
 	this.start = function(yscale)
@@ -158,24 +172,41 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 
 	this.play = function(time, draw)
 	{
-		if( this.state == this.states.end || this.playing == false)
+		// state_is_completed = end_time_of_rhythm_set_passed and user_succeeded (played == 1)
+		// replace/delete if stateIsCompleted then create new RhythmSet 
+		// 		else repeatState
+		// if the_rhythmSet_has_left_canvas then remove from rhythmSet array 
+
+		// if statecomplete (state++, pause) else repeat
+		// if state.rhythmset left screen del rhythmset
+		// draw metronome
+		// draw state.play()
+
+
+		var all_states_finished = this.state == this.states.end
+		if( all_states_finished || this.playing == false)
 		{
 
 			return;
 		}
 		else
 		{
-			if ( this.rhythms.length > 0 && time >= this.rhythms[0].diff_time + this.rhythms[0].rhythm_time 
-																									+ this.start_time )
+		if (this.rhythms.length > 0)
+			var absolute_end_rhythm_time = this.rhythms[0].diff_time + this.rhythms[0].rhythm_time + this.start_time;
+			var end_time_of_rhythm_has_passed = time >= absolute_end_rhythm_time;
+			if ( end_time_of_rhythm_has_passed)
 			{
 				this.numberOfRhythmBeforeNextState--;
 				
-				if( this.rhythms[0].played == 1)
+				var rhythm_was_played = this.rhythms[0].played == 1
+				if(rhythm_was_played)
 					this.playerCounter++;
-
-				if( this.numberOfRhythmBeforeNextState == 0 )
+				
+				var there_are_no_more_rhythms_to_be_played = this.numberOfRhythmBeforeNextState == 0
+				if(there_are_no_more_rhythms_to_be_played)
 				{
-					if( this.playerCounter >= this.stateRepititionRequired[this.state] )
+					var player_succeeded = this.playerCounter >= this.stateRepititionRequired[this.state]
+					if(player_succeeded)
 					{
 						this.metronomes.shift();
 						this.state++;
@@ -184,10 +215,10 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 						c.style.webkitFilter = "blur(3px)";
 						d.removeEventListener('keypress', playKeysFunction, false);
  						d.addEventListener('keypress', function (e){ 	d.removeEventListener('keypress',arguments.callee,false);
- 																		d.addEventListener('keypress', playKeysFunction, false);
- 																		new_song.resume();
- 																		c.style.webkitFilter = "blur(0px)"; }, false);
-					}
+						d.addEventListener('keypress', playKeysFunction, false);
+						new_song.resume();
+						c.style.webkitFilter = "blur(0px)"; }, false);
+					}	
 					else
 					{
 						this.metronomes.shift();
@@ -200,7 +231,8 @@ function RhythmTrainer(rhythm, metronomeTemp, stateRepitition, stateRepititionRe
 				this.rhythms.shift();
 			}
 
-			if( time + this.screenTime  >= this.nextDisplayedDiffTime + this.start_time )
+			
+			if( time + this.screenTime >= this.nextDisplayedDiffTime + this.start_time )
 			{
 				this.createNextRhythms();
 				this.nextDisplayedState++;

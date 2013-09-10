@@ -5,7 +5,7 @@ function animate()
 	var time = new Date().getTime();
 	var draw = 0;
 	playback(time);
-	if( time - lastTime >= 20 )
+	if( time - lastTime >= 2 )
 	{
 		draw = 1;
 		lastTime = time;
@@ -48,9 +48,9 @@ function playSound(track){
 	if( soundIndex[track] > 2)
 		soundIndex[track] = 0;
 	// -- DEBUGGING --
-  	console.log(track)
-  	console.log(soundIndex)
-  	console.log(audio[track][soundIndex[track]])
+  	// console.log(track)
+  	// console.log(soundIndex)
+  	// console.log(audio[track][soundIndex[track]])
   	// ---
 	audio[track][soundIndex[track]].play();
 }

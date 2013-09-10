@@ -28,7 +28,7 @@ TO DO:
 - create user account
 - ranking of players
 - multiplayer mode
-
+- rhythmTrainer.play() bug 
 
 DONE:
 - tree view nav pane (although need to do icons e.g http://www.webappers.com/category/design/icons/page/2/ and CSS is messy!)

@@ -1,8 +1,11 @@
 <html>
 <head>
+	<script src="script/modified_prototypes.js"></script>
 	<script src="script/advancedMetronome.js"></script>
 	<script src="script/metronome.js"></script>
-	<script src="script/rhythmTrainer.js"></script>
+	<script src="script/new_rhythmTrainer.js"></script>
+	<script src="script/state.js"></script>
+	<script src="script/rhythmSet.js"></script>
 	<script src="script/scoring.js"></script>
 	<script src="script/staticCircles.js"></script>
     <script src="script/beat.js"></script>
@@ -25,36 +28,36 @@
 <canvas width="1px" height="1px" id="metronome" ></canvas>
 <div id="container" >
 	<div id="nav" class="side-pane">
-	<ul>
-		<li><input type="checkbox" id="item-0" /><label for="item-0">African</label>
-			<ul class="continent">
-				<li><input type="checkbox" id="item-0-0" /><label for="item-0-0">Gedsum</label>
-					<ul class="rhythm">
-						<li class="game"><a>Playback (should be able to activate play back with keypress)</a></li>
-						<li class="game"><a>Audio and visual</a></li>
-						<li class="game"><a>Audio only</a></li>
-						<li class="game"><a>Metronome only</a></li>
-					</ul>
-				</li>
-			</ul>
-		</li>
-		<li><input type="checkbox" id="item-1" /><label for="item-1">Latin</label>
-			<ul class="continent">
-				<li><input type="checkbox" id="item-1-0" /><label for="item-1-0">Bossa Nova</label>
-					<ul class="rhythm">
-						<li class="game"><a>Playback (should be able to activate play back with keypress)</a></li>
-						<li class="game"><a>Audio and visual</a></li>
-						<li class="game"><a>Audio only</a></li>
-						<li class="game"><a>Metronome only</a></li>
-					</ul>
-				</li>
-			</ul>
-		</li>
-	</ul>	
-	
+		<ul>
+			<li><input type="checkbox" id="item-0" /><label for="item-0">African</label>
+				<ul class="continent">
+					<li><input type="checkbox" id="item-0-0" /><label for="item-0-0">Gedsum</label>
+						<ul class="rhythm">
+							<li class="game"><a>Playback</a></li>
+							<li class="game"><a>Speed 1</a></li>
+							<li class="game"><a>Speed 2</a></li>
+							<li class="game"><a>Speed 3</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li><input type="checkbox" id="item-1" /><label for="item-1">Latin</label>
+				<ul class="continent">
+					<li><input type="checkbox" id="item-1-0" /><label for="item-1-0">Bossa Nova</label>
+						<ul class="rhythm">
+							<li class="game"><a>Playback (should be able to activate play back with keypress)</a></li>
+							<li class="game"><a>Audio and visual</a></li>
+							<li class="game"><a>Audio only</a></li>
+							<li class="game"><a>Metronome only</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>	
+		
 	</div>
 		<!-- <img> -->
-		<canvas id="game" width="600" height="400" style="border:1px solid #000000; background-color:#ffffff;">
+		<canvas id="game" width="600" height="600" >
 		</canvas>
 	<div id="score-pane" class="side-pane" >
 		<p> Last key pressed: </p>	<p class='val' id="keypressed">none</p>
@@ -99,6 +102,8 @@ var lastTime = 0;
 var start_metronome = 0;
 var metronome_speed = 0;
 var staticCircle = null;
+
+var YSCALE = 0.3
 
 loadGameElements(0, "song/{{song}}");
 

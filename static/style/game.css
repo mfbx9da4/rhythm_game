@@ -17,7 +17,6 @@ src: url('fonts/Raleway/Raleway-Light.ttf');
     margin: 15 250;
     color: #20b8b6;
     text-decoration: none;
-
 }
 
 body {
@@ -29,12 +28,14 @@ body {
     background:url(images/bgnoise_lg.png);
 }
 
+
+
 #container {
-	width: 1006px; height:402px; background-color:#e8e2e2;
+	width: 1006px; height:602px; background-color:#e8e2e2;
 }
 
 .side-pane {
-	width: 200px;  height:402px; 
+	width: 200px;  height:100%; 
     font-family: rale;
     font-family: 'Raleway', sans-serif;
 	background-color:#b7b1b1;
@@ -54,6 +55,7 @@ body {
 #score-pane {
 	float: left;
 }
+
 #score-pane p {
 	margin-left: 10px;
 }
@@ -62,6 +64,6 @@ body {
 	background:url(images/graphy.png);
 	background-position-y: 35;
 	float: left;
-	border: solid black 4px;
+	border: solid black 1px;
 }
 
