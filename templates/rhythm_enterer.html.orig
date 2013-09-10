@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script src="script/xml_parsing.js"></script>
+    <script src="script/gridToRhythm.js"></script>
+    <script src="script/rhythmToXml.js"></script>
+    <script src="script/rhythm.js"></script>
+    <script src="script/AdvancedRhythm.js"></script>
+    <script src="script/circle.js"></script>
+    <script src="script/beat.js"></script>
+    <script src="script/rhythmPlayer.js"></script>
+    <script src="script/modifyNbColumns.js"></script>
+    <script src="script/modifyNbTracks.js"></script>
+    <script src="script/cursor.js"></script>
+    <script src="script/sortRhythmList.js"></script>
+    <script src="script/xmlToGrid.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/rhythm_enterer.css">
+{% endblock %}
+
+{% block core %}
+<div id="enterer_container">
+<table>
+    <tbody>
+        <tr>
+            <td><label>Number rows</label><input type="text" id="num_rows" value="16"/></td>
+            {% if title and edit %}
+                <td><label>Title</label><input type="text" id="rhythm_title" value="{{title}}" readonly="readonly"/>
+            {% else %}
+                <td><label>Title</label><input type="text" id="rhythm_title" value="Some new rhythm"/>
+            {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table id="main_table">
+    <tbody id="rhythm_table">
+        <tr id="table_header"> 
+            <td> <label class="table_header">Track Song </label> </td>
+            <td> <label class="table_header">1 </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header">2 </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header">3 </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header">4 </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td>  
+            <td> <label class="table_header"> </label> </td> 
+        </tr>
+    </tbody>
+</table>
+
+<table >
+<tbody id="all_rhythms"> 
+</tbody>
+</table>
+
+
+<div id="button_container">
+    <button onclick="submitRhythm()">Submit rhythm</button>
+    <button onclick="updateRhythms('delete_all')">Delete all rhythms</button>
+    <button onclick="updateRhythmsList()">Update List Of Rhythm</button>
+    <button onclick="addATrack()" >Add Track</button>
+    <button onclick="removeATrack()" >Remove Track</button>
+    <button onclick="playRhythm()" id="playRhythm">Play Rhythm</button>
+    <input type="number" id="time" value="1">
+    <button onclick="emptyGrid()" >Clear Grid</button>
+    
+    <button onclick="addColumns(1, cursorAdd.getIndex())" >Add a column</button>
+    <button onclick="removeColumns(1, cursorRemove.getIndex())" >Remove a column</button>
+    <button onclick="resizeGridColumns()" >Resize Grid</button>
+    <input type="number" id="nbColumns" value="">
+
+    <button onclick="cursorAdd.moveCursorLeft()" > Left </button>
+    <button onclick="cursorAdd.moveCursorRight()" > Right </button>
+
+    <button onclick="cursorRemove.moveCursorLeft()" > Left </button>
+    <button onclick="cursorRemove.moveCursorRight()" > Right </button>
+
+    <select name="type" id="type">
+        {% if admin %}
+            <option value="1" >Official</option>
+        {% endif %}
+        <option value="2">Private</option>
+        <option value="3">Public</option>
+    </select>
+    
+</div>
+
+</div>
+<div id='rhythms' style="text-align: center;"></div>
+<b><div id='error' style="text-align: center; color: #d73535; "></div></b>
+</body>
+<script>
+
+var codes = [ "Undefined", "Official", "Private", "Public"]
+
+
+var gridToRhythm = new GridToRhythm();
+var rhythmToXml = new RhythmToXml();
+var rhythm_player = new RhythmPlayer();
+
+
+var x2g = new XMLToGrid();
+var songs = new SongRequest();
+rhythmsInfo = null;
+
+updateRhythmsList();
+songs.updateDropDowns();
+
+var w = window;
+
+var number_line = 0;
+var number_columns = 16;
+var sortedDate = 0;
+var sortedTitle = 0;
+var sortedOwner = 0;
+var sortedType = 0;
+var cursor_index = 1;
+var cursorAdd = null;
+var cursorRemove = null;
+
+
+function convertType(type)
+{
+    if( type >= 0 && type < codes.length )
+        return codes[type];
+    else
+        return "";
+}
+
+function getZeros(number)
+{
+    if( number < 10 )
+        return "00" + number
+    else if( number < 100 )
+        return "0" + number
+    else
+        return "" + number
+}
+
+function resizeGridColumns()
+{
+    var new_number_columns= Number(document.getElementById("nbColumns").value);
+    if( new_number_columns > 0 && new_number_columns < 100)
+        resizeGrid(new_number_columns);
+}
+
+for( var j = 0; j < 6 ; j++)
+    addATrack();
+
+cursorAdd = CreateAddCursor( 'img/addCursor.png');
+cursorRemove = CreateRemoveCursor( 'img/removeCursor.png');
+
+function playRhythm()
+{
+    if( rhythm_player.canPlay == 1 )
+    {    
+        rhythm_player.canPlay = 0;
+        var rhythm = gridToRhythm.parseRhythm();
+        var time = document.getElementById("time").value;
+        var time = parseInt(time) * 1000;
+        rhythm_player.setUp(rhythm, time);
+    }
+}
+
+function submitRhythm()
+{
+    var rhythm = gridToRhythm.parseRhythm();
+    var xml = rhythmToXml.parseRhythm(rhythm);
+
+    var xhr = getXMLHttpRequest();
+    {% if edit %}
+        xhr.open("POST", '/rhythm_db?arg=edit', false);
+    {% else %}
+        xhr.open("POST", '/rhythm_db', false);
+    {% endif %}
+    var xml_str = xml.innerHTML;
+    var title = document.getElementById('rhythm_title').value;
+    var type_drop_down = document.getElementById('type');
+    var type = type_drop_down.options[type_drop_down.selectedIndex].value;
+    var request_body = title + '|' + type + '|' + xml_str 
+    xhr.send(request_body);
+    console.log(request_body);
+    console.log(xhr.responseText);
+    document.getElementById('error').innerHTML = xhr.responseText;
+
+<<<<<<< HEAD
+document.onload = loadALlRhythms ()
+=======
+    updateRhythmsList();
+}
+>>>>>>> 6c539b4ef6f7fcb740ba32362471861f21730bf1
+
+function updateRhythms(string){
+    var xhr = getXMLHttpRequest();
+    var url = '/rhythm_db?arg=' + string
+    xhr.open("GET", url, false);
+    xhr.send(null);
+    document.getElementById('rhythms').innerHTML = xhr.responseText;
+    console.log(xhr.responseText);
+    all_rhythms = JSON.parse(xhr.responseText);
+    return xhr.responseText;
+}
+
+
+
+function updateRhythmsList()
+{
+    list = document.getElementById("all_rhythms");
+    rhythmsInfo = getRhythmsInfo('all_templates');
+    displayRhythmsInList();
+    sortedTitle = 0;
+    sortedDate = 0;
+}
+
+function displayRhythmsInList()
+{
+    if( list == null)
+    {
+        alert("The list could not be found")
+        return;
+    }
+    list.innerHTML = "<tr> <td onclick=\"sortListByName()\">Title</td> <td onclick=\"sortListByOwner()\">Owner</td> <td onclick=\"sortListByType()\">Type</td> <td onclick=\"sortListByDate()\">Last Modified</td>  </tr>";
+    for( var i = 0 ; i < rhythmsInfo.length; i++)
+    {
+        title = document.createElement('td');
+        title.innerHTML = rhythmsInfo[i].title;
+        title.setAttribute("onclick","x2g.displayRhythmOnGrid(\""+rhythmsInfo[i].title+"\");");
+        
+        date = document.createElement('td');
+        date.innerHTML =rhythmsInfo[i].date.toUTCString();
+
+        owner = document.createElement('td');
+        owner.innerHTML = rhythmsInfo[i].owner;
+
+        type = document.createElement('td');
+        type.innerHTML = convertType( rhythmsInfo[i].type );
+
+        new_entry = document.createElement('tr');
+        new_entry.appendChild(title);
+        new_entry.appendChild(owner);
+        new_entry.appendChild(type);
+        new_entry.appendChild(date);
+
+        list.appendChild( new_entry );
+    }
+}
+
+
+function SongRequest()
+{
+    this.sendRequest = function (options){
+        var xhr = getXMLHttpRequest();
+        var url = '/song_db' + options
+        xhr.open("GET", url, false);
+        xhr.send(null);
+        return xhr;       
+    }
+
+    this.requestAllSongs = function()
+    {
+        xhr = this.sendRequest('');
+        this.songs = JSON.parse(xhr.responseText).songs;       
+    }
+
+    this.updateDropDowns = function()
+    {
+        this.requestAllSongs();
+        song_options = []
+        this.songs.sort();
+        for( var i = 0; i < this.songs.length; i++)
+        {
+            song_option = document.createElement('option');
+            song_option.value = this.songs[i];
+            song_option.innerHTML = this.songs[i];
+            song_options.push(song_option);
+        }
+
+        dropDowns = document.getElementsByClassName("song_dropdown");
+        for(var i = 0; i < dropDowns.length; i++)
+        {
+            for( var j = 0; j < song_options.length; j++)
+            {
+                dropDowns[i].appendChild(song_options[j].cloneNode(true));
+            }
+        }
+    }
+
+    this.updateDropDown = function(k)
+    {
+        this.requestAllSongs();
+        song_options = []
+        this.songs.sort();
+        for( var i = 0; i < this.songs.length; i++)
+        {
+            song_option = document.createElement('option');
+            song_option.value = this.songs[i];
+            song_option.innerHTML = this.songs[i];
+            song_options.push(song_option);
+        }
+        
+        var dropDowns = document.getElementsByClassName("song_dropdown");
+        for( var j = 0; j < song_options.length; j++)
+        {
+            dropDowns[k].appendChild(song_options[j].cloneNode(true));
+        }
+    }
+}
+
+
+function emptyGrid()
+{
+    var table = document.getElementById('main_table');
+    for (var i = 0, row; row = table.rows[i+1]; i++) 
+    {
+        for (var j = 0, col; col = row.cells[j]; j++) 
+        {           
+            col.childNodes[0].checked = false;
+        }
+    }       
+}
+
+function getRhythmsInfo(arg)
+{
+    var url = 'rhythm_info?arg=' + arg;
+    var xhr = getXMLHttpRequest();
+    xhr.open("GET", url, false);
+    xhr.send(null);
+    var rhythmsInfos = JSON.parse(xhr.responseText).rhythms;
+    for( var i = 0; i < rhythmsInfos.length ; i++)
+        rhythmsInfos[i].date = new Date( Date.parse(rhythmsInfos[i].date));
+    return rhythmsInfos;
+}
+
+rhythm = [
+    [
+        {'track':[
+            {'note': 0.2},
+            {'note': 0.4}]},
+        {'sound':'djembe_low.wav'}
+    ],
+    {'track':[{'note': 0.2}, {'note': 0.4}]}
+]
+
+{% if edit and title %}
+    x2g.displayRhythmOnGrid("{{title}}");
+{% endif %}
+</script>
+{% endblock %}
+

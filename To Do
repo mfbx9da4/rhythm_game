@@ -21,7 +21,7 @@ TO DO:
 - use a DB to store the song + usefull properties
 - ranking of players
 - multiplayer mode
-
+- rhythmTrainer.play() bug 
 
 DONE:
 - create user account

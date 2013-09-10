@@ -1,0 +1,70 @@
+RhythmTrainer
+
+var
+
+method
+
+	replay(state)
+		state.duplicate.shiftTime(nextDisplayTime)
+	
+	play
+		if statecomplete (state++, pause) else repeat
+		if state.rhythmset left screen del rhythmset
+		draw metronome
+		draw state.play()
+
+	state++/prepareNextState
+		metronome.shiftTime(nextDisplayTime)
+		states.append(new State(state_str))
+		nextDisplayTime = now + screen_time
+		this.nextDisplayedDiffTime = rhy.diff_time + rhy.rhythm_time;
+		
+
+===========
+State 
+
+init (state_str)
+	map_state_to_parameters[state_str] --> {... : ..., ..}
+
+	visible
+
+	speed
+
+	state_repition
+
+
+
+current_rhythmset = RhythmSet
+
+shiftTime
+
+=============
+
+RhythmSet
+
+var
+
+	rhythms = [...]
+
+	user_has_succeeded
+
+	start_time
+
+
+
+method
+
+	play
+		rhythm.play
+
+		
+	duplicate
+		return duplicate of rhythm set with time later 
+
+
+	getCurrentBeatTime
+		return given the time return a near by beat time
+
+	getCurrentPlaybackBeatTime
+		returns boolean if note should be played
+
