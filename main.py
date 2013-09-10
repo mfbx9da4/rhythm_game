@@ -10,12 +10,12 @@ __website__ = 'http://rhythmludus.appspot.com/'
 
 from xml.dom import minidom as md
 import xml.etree.cElementTree as ET
+import re
 
 import webapp2
 from google.appengine.ext import db
 
 from object_models import BaseHandler
-from object_models import render_str
 from rhythmgame import game
 from gamesetup import CreateChannel
 from gamesetup import GameRequest
@@ -36,7 +36,7 @@ import json
 class ManageRhythms(BaseHandler):
       def get(self): 
             params = {}
-            self.response.write(render_str('my_rhythm.html', params))
+            self.response.write(self.render_template_arg('my_rhythm.html', params))
 
 class Home(BaseHandler):
       def get(self): 
@@ -68,11 +68,11 @@ class RhythmEnterer(BaseHandler):
         if self.request.get('edit') and self.request.get('title'):
           params["edit"] = True
           params["title"] = self.request.get('title')
-        self.response.write(render_str('rhythm_enterer.html', params))
+        self.response.write(self.render_template_arg('rhythm_enterer.html', params))
 
 class SongEnterer(BaseHandler):
     def get(self):
-        self.render('song_enterer.html')
+        self.response.write(self.render_template('song_enterer.html'))
 
 class SongsQuery(BaseHandler):
   def get(self):
@@ -179,6 +179,17 @@ class RhythmsQuery(BaseHandler):
         else:
           return self.write('invalid rhythm')
 
+class Index(BaseHandler):
+      def get(self): 
+            pages = stripOutRouteStrings(app.router.match_routes)
+            self.write.out(self.render_template_arg('index.html', pages=pages))
+
+def stripOutRouteStrings(routes):
+      strs = []
+      for r in routes:
+            strs.append(re.findall('/[a-zA-Z/0-9._()]*', r.template)[0])
+      return strs
+
 
 def valid_rhythm(xml):
     if xml.getElementsByTagName('note'):
@@ -226,7 +237,8 @@ app = webapp2.WSGIApplication([('/home', Home),
                                ('/my_rhythms', ManageRhythms),
                                ('/_ah/mail/support@rhythmludus.appspotmail.com', ReceiveEmail),
                                ('/fb_endpoint', FBEndPoint),
-                               ('/facebook_sign_up', FBSignUp)
+                               ('/facebook_sign_up', FBSignUp),
+                               ('/index', Index)
                                ],
                                debug=True,
                                config=config)

@@ -23,21 +23,25 @@ facebookSecret= '30b536df7633cc10c255ec66d73090fd'
 
 class FBSignUp(BaseHandler):
 	def get(self):
-		self.render('facebook_sign_up.html')
+		parameter = {}
+		if self.request.get('errorMessage'):
+			parameter['message'] = self.request.get('errorMessage')
+		self.response.write( self.render_template_arg('facebook_sign_up.html', parameter))
 
 class SignUp(BaseHandler):
     def get(self):
-        self.render('signup.html')
+        self.response.write( self.render_template('signup.html') )
 
 
 class Logout(BaseHandler):
 	def get(self):
 		if self.isLoggedIn():
-			self.session.delete('user')
+			self.session.pop('user')
+		return self.redirect('/home')
 
 class Login(BaseHandler):
 	def get(self):
-		self.render('login.html')
+		self.response.write(self.render_template('login.html'))
 
 	def post(self):
 		if self.request.get('username') and self.request.get('password'):
@@ -251,7 +255,7 @@ class FBEndPoint(SignUp):
 			fbUser.put()
 			return self.redirect("https://www.facebook.com/dialog/oauth?client_id=539751139430183&redirect_uri=https%3A%2F%2Frhythmludus.appspot.com%2Ffb_endpoint")
 		else:
-			return self.write(self.validation.getMessage())
+			self.redirect('/facebook_sign_up?errorMessage='+self.validation.getMessage())
 
 class ValidationEmail(BaseHandler):
   def get(self):
