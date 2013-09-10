@@ -1,5 +1,6 @@
 function Rhythm (beats, diff_time, rhythm_time){
 
+<<<<<<< HEAD
     this.tracks = beats.length;
     this.beats = beats;
     this.xscale = 0;
@@ -12,17 +13,25 @@ function Rhythm (beats, diff_time, rhythm_time){
         for( l = 0; l < beats[t].length ; l++ )
             nb++;
     this.numberOfBeats = nb;
+=======
+	this.tracks = beats.length;
+	this.beats = beats;
+  	this.xscale = 0;
+  	this.offset = 0;
+  	this.diff_time = diff_time;
+  	this.rhythm_time = rhythm_time;
+  	
+  	nb = 0;
+  	for( var t = 0; t < beats.length ; t++)
+  		for( var l = 0; l < beats[t].length ; l++ )
+  			nb++;
+  	this.numberOfBeats = nb;
+>>>>>>> 6c539b4ef6f7fcb740ba32362471861f21730bf1
 
     this.counter = 0;
     this.played = 0;
 
-  	this.setPlayback = function( value)
-  	{
-  		for( track = 0 ; track < this.tracks; track ++)  		
-  			for( j = 0; j < this.beats[track].length; j ++ )
-	      		this.beats[track][j].playedPlayBack = value;		
-  	}
-
+<<<<<<< HEAD
     this.duplicate = function()
     {
         var newBeats = new Array(this.tracks);
@@ -36,6 +45,28 @@ function Rhythm (beats, diff_time, rhythm_time){
         }
         return new Rhythm(newBeats, 0, this.rhythm_time);
     }
+=======
+  	this.setPlayback = function( value)
+  	{
+  		for( track = 0 ; track < this.tracks; track ++)  		
+  			for( j = 0; j < this.beats[track].length; j ++ )
+	      		this.beats[track][j].playedPlayBack = value;		
+  	}
+
+  	this.duplicate = function()
+  	{
+  		var newBeats = new Array(this.tracks);
+  		for( track = 0 ; track < this.tracks; track ++)
+  		{
+  			newBeats[track] = new Array(this.beats[track].length);
+  			for( j = 0; j < this.beats[track].length; j ++ )
+	      	{
+	      		newBeats[track][j] = this.beats[track][j].duplicate();
+	      	}
+  		}
+  		return new Rhythm(newBeats, 0, this.rhythm_time);
+  	}
+>>>>>>> 6c539b4ef6f7fcb740ba32362471861f21730bf1
 
     this.initialise = function(xscale, offset)
     {

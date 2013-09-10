@@ -21,38 +21,36 @@ function getXMLHttpRequest() {
 
 function parseXml( xml)
 {
-    var new_rhythms = [];
-    
     // Load the notes:
     var rhythms = xml.getElementsByTagName("rhythm");
-    for( var i = 0; i < rhythms.length; i++)
+   
+    var rhythm = rhythms[0];
+    var tracks = rhythm.getElementsByTagName("track");
+    var beats = [];
+    var trackNumber_to_trackID = [];
+    for( k = 0; k <tracks.length; k++ )
     {
-        var rhythm = rhythms[i];
-        var tracks = rhythm.getElementsByTagName("track");
-        var beats = [];
-        for( k = 0; k <tracks.length; k++ )
-        {
-            var track = tracks[k];
-            var beatsT = [];
-            var notes = track.getElementsByTagName("note");
-            for( j = 0; j < notes.length; j++) {
-                beatsT[j] = Number(notes[j].childNodes[0].nodeValue);
-            }
-            beats[k] = beatsT;
+        var track = tracks[k];
+        var beatsT = [];
+        trackNumber_to_trackID[k] = track.getAttribute("id");
+        var notes = track.getElementsByTagName("note");
+        for( j = 0; j < notes.length; j++) {
+            beatsT[j] = Number(notes[j].childNodes[0].nodeValue);
         }
-        new_rhythms[i] = new Rhythm( beats, Number( rhythm.getElementsByTagName("start")[0].childNodes[0].nodeValue ), 
-                                            Number( rhythm.getElementsByTagName("length")[0].childNodes[0].nodeValue ) );
+        beats[k] = beatsT;
     }
-    
-    // Load the name of the soud to play for each track:
-    var sounds = xml.getElementsByTagName("sound");
-    for( var i = 0; i < sounds.length; i++)
-        map_track_sound.push(sounds[i].childNodes[0].nodeValue);
-    
-    // Load the name of the background sound:
-    var song_background = xml.getElementsByTagName("backgroundsong");
-    if( song_background.length == 1 )
-        backgroundsong = song_background[0].childNodes[0].nodeValue;
 
-    return new Song(new_rhythms, "ij");
+    var songs = rhythm.getElementsByTagName("song");
+    var track_to_song = {};
+    for( k = 0; k < songs.length; k++ )
+    {
+        var song = songs[k].getAttribute("name");
+        var track_id = songs[k].getAttribute("trackid");
+        track_to_song[track_id] = song;
+    }
+
+    var columns = rhythm.getElementsByTagName("numbercolumns");
+    var nbColumns = Number(columns[0].childNodes[0].nodeValue);
+
+    return new createAdvancedRhythm( beats, 0, 0, trackNumber_to_trackID, track_to_song, nbColumns );
 }

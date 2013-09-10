@@ -1,5 +1,5 @@
-<html>
-<head>
+{% extends "base.html" %}
+
 	<script src="script/modified_prototypes.js"></script>
 	<script src="script/advancedMetronome.js"></script>
 	<script src="script/metronome.js"></script>
@@ -19,12 +19,10 @@
   	<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="style/game.css">
 	<link rel="stylesheet" type="text/css" href="style/tree.css">
+{% endblock %}
 
-</head>
-<body>
 
-<div id="title">rhythmludus</div>
-
+{% block core %}
 <canvas width="1px" height="1px" id="metronome" ></canvas>
 <div id="container" >
 	<div id="nav" class="side-pane">
@@ -109,4 +107,4 @@ loadGameElements(0, "song/{{song}}");
 
 
   </script>
-</html>
+{% endblock %}

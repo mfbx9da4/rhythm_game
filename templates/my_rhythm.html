@@ -1,0 +1,120 @@
+<table >
+<tbody id="all_rhythms"> 
+</tbody>
+</table>
+<script src="script/sortRhythmList.js"></script>
+<script>
+
+var rhythmsInfo = null;
+var list = null;
+
+// This function returns an XMLHttpRequest:
+function getXMLHttpRequest() {
+    var xhr = null;
+     
+    if (window.XMLHttpRequest || window.ActiveXObject) {
+        if (window.ActiveXObject) {
+            try {
+                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch(e) {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+        } else {
+            xhr = new XMLHttpRequest(); 
+        }
+    } else {
+        alert("Your webbrowser doesn't suppot XMLHTTP!");
+        return null;
+    }     
+    return xhr;
+}
+
+var codes = [ "Undefined", "Official", "Private", "Public"]
+
+function convertType(type)
+{
+    if( type >= 0 && type < codes.length )
+        return codes[type];
+    else
+        return "";
+}
+
+function updateRhythmsList()
+{
+    list = document.getElementById("all_rhythms");
+    rhythmsInfo = getRhythmsInfo('all_personal');
+    displayRhythmsInList();
+    sortedTitle = 0;
+    sortedDate = 0;
+}
+
+function displayRhythmsInList()
+{
+    if( list == null)
+    {
+        alert("The list could not be found")
+        return;
+    }
+    list.innerHTML = "<tr> <td onclick=\"sortListByName()\">Title</td> <td onclick=\"sortListByType()\">Type</td> <td onclick=\"sortListByDate()\">Last Modified</td>  <td>Edit<td> <td>Delete<td> </tr>";
+    for( var i = 0 ; i < rhythmsInfo.length; i++)
+    {
+        title = document.createElement('td');
+        title.innerHTML = rhythmsInfo[i].title;
+        title.setAttribute("onclick","x2g.displayRhythmOnGrid(\""+rhythmsInfo[i].title+"\");");
+        
+        date = document.createElement('td');
+        date.innerHTML =rhythmsInfo[i].date.toUTCString();
+
+        type = document.createElement('td');
+        type.innerHTML = convertType( rhythmsInfo[i].type );
+
+        editButton = document.createElement('button');
+        editButton.innerHTML = "Edit";
+        editButton.setAttribute("onclick","editRhythm(\""+rhythmsInfo[i].title+"\");");
+
+        deleteButton = document.createElement('button');
+        deleteButton.innerHTML = "Delete";
+        deleteButton.setAttribute("onclick","deleteRhythm(\""+rhythmsInfo[i].title+"\");");
+
+
+        new_entry = document.createElement('tr');
+        new_entry.appendChild(title);
+        new_entry.appendChild(type);
+        new_entry.appendChild(date);
+        new_entry.appendChild(editButton);
+        new_entry.appendChild(deleteButton);
+
+
+        list.appendChild( new_entry );
+    }
+}
+
+function deleteRhythm(title)
+{
+	var url = 'rhythm_db?arg=delete&title='+title;
+    var xhr = getXMLHttpRequest();
+    xhr.open("GET", url, false);
+    xhr.send(null);
+    updateRhythmsList();
+}
+
+function editRhythm(title)
+{
+    window.location.replace("rhythm_enterer?edit=1&title="+title);
+}
+
+function getRhythmsInfo(arg)
+{
+    var url = 'rhythm_info?arg=' + arg;
+    var xhr = getXMLHttpRequest();
+    xhr.open("GET", url, false);
+    xhr.send(null);
+    var rhythmsInfos = JSON.parse(xhr.responseText).rhythms;
+    for( var i = 0; i < rhythmsInfos.length ; i++)
+        rhythmsInfos[i].date = new Date( Date.parse(rhythmsInfos[i].date));
+    return rhythmsInfos;
+}
+
+updateRhythmsList();
+
+</script>

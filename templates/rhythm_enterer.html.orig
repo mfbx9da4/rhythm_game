@@ -191,8 +191,12 @@ function submitRhythm()
     console.log(xhr.responseText);
     document.getElementById('error').innerHTML = xhr.responseText;
 
+<<<<<<< HEAD
+document.onload = loadALlRhythms ()
+=======
     updateRhythmsList();
 }
+>>>>>>> 6c539b4ef6f7fcb740ba32362471861f21730bf1
 
 function updateRhythms(string){
     var xhr = getXMLHttpRequest();

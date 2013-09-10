@@ -1,15 +1,11 @@
 TO DO:
-- metronome ( horitzontal line from top to bottom of canvas )
+- User login with facebook
+- Manage your rythms
 - rhythm enterer 
 {
-  * a table of checkboxes which export to an XML.
   * First row should be reserved for the "strong beat" to determine time signatures
-  * Each following row is a different track
-  * Need to support for different time signatures ie how many beats in the
-  rhythm is variable (when mixing rhythms in the game need to ensure that time signatures match).
   * (Advanced) make the columns expandable and collapsable to allow for demi/semi quaver notes.
 }
-- playback (playback XML)
 - "graphy.png" aligned with time_position
 - welcome/about page
 - Header image {
@@ -32,3 +28,13 @@ TO DO:
 
 DONE:
 - tree view nav pane (although need to do icons e.g http://www.webappers.com/category/design/icons/page/2/ and CSS is messy!)
+- metronome ( horitzontal line from top to bottom of canvas )
+- rhythm enterer 
+{
+  * a table of checkboxes which export to an XML.
+  * Each following row is a different track
+  * Need to support for different time signatures ie how many beats in the
+  rhythm is variable (when mixing rhythms in the game need to ensure that time signatures match).
+}
+- playback (playback XML)
+- User login with email
