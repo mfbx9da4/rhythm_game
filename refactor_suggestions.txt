@@ -1,0 +1,4 @@
+* variables containing time are noted whether they are absolute or relative eg start_time --> absolute_start_time; diff_time --> relative_start_time
+* time --> now
+* rhythmTrainer.play() should not take draw as a param?
+* rhythm.relative_start, rhythm.dur, rhythm.setVisible, rhy.setDur
