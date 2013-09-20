@@ -16,7 +16,7 @@ function RhythmTrainer  (rhythm, metronomeTemp, stateRepitition, stateRepitition
 	// this.states = array of state objects
 	// this.state = current state object
 	// this.state.name = name of current state
-	this.order_of_states = ["visual", "speed1", "speed2", "end"];
+	this.order_of_states = ["playback", "visual", "speed1", "speed2", "end"];
 
 
 	// The next rhythms which will be played:
