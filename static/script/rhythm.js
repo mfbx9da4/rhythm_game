@@ -23,6 +23,17 @@ function Rhythm (beats, diff_time, rhythm_time){
 	      		this.beats[track][j].playedPlayBack = value;		
   	}
 
+    this.finished = function( start_time, time )
+    {
+        return time > start_time + this.diff_time + this.rhythm_time + 500;
+    }
+
+    this.leftCanvas = function(start_time, time, yscale)
+    {
+        var canvas_time = ( c.height - time_position) / yscale ;
+        return time - canvas_time > start_time + this.diff_time + this.rhythm_time;
+    }
+
     this.duplicate = function()
     {
         var newBeats = new Array(this.tracks);
@@ -96,10 +107,11 @@ function Rhythm (beats, diff_time, rhythm_time){
             // Compute the y position of the beat:
             var beat_offest = this.beats[track][j].time * this.rhythm_time * yscale;
             var y = start_time_position - beat_offest;
-
+            
             // Draw the circle:
             this.beats[track][j].circle.x = x;
             this.beats[track][j].circle.y = y;
+
             if( draw == 1)
                 this.beats[track][j].draw();
           }
