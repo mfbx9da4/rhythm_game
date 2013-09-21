@@ -1,0 +1,49 @@
+track trainer
+	states = [new State(visible=true, repitions=5),new State(visible=true, repitions=5)]
+	play:
+		draw()
+		checkIfCompleted()
+	checkIfCompleted():
+
+		if visual repitions completed
+			start non visual repitions (overlay of track and info box)
+			if non visual repitions completed
+				rerturn completed	
+
+rhythm trainer
+	for track in rhythm_set:
+		create TrackTrainer
+	play:
+		for tracktrainer in tracktrainers:
+			tracktrainer.play()
+			if track trainer completed:
+				congrats notify box
+				prepare next key
+				info box 
+
+rhythmtrainer:
+	progresses through each track
+		learning (1)
+		display (1), no-display(0)
+
+rhythmset:
+	track_status = [1, 1, 0, 0, ..... ntracks]
+
+0 * no-display track
+1 * display track
+2 * hide visual (overlay)
+
+start 
+	full track playback with visual
+	bass note:
+		display 
+			repition*3? -->
+		hide visual
+			if repition*3 ? progress : display
+	next note:
+		no-display --> display
+			repition * 3  ? progress
+		hide visual 
+			
+
+GLOBAL : if at any point out of time of any track reset to bass note --> start
