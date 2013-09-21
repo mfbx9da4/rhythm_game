@@ -9,16 +9,6 @@ function RhythmTrainer  (rhythm, metronomeTemp, stateRepitition, stateRepitition
 
 	this.all_states_finished = false;
 
-	// Variable used for the state machine:
-	// need to rm ambiguation between:
-	// 		names of states and array of state objects
-	// 		name of current state and current state object
-	// this.states = array of state objects
-	// this.state = current state object
-	// this.state.name = name of current state
-	this.order_of_states = ["playback", "visual", "speed1", "speed2", "end"];
-
-
 	// The next rhythms which will be played:
 	this.rhythms = [];
 
@@ -68,8 +58,7 @@ function RhythmTrainer  (rhythm, metronomeTemp, stateRepitition, stateRepitition
 
 	this.createState = function(index)
 	{
-		var state_str = this.order_of_states[index];
-		this.state = new State(state_str, this.rhythm, this.nextDisplayedDiffTime, this.xscale, this.offset);
+		this.state = new State(index, this.rhythm, this.nextDisplayedDiffTime, this.xscale, this.offset);
 		this.states.push(this.state);
 	}
 
@@ -105,7 +94,7 @@ function RhythmTrainer  (rhythm, metronomeTemp, stateRepitition, stateRepitition
 		if(this.state.complete())
 		{
 			this.metronomes.shift();
-			var index_of_next_state = this.order_of_states.indexOf(this.state.name) + 1;
+			var index_of_next_state = this.state.index + 1;
 			console.log(index_of_next_state);
 			this.prepareState(index_of_next_state)
 			this.pause();
@@ -113,7 +102,7 @@ function RhythmTrainer  (rhythm, metronomeTemp, stateRepitition, stateRepitition
 		else
 		{
 			this.metronomes.shift();
-			var index_of_next_state = this.order_of_states.indexOf(this.state.name);
+			var index_of_next_state = this.state.index;
 			this.prepareState(index_of_next_state)
 		}
 
@@ -153,7 +142,7 @@ function RhythmTrainer  (rhythm, metronomeTemp, stateRepitition, stateRepitition
 	this.getCurrentBeatTime = function (current_time, track)
 	{
 		rhythms = this.state.rhythm_set.rhythms;
-		if( this.state != "start" && this.state.name != "playback" )
+		if( this.state.index != 0 )
 		{
 			for ( i = 0; i < rhythms.length; i++ ) 
 			{

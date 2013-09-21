@@ -1,20 +1,18 @@
 function Rhythm (beats, diff_time, rhythm_time){
 
     this.tracks = beats.length;
+    this.track_train = [];
+    this.track_hide = [];
     this.beats = beats;
     this.xscale = 0;
     this.offset = 0;
     this.diff_time = diff_time;
     this.rhythm_time = rhythm_time;
-    
-    nb = 0;
-    for( t = 0; t < beats.length ; t++)
-        for( l = 0; l < beats[t].length ; l++ )
-            nb++;
-    this.numberOfBeats = nb;
 
     this.counter = 0;
     this.played = 0;
+
+
 
   	this.setPlayback = function( value)
   	{
@@ -53,6 +51,12 @@ function Rhythm (beats, diff_time, rhythm_time){
         this.xscale = xscale;
         this.offset = offset;
         this.played = 0;
+        nb = 0;
+        for( t = 0; t < beats.length ; t++)
+            if ( this.track_train[t] == 1 ) 
+                for( l = 0; l < beats[t].length ; l++ )
+                    nb++;
+        this.numberOfBeats = nb;    
     }
 
     this.setRhyhtmLength = function(newTime)
@@ -100,21 +104,24 @@ function Rhythm (beats, diff_time, rhythm_time){
         var start_time_position = ( time_position - ( start_time + this.diff_time - time ) * yscale );
         for( track = 0; track < this.tracks ; track ++ )
         {
-          // Compute the x position of the track:
-          var x = track * this.xscale + this.offset;
-          for( j = 0; j < this.beats[track].length; j ++ )
-          {
-            // Compute the y position of the beat:
-            var beat_offest = this.beats[track][j].time * this.rhythm_time * yscale;
-            var y = start_time_position - beat_offest;
-            
-            // Draw the circle:
-            this.beats[track][j].circle.x = x;
-            this.beats[track][j].circle.y = y;
+            if( this.track_train[track] == 1)
+            {
+                  // Compute the x position of the track:
+                  var x = track * this.xscale + this.offset;
+                  for( j = 0; j < this.beats[track].length; j ++ )
+                  {
+                        // Compute the y position of the beat:
+                        var beat_offest = this.beats[track][j].time * this.rhythm_time * yscale;
+                        var y = start_time_position - beat_offest;
+                        
+                        // Draw the circle:
+                        this.beats[track][j].circle.x = x;
+                        this.beats[track][j].circle.y = y;
 
-            if( draw == 1)
-                this.beats[track][j].draw();
-          }
+                        if( draw == 1 && ( this.track_hide[track] == 0 || y > time_position ))
+                            this.beats[track][j].draw();
+                  }
+            }
         }
     }
 

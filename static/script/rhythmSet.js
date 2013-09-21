@@ -8,9 +8,11 @@ function RhythmSet(rhythm, params, start_time, xscale, offset){
 		for( i = 0; i < params.repetitions; i ++)
 		{
 			rhy = rhythm.duplicate();
-			rhy.initialise(xscale, offset);
 			rhy.diff_time = nextDisplayedDiffTime;
 			rhy.setvisible(params.visible);
+			rhy.track_train = params.track_to_train;
+			rhy.track_hide = params.track_to_hide;
+			rhy.initialise(xscale, offset);
 			rhy.rhythm_time = rhythm.rhythm_time * params.speed;
 			this.rhythms.push(rhy);
 			nextDisplayedDiffTime = rhy.diff_time + rhy.rhythm_time;
