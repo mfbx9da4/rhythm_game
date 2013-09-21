@@ -34,6 +34,7 @@ function removeColumns(nb_columns_to_remove, row_number)
         }
     }   
     number_columns -= nb_columns_to_remove;  
+    updateEdit();
 }
 
 function addColumns(nb_columns_to_add, row_number)
@@ -82,5 +83,6 @@ function addColumns(nb_columns_to_add, row_number)
             }
         }
     }     
-    number_columns += nb_columns_to_add;  
+    number_columns += nb_columns_to_add;
+    updateEdit();  
 }
