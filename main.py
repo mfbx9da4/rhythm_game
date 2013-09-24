@@ -61,7 +61,7 @@ class RhythmEnterer(BaseHandler):
         if not self.requireLogin():
           return
         params = {}
-        if self.getUser().userType == 2:
+        if self.getUser().userRights == 2:
           params["admin"] = True
         else:
           params["admin"] = False
@@ -157,7 +157,7 @@ class RhythmsQuery(BaseHandler):
 
     def validType(self, type):
       if type == 1:
-        return self.getUser().type == 1
+        return self.getUser().userRights == 2
       else:
         return type < 4 and type > 0
 
