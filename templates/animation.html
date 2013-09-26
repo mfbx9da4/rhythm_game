@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block head %}
+	<script src="script/updateList.js"></script>
 	<script src="script/modified_prototypes.js"></script>
 	<script src="script/advancedMetronome.js"></script>
 	<script src="script/metronome.js"></script>
@@ -28,29 +29,26 @@
 <div id="container" >
 	<div id="nav" class="side-pane">
 		<ul>
-			<li><input type="checkbox" id="item-0" /><label for="item-0">African</label>
+			<li><input type="checkbox" id="item-0" /><label for="item-0">Solo</label>
 				<ul class="continent">
-					<li><input type="checkbox" id="item-0-0" /><label for="item-0-0">Gedsum</label>
-						<ul class="rhythm">
-							<li class="game"><a>Playback</a></li>
-							<li class="game"><a>Speed 1</a></li>
-							<li class="game"><a>Speed 2</a></li>
-							<li class="game"><a>Speed 3</a></li>
+					<li><input type="checkbox" id="item-0-0" /><label for="item-0-0">Official</label>
+						<ul id="official_list" class="rhythm">
 						</ul>
 					</li>
+
+					<li><input type="checkbox" id="item-0-0" /><label for="item-0-0">Personal</label>
+						<ul id="personal_list" class="rhythm">
+						</ul>
+					</li>
+
+					<li><input type="checkbox" id="item-0-0" /><label for="item-0-0">Public</label>
+						<ul id="public_list" class="rhythm">
+						</ul>
+					</li>
+
 				</ul>
 			</li>
-			<li><input type="checkbox" id="item-1" /><label for="item-1">Latin</label>
-				<ul class="continent">
-					<li><input type="checkbox" id="item-1-0" /><label for="item-1-0">Bossa Nova</label>
-						<ul class="rhythm">
-							<li class="game"><a>Playback (should be able to activate play back with keypress)</a></li>
-							<li class="game"><a>Audio and visual</a></li>
-							<li class="game"><a>Audio only</a></li>
-							<li class="game"><a>Metronome only</a></li>
-						</ul>
-					</li>
-				</ul>
+			<li><input type="checkbox" id="item-1" /><label for="item-1">Multiplayer</label>
 			</li>
 		</ul>	
 		
@@ -105,6 +103,7 @@ var staticCircle = null;
 var YSCALE = 0.3
 
 loadGameElements(0, "song/{{song}}");
+loadList();
 
 
   </script>

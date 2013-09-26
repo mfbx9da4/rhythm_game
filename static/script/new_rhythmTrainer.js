@@ -95,9 +95,7 @@ function RhythmTrainer  (rhythm, metronomeTemp, stateRepitition, stateRepitition
 		{
 			this.metronomes.shift();
 			var index_of_next_state = this.state.index + 1;
-			console.log(index_of_next_state);
 			this.prepareState(index_of_next_state)
-			this.pause();
 		}	
 		else
 		{

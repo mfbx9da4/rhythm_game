@@ -104,21 +104,28 @@ class RhythmInfo(BaseHandler):
           return self.write(self.getEncodedRhythms())
         elif self.arg == 'all_official':
           self.rhythms = Rhythm.all().filter('rhythm_type = ', 1).fetch(limit=None)
-          return self.write(getEncodedRhythms)
+          return self.write(self.getEncodedRhythms())
         elif self.arg == 'all_publicly_shared':
           self.rhythms = Rhythm.all().filter('rhythm_type = ', 3).fetch(limit=None)
-          return self.write(getEncodedRhythms)
+          return self.write(self.getEncodedRhythms())
         elif self.arg == 'all_personal':
-          self.rhythms = Rhythm.all().filter('owner = ', self.getUser().username).fetch(limit=None)
+          if self.isLoggedIn():
+            self.rhythms = Rhythm.all().filter('owner = ', self.getUser().username).fetch(limit=None)
+          else:
+            self.rhythms = []
           return self.write(self.getEncodedRhythms())
         elif self.arg == 'all_personally_shared':
-          self.rhythm = []
-          privateRhythms = Rhythm.all()
-          privateRhythmsName = RhythmAutorisation.all().filter('username = ', user.username).fetch(limit=None)
-          for name in privateRhythmsName:
-            self.rhythms.append(privateRhythms.filter('rhythm_type = ', 2, 'title = ', name).get())
+          if isLoggedIn:
+            self.rhythm = []
             privateRhythms = Rhythm.all()
+            privateRhythmsName = RhythmAutorisation.all().filter('username = ', user.username).fetch(limit=None)
+            for name in privateRhythmsName:
+              self.rhythms.append(privateRhythms.filter('rhythm_type = ', 2, 'title = ', name).get())
+              privateRhythms = Rhythm.all()
+          else:
+            self.rhythms = []
           return self.write(self.getEncodedRhythms())
+          
 
     def getEncodedRhythms(self):
         rhythms = [{ 'title': str(r.title), 'date': str(r.last_modified), 'type': str(r.rhythm_type), "owner": str(r.owner) } for r in self.rhythms]
