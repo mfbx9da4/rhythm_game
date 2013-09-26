@@ -19,75 +19,104 @@
 
 {% block core %}
 <div id="enterer_container">
+
+    <table id="rhythm_details">
+        <tbody>
+            <tr>
+                <td>
+                    Title
+                </td>
+                {% if title and edit %}
+                    <td><input type="text" id="rhythm_title" value="{{title}}" readonly="readonly"/></td>
+                {% else %}
+                    <td><input type="text" id="rhythm_title" placeHolder="Some new rhythm"/></td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td>
+                    Privacy settings
+                </td>
+                <td>
+                    <select name="type" id="type">
+                        {% if admin %}
+                            <option value="1" >Official</option>
+                        {% endif %}
+                        <option value="2">Private</option>
+                        <option value="3">Public</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button id="submit_rhythm" class="button_icon" onclick="submitRhythm()"><span class="icon icon-upload"> Submit rhythm</span></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 <table>
-    <tbody>
-        <tr>
-            <td><label>Number rows</label><input type="text" id="num_rows" value="16"/></td>
-            {% if title and edit %}
-                <td><label>Title</label><input type="text" id="rhythm_title" value="{{title}}" readonly="readonly"/>
-            {% else %}
-                <td><label>Title</label><input type="text" id="rhythm_title" value="Some new rhythm"/>
-            {% endif %}
-            </td>
-        </tr>
+        <tbody>
+            <tr>
+                <td>
+                <div id="rhythm_controls">
+                        <button class="button_icon" onclick="toggleEdit()"><span class="icon icon-edit"> Edit</span></button>
+                        <button class="button_icon" onclick="addATrack()"><span class="icon icon-plus-sign"> Add Track</button></span>
+                        <button class="button_icon" onclick="removeATrack()" ><span class="icon icon-minus-sign"> Remove Track</button></span>
+                        <button class="button_icon" onclick="playRhythm()" id="playRhythm"><span class="icon icon-play"> Play Rhythm</button></span>
+                        <span class="icon icon-time"> Duration: <input type="number" id="time" value="1"></span>
+                        <button class="button_icon" onclick="emptyGrid()"><span class="icon icon-eraser"> Clear Grid</button></span>
+                        <button class="button_icon" onclick="resizeGridColumns()"><span class="icon icon-resize-full"> Resize Grid</button></span>
+                        <span class="icon icon-columns"> <input type="number" id="nbColumns" value=""></span>
+                </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table id="main_table">
+                        <tbody id="rhythm_table">
+                            <tr id="table_header"> 
+                                <td> <label class="table_header">Track Song </label> </td>
+                                <td> <label class="table_header">1 </label> </td>  
+                                <td> <label class="table_header"> </label> </td>  
+                                <td> <label class="table_header"> </label> </td>  
+                                <td> <label class="table_header"> </label> </td>  
+                                <td> <label class="table_header">2 </label> </td>  
+                                <td> <label class="table_header"> </label> </td>  
+                                <td> <label class="table_header"> </label> </td>  
+                                <td> <label class="table_header"> </label> </td>  
+                                <td> <label class="table_header">3 </label> </td>  
+                                <td> <label class="table_header"> </label> </td>  
+                                <td> <label class="table_header"> </label> </td>  
+                                <td> <label class="table_header"> </label> </td>  
+                                <td> <label class="table_header">4 </label> </td>  
+                                <td> <label class="table_header"> </label> </td>  
+                                <td> <label class="table_header"> </label> </td>  
+                                <td> <label class="table_header"> </label> </td> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <table id="all_rhythms_table">
+    <tbody id="all_rhythms"> 
     </tbody>
-</table>
-<table id="main_table">
-    <tbody id="rhythm_table">
-        <tr id="table_header"> 
-            <td> <label class="table_header">Track Song </label> </td>
-            <td> <label class="table_header">1 </label> </td>  
-            <td> <label class="table_header"> </label> </td>  
-            <td> <label class="table_header"> </label> </td>  
-            <td> <label class="table_header"> </label> </td>  
-            <td> <label class="table_header">2 </label> </td>  
-            <td> <label class="table_header"> </label> </td>  
-            <td> <label class="table_header"> </label> </td>  
-            <td> <label class="table_header"> </label> </td>  
-            <td> <label class="table_header">3 </label> </td>  
-            <td> <label class="table_header"> </label> </td>  
-            <td> <label class="table_header"> </label> </td>  
-            <td> <label class="table_header"> </label> </td>  
-            <td> <label class="table_header">4 </label> </td>  
-            <td> <label class="table_header"> </label> </td>  
-            <td> <label class="table_header"> </label> </td>  
-            <td> <label class="table_header"> </label> </td> 
-        </tr>
-    </tbody>
-</table>
-
-<table >
-<tbody id="all_rhythms"> 
-</tbody>
-</table>
+    </table>
 
 
-<div id="button_container">
-    <button onclick="toggleEdit()">Edit</button>
-    <button onclick="submitRhythm()">Submit rhythm</button>
-    <button onclick="updateRhythms('delete_all')">Delete all rhythms</button>
-    <button onclick="updateRhythmsList()">Update List Of Rhythm</button>
-    <button onclick="addATrack()" >Add Track</button>
-    <button onclick="removeATrack()" >Remove Track</button>
-    <button onclick="playRhythm()" id="playRhythm">Play Rhythm</button>
-    <input type="number" id="time" value="1">
-    <button onclick="emptyGrid()" >Clear Grid</button>
-    <button onclick="resizeGridColumns()" >Resize Grid</button>
-    <input type="number" id="nbColumns" value="">
-
-    <select name="type" id="type">
-        {% if admin %}
-            <option value="1" >Official</option>
-        {% endif %}
-        <option value="2">Private</option>
-        <option value="3">Public</option>
-    </select>
+    <div id="button_container">
+        <button class="button_icon" onclick="updateRhythms('delete_all')"><span class="icon icon-remove-sign"> Delete all rhythms</button></span>
+        <button class="button_icon" onclick="updateRhythmsList()"><span class="icon icon-refresh"> Update List Of Rhythm</button></span>
+    </div>
     
-</div>
 
+    <div>
+        <div id="rhythms"></div>
+        <b><div id="error"></div></b>
+    </div>
 </div>
-<div id='rhythms' style="text-align: center;"></div>
-<b><div id='error' style="text-align: center; color: #d73535; "></div></b>
 </body>
 <script>
 

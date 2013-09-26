@@ -1,66 +1,82 @@
-@media screen {
-@font-face {
-  font-family: 'Lobster';
-  font-style: normal;
-  font-weight: normal;
-  src: local('Lobster'), local('Lobster'), url('fonts/Lobster/Lobster.ttf') format('truetype');
-}
-}
-@font-face
-{
-font-family: rale;
-src: url('fonts/Raleway/Raleway-Light.ttf');
-}
-
-
 body {
 	margin-right: auto;
 	position: relative;
-	width: 900px;
+	width: 1300px;
     margin: 0 auto;
     padding: 10px;
     font-family: rale;
     background:url(images/bgnoise_lg.png);
 }
-table{
-    margin: 0 auto;
-    padding: 0 0;
-    border-spacing: 0;
-    text-align: center;
-}
 
-#main_table{
-    font-family: courier;
-    background-color: white;
-    border-radius: 6px;
-    border: solid #3b3535 1px;
-
-}
-
-#main_table tr:nth-child(even) {
-    background-color: #CCC;
-    /*border: solid black 2px;*/
-}
-
-#all_rhythms {
-    background-color: white;
-
-}
-
-input, td {
-    /*border: solid black 2px;*/
-}
-
-.hid{
-    visibility: hidden;
-    /*margin-left: 22px;*/
-}
-#enterer_container{
-    width: 800px;
+#enterer_container
+{
+    width: 1300px;
     border: dashed #4F4A4A 1px;
     margin: 0 auto;
     border-radius: 10px;
 }
+
+table
+{
+    padding: 0 0;
+    border-spacing: 0;
+    text-align: center;
+    display: inline-block;
+}
+
+
+
+/*********************************************************************************/
+/* Rhythm details                                                                         */
+/*********************************************************************************/
+
+#submit_rhythm
+{
+    font-size: 1.5em;
+    padding: 0.4em;
+    color: #009C9A;
+}
+
+/*********************************************************************************/
+/* Main grid                                                                         */
+/*********************************************************************************/
+
+#rhythm_controls
+{
+    display: inline-block;
+    width: 400px;
+}
+
+#main_table
+{
+    font-family: courier;
+    background-color: white;
+    border-radius: 6px;
+    border: solid #3b3535 1px;
+    /*display: inline-block;*/
+}
+
+#main_table tr:nth-child(even) {
+    background-color: #A3CACA;
+}
+
+/*********************************************************************************/
+/* Db table                                                                         */
+/*********************************************************************************/
+
+
+#all_rhythms_table
+{
+    position: relative;
+    background-color: white;
+    border-spacing: 7px;
+}
+
+
+.hid{
+    visibility: hidden;
+}
+
 button {
     display: inline;
     font-family: rale;
@@ -71,7 +87,4 @@ button {
 }
 
 
-.table_header {
-    /*text-justify: "center";*/
 
-}

@@ -3,6 +3,16 @@
 font-family: Lobster;
 src: url('fonts/Lobster/Lobster.ttf');
 }
+@font-face
+{
+font-family: rale;
+src: url('fonts/Raleway/Raleway-Light.ttf');
+}
+@font-face
+{
+font-family: cabin;
+src: url('fonts/Raleway/Cabin-regular.ttf');
+}
 
 #title {
     font-family: Lobster;
@@ -11,6 +21,9 @@ src: url('fonts/Lobster/Lobster.ttf');
     text-align: center;
     color: #20b8b6;
     text-decoration: none;
+    position: relative;
+    top: -22px;
+
 }
 
 #userInfo {
