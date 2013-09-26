@@ -23,8 +23,14 @@ src: url('fonts/Raleway/Cabin-regular.ttf');
     text-decoration: none;
     position: relative;
     top: -22px;
-
 }
+	#title h1
+	{
+		font-family: rale;
+		display: inline;
+		font-size: 80px;
+		color: MediumVioletRed;
+	}
 
 #userInfo {
 	position: absolute;
