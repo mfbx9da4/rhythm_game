@@ -58,17 +58,18 @@ class Song(db.Model):
 
 class RhythmEnterer(BaseHandler):
     def get(self):
-        if not self.requireLogin():
-          return
-        params = {}
-        if self.getUser().userRights == 2:
-          params["admin"] = True
-        else:
-          params["admin"] = False
-        if self.request.get('edit') and self.request.get('title'):
-          params["edit"] = True
-          params["title"] = self.request.get('title')
-        self.response.write(self.render_template_arg('rhythm_enterer.html', params))
+        # if not self.requireLogin():
+        #   return
+        # params = {}
+        # if self.getUser().userRights == 2:
+        #     params["admin"] = True
+        # else:
+        #     params["admin"] = False
+        # if self.request.get('edit') and self.request.get('title'):
+        #     params["edit"] = True
+        #     params["title"] = self.request.get('title')
+        # self.response.write(self.render_template_arg('rhythm_enterer.html', params))
+        self.render('rhythm_enterer.html')
 
 class SongEnterer(BaseHandler):
     def get(self):

@@ -10,22 +10,7 @@ template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
                                autoescape=True)
 
-def blog_key(name='default'):
-    return db.key.from_path('blogs', name)
-
-
-class BlogPost(db.Model):
-    """Models an individual Guestbook entry with an author, content, and date."""
-    subject = db.StringProperty(multiline=False, required=True)
-    content = db.TextProperty(required=True)
-    created = db.DateTimeProperty(auto_now_add=True)
-    last_modified = db.DateTimeProperty(auto_now=True)
-
-    def render(self):
-        self._render_text = self.content.replace('\n', '<br>')
-        return render_str('post.html', p=self)
-
-
+    
 class BaseHandler(webapp2.RequestHandler):
     def render_template_arg(self, template, params):
         if self.isLoggedIn():
@@ -92,7 +77,8 @@ class BaseHandler(webapp2.RequestHandler):
     def getUser(self):
         if self.isLoggedIn():
             username = self.session.get('user')
-            user_query = User.all().filter('username =', username)
-            return user_query.fetch(1)[0]
+            user_query = User.all().filter('username =', username).fetch(1)
+            if user_query:
+                return user_query[0]
         else:
             return None

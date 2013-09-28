@@ -34,6 +34,7 @@ function showEditButtons()
 		showRemoveButton(i+1, columnID);
 	} 
 	showLastAddButton(i, columnID);
+	
 }
 
 function showLastAddButton(number, id )

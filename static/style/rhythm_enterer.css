@@ -1,17 +1,7 @@
-body {
-	margin-right: auto;
-	position: relative;
-	width: 1300px;
-    margin: 0 auto;
-    padding: 10px;
-    font-family: rale;
-    background:url(images/bgnoise_lg.png);
-}
 
 #enterer_container
 {
     width: 1300px;
-    border: dashed #4F4A4A 1px;
     margin: 0 auto;
     border-radius: 10px;
 }
@@ -27,8 +17,80 @@ table
 
 
 /*********************************************************************************/
+/* Main grid                                                                         */
+/*********************************************************************************/
+
+
+
+
+
+#main_table
+{
+    font-family: courier;
+    background-color: white;
+    border-radius: 6px;
+    border: solid #3b3535 1px;
+    width:100%;
+    margin: 0 auto;
+}
+
+#main_table tr:nth-child(even) {
+    background-color: #A3CACA;
+}
+
+.rhythm_controls
+{
+    padding: 1em;
+    width: 700px;
+    margin:0 auto;
+}
+    .rhythm_controls .icon-plus-sign
+    {
+        color: forestgreen;
+    }
+
+    .rhythm_controls .icon-minus-sign
+    {
+        color: firebrick;
+    }
+    #playRhythm
+    {
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        border: 1px solid #ccc;   
+    }
+
+    #time
+    {
+        width: 40px;
+    }
+
+    #clear_grid, #edit_grid_button
+    {
+        float: right;
+    }
+
+    #edit_grid
+    {
+        display: none;
+    }
+    #edit_grid.show
+    {
+        display: block;
+    }
+
+/*********************************************************************************/
 /* Rhythm details                                                                         */
 /*********************************************************************************/
+
+table#rhythm_details
+{
+    margin-left: 200px;
+    border-spacing: 1em;
+    font-weight: bold;
+    text-align: left;
+}
 
 #submit_rhythm
 {
@@ -37,28 +99,6 @@ table
     color: #009C9A;
 }
 
-/*********************************************************************************/
-/* Main grid                                                                         */
-/*********************************************************************************/
-
-#rhythm_controls
-{
-    display: inline-block;
-    width: 400px;
-}
-
-#main_table
-{
-    font-family: courier;
-    background-color: white;
-    border-radius: 6px;
-    border: solid #3b3535 1px;
-    /*display: inline-block;*/
-}
-
-#main_table tr:nth-child(even) {
-    background-color: #A3CACA;
-}
 
 /*********************************************************************************/
 /* Db table                                                                         */
@@ -70,6 +110,9 @@ table
     position: relative;
     background-color: white;
     border-spacing: 7px;
+    width: 650px;
+    display: inline-block;
+    border: 1px solid #ccc;
 }
 
 
@@ -77,13 +120,16 @@ table
     visibility: hidden;
 }
 
-button {
+button 
+{
     display: inline;
-    font-family: rale;
 }
 
-#button_container{
+#all_rhythms_container
+{
     margin: 5px 30px;
+    display: inline-block;
+    width: 650px;
 }
 
 

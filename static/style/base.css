@@ -14,6 +14,30 @@ font-family: cabin;
 src: url('fonts/Raleway/Cabin-regular.ttf');
 }
 
+body
+{
+	margin: 0;
+	font-family: rale;
+	
+}
+
+
+
+#header
+{
+    background:url(images/bgnoise_lg.png);
+    width: 100%;
+    border-bottom: 2px solid #B4B1AA;
+    height: 148px;
+    box-shadow: 0px 0px 30px;
+
+}
+	#header button
+	{
+		font-family: rale;
+		font-weight: bold;
+	}
+
 #title {
     font-family: Lobster;
     font-family: 'Lobster', cursive;
@@ -22,18 +46,89 @@ src: url('fonts/Raleway/Cabin-regular.ttf');
     color: #20b8b6;
     text-decoration: none;
     position: relative;
-    top: -22px;
+    top: -42px;
+    text-shadow: 0px 0px 20px rgb(0, 0, 0);
+
 }
 	#title h1
 	{
 		font-family: rale;
 		display: inline;
-		font-size: 80px;
+		font-size: 70px;
 		color: MediumVioletRed;
+	    text-shadow: 0px 0px 0px;
 	}
 
-#userInfo {
+
+#userInfo 
+{
 	position: absolute;
-	top: 10px;
-	right: 10px;
+	background-color: #fff;
+	padding: 2em;
+	border-radius: 12px;
+	border: 1px solid #ccc;
 }
+
+#signin-signup
+{
+	position: relative;
+	display: none;
+	top:25px;
+	left:910px;
+	width: 250px
+}
+	#signin-signup:before
+	{
+		position: absolute;
+		content: '';
+		width: 0px;
+		height: 0px;
+		border-top: 10px solid transparent;
+		border-right: 10px solid transparent;
+		border-left: 10px solid transparent;
+		border-bottom: 10px solid white;
+		top:-16px;
+		left: 200px;
+		z-index: 200;
+	}
+	
+	#signin-signup.show
+	{
+		display: inline-block;
+		z-index: 3000;
+	}
+
+	#signin-signup #login
+	{
+		float: right;
+	}
+	
+	#signin-signup .login-icon
+	{
+		text-align: center;
+		vertical-align: center;
+	}
+		#signin-signup .login-icon .icon-facebook
+		{
+			color: white;
+		}
+
+		#signin-signup .login-icon .icon-stack-base
+		{
+			color: #474545;
+		}
+
+#signin-signup-button
+{
+	position: relative;
+	top:10px;
+	left:1170px;
+	z-index: 100;
+	background-color: #20b8b6;
+	padding: 10px;
+	color: white;
+	border-radius: 15px;
+	box-shadow: 0px 0px 15px 2px rgb(129, 129, 129);
+}
+	
+
