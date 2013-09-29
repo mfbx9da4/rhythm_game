@@ -120,10 +120,6 @@ table#rhythm_details
     visibility: hidden;
 }
 
-button 
-{
-    display: inline;
-}
 
 #all_rhythms_container
 {
@@ -133,4 +129,16 @@ button
 }
 
 
+#error
+{
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    position: fixed;
+    top: 50px;
+    left: 100px;
+    width: 200px;
+    height: 50px;
+    background-color: lightgoldenrodyellow;
+    text-align: center;
 
+}
