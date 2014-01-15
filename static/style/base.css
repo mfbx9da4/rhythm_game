@@ -14,12 +14,40 @@ font-family: cabin;
 src: url('fonts/Raleway/Cabin-regular.ttf');
 }
 
-body
-{
+body {
 	margin: 0;
 	font-family: rale;
-	
 }
+
+nav {
+	float: left;
+	position: absolute;
+	left: 311px;
+	z-index: 30;
+}
+
+nav > ul {
+  margin-left: 0;
+  margin-bottom: 20px;
+  list-style: none;
+
+}
+	nav > ul > li {
+		display: inline;
+		border: 1px solid #888;
+		margin-right: 15px;
+		padding: 5px;
+
+		background-color: aliceblue;
+	}
+		nav > ul > li:hover {
+			background-color: #eeeeee;
+		}
+		nav > ul > li > a {
+		  text-decoration: none;
+		}
+			nav > ul > li > a:hover {
+			}
 
 
 
@@ -27,9 +55,7 @@ body
 {
     background:url(images/bgnoise_lg.png);
     width: 100%;
-    border-bottom: 2px solid #B4B1AA;
     height: 148px;
-    box-shadow: 0px 0px 30px;
 
 }
 	#header button

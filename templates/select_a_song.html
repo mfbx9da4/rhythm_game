@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block head %}
+  	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+  	<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="style/game.css">
+{% endblock %}
+
+
+{% block core %}
+<h1>Please select one of the following songs to play</h1>
+	{% for title in titles %}
+		<li><a href="/game?song={{title}}">{{title}}</a></li>
+	{% endfor %}
+{% endblock %}

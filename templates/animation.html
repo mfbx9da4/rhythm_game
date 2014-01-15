@@ -28,38 +28,14 @@
 <canvas width="1px" height="1px" id="metronome" ></canvas>
 <div id="container" >
 	<div id="nav" class="side-pane">
-		<ul>
-			<li><input type="checkbox" id="item-0" /><label for="item-0">Solo</label>
-				<ul class="continent">
-					<li><input type="checkbox" id="item-0-0" /><label for="item-0-0">Official</label>
-						<ul id="official_list" class="rhythm">
-						</ul>
-					</li>
-
-					<li><input type="checkbox" id="item-0-0" /><label for="item-0-0">Personal</label>
-						<ul id="personal_list" class="rhythm">
-						</ul>
-					</li>
-
-					<li><input type="checkbox" id="item-0-0" /><label for="item-0-0">Public</label>
-						<ul id="public_list" class="rhythm">
-						</ul>
-					</li>
-
-				</ul>
-			</li>
-			<li><input type="checkbox" id="item-1" /><label for="item-1">Multiplayer</label>
-			</li>
-		</ul>	
-		
+		<h3>Instructions</h3>
 	</div>
 		<!-- <img> -->
 		<canvas id="game" width="600" height="600" >
 		</canvas>
 	<div id="score-pane" class="side-pane" >
-		<p> Last key pressed: </p>	<p class='val' id="keypressed">none</p>
-		<p> Update: </p>			<p class='val' id="update" >0</p>
-		<p> Score: </p>  			<p class='val' id="score">0</p>
+		<p> Score update: </p>			<p class='val' id="update" >0</p>
+		<p> Total score: </p>  			<p class='val' id="score">0</p>
 	</div>
 
 </div>

@@ -30,8 +30,8 @@ from login import CreateUser
 from login import Logout
 from userDB import User  
 from RhythmAuto import RhythmAutorisation 
-
 import json
+from fixture_data import create_initial_data
 
 class ManageRhythms(BaseHandler):
       def get(self): 
@@ -40,7 +40,8 @@ class ManageRhythms(BaseHandler):
 
 class Home(BaseHandler):
       def get(self): 
-            self.write('HOME')
+            params = {}
+            self.response.write(self.render_template_arg('home.html', params))
 
 
 class Rhythm(db.Model):
@@ -51,10 +52,6 @@ class Rhythm(db.Model):
     last_modified = db.DateTimeProperty(auto_now=True)
     rhythm_type = db.IntegerProperty(default=2, required=True)
 
-
-class Song(db.Model):
-    title = db.StringProperty(multiline=False, required=True)
-    created = db.DateTimeProperty(auto_now_add=True)
 
 class RhythmEnterer(BaseHandler):
     def get(self):
@@ -208,13 +205,7 @@ def valid_title(title):
 
 class SongDb(BaseHandler):
     def get(self):
-          db.delete(Song.all());
-          song = Song(title="sound/conga/1.wav")
-          song.put()
-          song = Song(title="sound/conga/2.wav")
-          song.put()
-          song = Song(title="sound/conga/3.wav")
-          song.put()
+          create_initial_data()
           return self.write("DB initialised")
 
 class ReceiveEmail (BaseHandler):
@@ -228,6 +219,7 @@ config['webapp2_extras.sessions'] = {
 }
 
 app = webapp2.WSGIApplication([('/home', Home),
+                               ('/?', Home), 
                                ('/game', game),
                                ('/randomsong', RandomSong),
                                ('/rhythm_enterer', RhythmEnterer),

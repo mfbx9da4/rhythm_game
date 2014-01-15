@@ -28,25 +28,21 @@ body {
 }
 
 .side-pane {
-	width: 200px;  height:100%; 
+	width: 200px;  height:602px; 
     font-family: rale;
     font-family: 'Raleway', sans-serif;
 	background-color:#b7b1b1;
 	background:url(images/tweed.png);
 	color:white;
+	float: left;
 }
 
 #nav {
-	float: left;
-	font-size: 6px;
-	padding: 0px;
-	word-spacing: 0px; 	
-	margin: 0 0; 	
+	padding: 5px;
 }
 
 
 #score-pane {
-	float: left;
 }
 
 #score-pane p {

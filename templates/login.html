@@ -1,6 +1,40 @@
+{% extends "base.html" %}
+
+{% block head %}
+  	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+  	<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="style/game.css">
+{% endblock %}
+
+
+{% block core %}
 <form action="/login" method="post"  >
-Username: <input type="text" name="username"><br>
-Passworde: <input type="password" name="password">
-<input type="submit" value="Submit">
+<table>
+	<tr>
+		<td>
+			Username:
+		</td>
+		<td>
+			<input type="text" name="username">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Password:
+		</td>
+		<td>
+			<input type="password" name="password">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="submit" value="Submit">
+		</td>
+		<td>
+		</td>
+	</tr>
+ </table>
 </form>
 <a href="https://www.facebook.com/dialog/oauth?client_id=539751139430183&redirect_uri=https%3A%2F%2Frhythmludus.appspot.com%2Ffb_endpoint"> Facebook Login </a>
+
+{% endblock %}
