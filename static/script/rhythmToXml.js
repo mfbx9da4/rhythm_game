@@ -20,7 +20,7 @@ function RhythmToXml()
         rhythm.appendChild(start);
 
         length = document.createElement('length');
-        length.innerText = "10000";
+        length.innerText = advancedRhythm.rhythm_time * 1000;
         rhythm.appendChild(length);
 
         tracks = document.createElement('tracks');
