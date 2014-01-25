@@ -7,6 +7,7 @@ function loadList()
 
 function showList(id, arg)
 {
+	return;
 	var rhythms = getRhythmsInfo(arg);
 	var list = d.getElementById(id);
 	for( var i = 0; i < rhythms.length; i++)

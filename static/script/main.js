@@ -34,7 +34,7 @@ function keyHandler(e){
 	var keyCode = String(e.keyCode);
 	updateScore(keyCode);
 	var p1 = d.getElementById("keypressed");
-	p1.innerHTML = e.keyCode;
+	//p1.innerHTML = e.keyCode;
 	var track = map_key_track[keyCode];
   	staticCircles.playedNote(track, new Date().getTime());
   	playSound(track);

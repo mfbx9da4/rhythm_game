@@ -37,6 +37,8 @@ function XMLToGrid ()
             dropDown = document.getElementById(i+1);
             dropDown.value = song;
         }
+        title_box = document.getElementById("rhythm_title");
+        title_box.value = title;
     }
 
     this.checkbox = function(index, track)

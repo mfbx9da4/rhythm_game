@@ -5,9 +5,7 @@ from google.appengine.ext import db
 from userDB import User, EmailUser
 
 
-song_titles = ['conga_play.xml',
-    'song_one_track_low.xml',
-    'song_one_track_ultralow.xml']
+song_titles = ['sound/conga/1.wav','sound/conga/2.wav','sound/conga/3.wav','sound/conga/4.wav','sound/conga/5.wav','sound/conga/6.wav','sound/conga/7.wav']
 
 def create_initial_songs():
     db.delete(Song.all())

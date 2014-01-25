@@ -21,10 +21,11 @@ function getXMLHttpRequest() {
 
 function sendSongRequest(song_name)
 {
-	var xhr = getXMLHttpRequest();
-	xhr.open("GET", song_name, false);
-	xhr.send(null);
-	return parseXml( xhr.responseXML );
+    var url = 'rhythm_db?arg=get&title='+song_name;
+    var xhr = getXMLHttpRequest();
+    xhr.open("GET", url, false);
+    xhr.send(null);
+    return parseXml( xhr.responseXML );
 }
 
 function parseXml( xml)
@@ -56,9 +57,9 @@ function parseXml( xml)
 	
 	
 	// Load the name of the soud to play for each track:
-	var sounds = xml.getElementsByTagName("sound");
+	var sounds = xml.getElementsByTagName("song");
 	for( var i = 0; i < sounds.length; i++)
-		map_track_sound.push(sounds[i].childNodes[0].nodeValue);
+		map_track_sound.push(sounds[i].attributes[0].nodeValue);
 	
 	// Load the name of the background sound:
 	var song_background = xml.getElementsByTagName("backgroundsong");
@@ -71,6 +72,12 @@ function parseXml( xml)
 	{
 		start_metronome = Number(metronome[0].getElementsByTagName("start")[0].childNodes[0].nodeValue);
 		metronome_speed = Number(metronome[0].getElementsByTagName("speed")[0].childNodes[0].nodeValue);
+		metronomeObject = new AdvancedMetronome(start_metronome, metronome_speed, 0, 5000);
+	}
+	else
+	{
+		start_metronome = Number( rhythm.getElementsByTagName("start")[0].childNodes[0].nodeValue );
+		metronome_speed = Number( rhythm.getElementsByTagName("length")[0].childNodes[0].nodeValue )
 		metronomeObject = new AdvancedMetronome(start_metronome, metronome_speed, 0, 5000);
 	}
 

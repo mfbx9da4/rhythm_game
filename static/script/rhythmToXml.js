@@ -9,10 +9,19 @@ function RhythmToXml()
         columns = document.createElement('numbercolumns');
         columns.innerText = String(number_columns);
         rhythm.appendChild(columns);
-
+/*
         columns = document.createElement('numbercolumns');
         columns.innerText = String(number_columns);
         rhythm.appendChild(columns);
+*/
+
+        start = document.createElement('start');
+        start.innerText = "0";
+        rhythm.appendChild(start);
+
+        length = document.createElement('length');
+        length.innerText = "10000";
+        rhythm.appendChild(length);
 
         tracks = document.createElement('tracks');
         rhythm.appendChild(tracks);

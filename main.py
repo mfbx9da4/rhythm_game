@@ -20,7 +20,7 @@ from rhythmgame import game
 from gamesetup import CreateChannel
 from gamesetup import GameRequest
 from song import RandomSong
-
+from rhythm import Rhythm
 from login import ValidationEmail
 from login import FBEndPoint
 from login import SignUp
@@ -32,6 +32,7 @@ from userDB import User
 from RhythmAuto import RhythmAutorisation 
 import json
 from fixture_data import create_initial_data
+from database.song import Song
 
 class ManageRhythms(BaseHandler):
       def get(self): 
@@ -42,15 +43,6 @@ class Home(BaseHandler):
       def get(self): 
             params = {}
             self.response.write(self.render_template_arg('home.html', params))
-
-
-class Rhythm(db.Model):
-    title = db.StringProperty(multiline=False, required=True)
-    xml = db.TextProperty(required=True)
-    owner = db.StringProperty(multiline=False, required=True)
-    created = db.DateTimeProperty(auto_now_add=True)
-    last_modified = db.DateTimeProperty(auto_now=True)
-    rhythm_type = db.IntegerProperty(default=2, required=True)
 
 
 class RhythmEnterer(BaseHandler):
@@ -178,7 +170,9 @@ class RhythmsQuery(BaseHandler):
             else:
               return self.write('Invalid rhythm or owner')
           elif valid_title(title):
-            rhy = Rhythm(title=str(title), xml=xml.toxml(), owner=self.getUser().username, rhythm_type = type )
+            rhy = Rhythm(title=str(title), xml=xml.toxml(), owner=self.getUser().username, rhythm_type=type )
+          elif not valid_title(title):
+            return self.write("The title is already in use or invalid")
           rhy.put()
         else:
           return self.write('invalid rhythm')
@@ -200,7 +194,7 @@ def valid_rhythm(xml):
       return True
 
 def valid_title(title):
-    if not Rhythm.all().filter('title =', title).get():
+    if not Rhythm.all().filter('title =', title).get() and title:
         return True
 
 class SongDb(BaseHandler):

@@ -118,6 +118,7 @@
 <script>
 
 var codes = [ "Undefined", "Official", "Private", "Public"]
+var edit = 0;
 
 
 var gridToRhythm = new GridToRhythm();
@@ -189,11 +190,12 @@ function submitRhythm()
     var xml = rhythmToXml.parseRhythm(rhythm);
 
     var xhr = getXMLHttpRequest();
-    {% if edit %}
+    
+    if ( edit == 1 )
         xhr.open("POST", '/rhythm_db?arg=edit', false);
-    {% else %}
+    else
         xhr.open("POST", '/rhythm_db', false);
-    {% endif %}
+    
     var xml_str = xml.innerHTML;
     var title = document.getElementById('rhythm_title').value;
     var type_drop_down = document.getElementById('type');
@@ -210,7 +212,7 @@ function submitRhythm()
 function updateRhythms(string)
 {
     var xhr = getXMLHttpRequest();
-    var url = '/rhythm_db?arg=' + string
+    var url = '/rhythm_db?arg=' + string;
     xhr.open("GET", url, false);
     xhr.send(null);
     document.getElementById('rhythms').innerHTML = xhr.responseText;
@@ -242,7 +244,7 @@ function displayRhythmsInList()
     {
         title = document.createElement('td');
         title.innerHTML = rhythmsInfo[i].title;
-        title.setAttribute("onclick","x2g.displayRhythmOnGrid(\""+rhythmsInfo[i].title+"\");");
+        title.setAttribute("onclick","x2g.displayRhythmOnGrid(\""+rhythmsInfo[i].title+"\");edit=1;");
         
         date = document.createElement('td');
         date.innerHTML =rhythmsInfo[i].date.toUTCString();

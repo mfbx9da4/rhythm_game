@@ -6,6 +6,7 @@ import webapp2
 import jinja2
 from google.appengine.api import users
 from database.song import Song
+from rhythm import Rhythm
 
 class game(BaseHandler):
     def get(self):
@@ -15,7 +16,7 @@ class game(BaseHandler):
             context = { 'song' : song , 'back' : back }
             self.response.write(self.render_template_arg('animation.html', context))
         else:
-            context = {'titles' : [song.title for song in Song.all()]}
+            context = {'titles' : [rhythm.title for rhythm in Rhythm.all() ] }
             self.response.write(self.render_template_arg('select_a_song.html', context))
 
 
